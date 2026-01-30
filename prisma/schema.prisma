@@ -1,0 +1,151 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model gamesaves {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(50)
+  year       Int
+  download   String? @db.VarChar(150)
+  size       String  @default("0G") @db.VarChar(10)
+  created_by BigInt?
+  users      users?  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gamesaves_users__fk")
+
+  @@index([created_by], map: "gamesaves_users_id_fk")
+}
+
+model gamesaves_images {
+  id          Int    @id @default(autoincrement())
+  gamesave_id Int
+  link        String @db.VarChar(50)
+
+  @@index([gamesave_id], map: "gamesaves_images_gamesaves_id_fk")
+}
+
+model gauntlet_games {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique(map: "name") @db.VarChar(80)
+  gauntlet_games_claimed gauntlet_games_claimed[]
+  gauntlet_games_owners  gauntlet_games_owners[]
+}
+
+model gauntlet_games_claimed {
+  id             Int                           @id @default(autoincrement())
+  user_id        BigInt
+  game_id        Int
+  status         gauntlet_games_claimed_status @default(new)
+  comment        String?                       @db.Text
+  gauntlet_games gauntlet_games                @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gauntlet_games_claimed_gauntlet_games_id_fk")
+  users          users                         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gauntlet_games_claimed_users_id_fk")
+
+  @@index([game_id], map: "gauntlet_games_claimed_gauntlet_games_id_fk")
+  @@index([user_id], map: "gauntlet_games_claimed_users_id_fk")
+}
+
+model gauntlet_games_owners {
+  game_id        Int
+  owner_id       BigInt
+  gauntlet_games gauntlet_games @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gauntlet_games_owners_gauntlet_games_id_fk")
+  users          users          @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gauntlet_games_owners_users_id_fk")
+
+  @@id([game_id, owner_id])
+  @@index([owner_id], map: "gauntlet_games_owners_users_id_fk")
+}
+
+model quotes {
+  id                             Int              @id @default(autoincrement())
+  quote                          String           @db.Text
+  quote_by                       BigInt?
+  date                           DateTime?        @db.Date
+  created_by                     BigInt?
+  upvotes                        Int              @default(0)
+  downvotes                      Int              @default(0)
+  quote_rankings                 quote_rankings[]
+  users_quotes_quote_byTousers   users?           @relation("quotes_quote_byTousers", fields: [quote_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quotes_users_id_fk")
+  users_quotes_created_byTousers users?           @relation("quotes_created_byTousers", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quotes_users_id_fk_2")
+
+  @@index([quote_by], map: "quotes_users_id_fk")
+  @@index([created_by], map: "quotes_users_id_fk_2")
+}
+
+model timeline {
+  id                    Int                     @id @default(autoincrement())
+  title                 String                  @db.VarChar(150)
+  location              String?                 @db.VarChar(100)
+  date                  DateTime                @db.Date
+  created_by            BigInt?
+  users                 users?                  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "timeline_users__fk")
+  timeline_participants timeline_participants[]
+
+  @@index([created_by], map: "timeline_users_id_fk")
+}
+
+model timeline_participants {
+  id          Int      @id @default(autoincrement())
+  timeline_id Int
+  user_id     BigInt?
+  timeline    timeline @relation(fields: [timeline_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "timeline_participants_timeline__fk")
+  users       users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "timeline_participants_users__fk")
+
+  @@index([timeline_id], map: "timeline_participants_timeline__fk")
+  @@index([user_id], map: "timeline_participants_users_id_fk")
+}
+
+model users {
+  id                              BigInt                   @id
+  email                           String                   @unique(map: "users_email_uindex") @db.VarChar(100)
+  name                            String                   @db.VarChar(50)
+  gauntlet                        Boolean                  @default(false)
+  created_utc                     DateTime?                @db.DateTime(0)
+  gamesaves                       gamesaves[]
+  gauntlet_games_claimed          gauntlet_games_claimed[]
+  gauntlet_games_owners           gauntlet_games_owners[]
+  quote_rankings                  quote_rankings[]
+  quotes_quotes_quote_byTousers   quotes[]                 @relation("quotes_quote_byTousers")
+  quotes_quotes_created_byTousers quotes[]                 @relation("quotes_created_byTousers")
+  sessions                        sessions[]
+  timeline                        timeline[]
+  timeline_participants           timeline_participants[]
+}
+
+model sessions {
+  session    String   @id @db.VarChar(128)
+  user_id    BigInt
+  created_at DateTime @db.DateTime(0)
+  valid_till DateTime @db.DateTime(0)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "sessions_users_id_fk")
+
+  @@index([user_id], map: "sessions_users_id_fk")
+}
+
+model quote_rankings {
+  id         Int                 @id @default(autoincrement())
+  type       quote_rankings_type
+  quote_id   Int
+  created_by BigInt
+  users      users               @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by__fk")
+  quotes     quotes              @relation(fields: [quote_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "quote_id__fk")
+
+  @@index([created_by], map: "created_by__fk")
+  @@index([quote_id], map: "quote_id__fk")
+}
+
+enum gauntlet_games_claimed_status {
+  new
+  completed
+  coop
+  dropped
+  rerolled
+  waitlisted
+}
+
+enum quote_rankings_type {
+  Upvote
+  Downvote
+}
