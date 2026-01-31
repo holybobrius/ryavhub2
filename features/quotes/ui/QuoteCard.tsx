@@ -30,6 +30,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
     if (hasDownvote) return "downvote";
     return null;
   });
+  const [isVoting, setIsVoting] = useState(false);
 
   const DURAK_ENABLED = localStorage.getItem("durak-enabled") === "true";
 
@@ -51,7 +52,9 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
 
   const handleVote = useCallback(
     async (type: "upvote" | "downvote") => {
-      if (!user) return;
+      if (!user || isVoting) return;
+
+      setIsVoting(true);
 
       const prevUpvotes = upvotes;
       const prevDownvotes = downvotes;
@@ -113,9 +116,11 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
         setDownvotes(prevDownvotes);
         setUserVote(prevUserVote);
         console.error("Error voting on quote:", error);
+      } finally {
+        setIsVoting(false);
       }
     },
-    [user, quote.id, upvotes, downvotes, userVote]
+    [user, quote.id, upvotes, downvotes, userVote, isVoting]
   );
 
   const isUpvoted = userVote === "upvote";
@@ -138,6 +143,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
               type={isDownvoted ? "danger" : "secondary"}
               variant="soft"
               className="w-48"
+              disabled={isVoting}
               onClick={() => handleVote("downvote")}
             >
               <div className="flex items-center gap-2">
@@ -155,6 +161,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
               type={isUpvoted ? "primary" : "secondary"}
               variant="soft"
               className="w-48"
+              disabled={isVoting}
               onClick={() => handleVote("upvote")}
             >
               <div className="flex items-center gap-2">
