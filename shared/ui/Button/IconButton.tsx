@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { IconView } from "../IconView/IconView";
+import { IconView, StratisUiIcon } from "../IconView/IconView";
 
 type ButtonType = "primary" | "secondary" | "danger" | "success";
 type ButtonVariant = "filled" | "soft" | "ghost";
@@ -14,7 +14,7 @@ interface Props {
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
-  iconPath: string;
+  icon: StratisUiIcon;
 }
 
 const buttonStyles: Record<`${ButtonType}-${ButtonVariant}`, string> = {
@@ -77,7 +77,7 @@ export const IconButton: FC<Props> = ({
   bordered = false,
   onClick,
   disabled = false,
-  iconPath,
+  icon,
 }) => {
   const baseStyles = `flex gap-4 items-center justify-center font-unbounded rounded-sm font-regular transition-colors leading-[120%] ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${getButtonStyles(type, variant, bordered)} ${bordered ? "border" : ""}`;
   const sizeStyle = sizeStyles[size as ButtonSize];
@@ -89,7 +89,7 @@ export const IconButton: FC<Props> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <IconView iconPath={iconPath} color="primary-500" size={17} />
+      <IconView icon={icon} size={24} />
     </button>
   );
 };

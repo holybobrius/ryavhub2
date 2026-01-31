@@ -7,8 +7,9 @@ import { Button } from "@/shared/ui/Button";
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/features/auth/useAuth";
-import { IconView } from "@/shared/ui/IconView/IconView";
+import { suEditContained, suPlus01, suMinimise01, suEdit02 } from "stratis-ui-icons";
 import { IconButton } from "@/shared/ui/Button/IconButton";
+import { IconView } from "@/shared/ui/IconView/IconView";
 
 interface Props {
   quote: Quote;
@@ -29,6 +30,8 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
     if (hasDownvote) return "downvote";
     return null;
   });
+
+  const DURAK_ENABLED = localStorage.getItem("durak-enabled") === "true";
 
   useEffect(() => {
     if (!user) {
@@ -120,7 +123,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
 
   return (
     <div className={`bg-black-950 rounded-lg flex flex-col ${className}`}>
-      <div className="px-8 py-13 h-full whitespace-pre-wrap">
+      <div className="px-8 py-13 h-full whitespace-pre-wrap break-words overflow-wrap-anywhere">
         <Typography.Text size={size === "small" ? 28 : 40}>
           {quote.quote}
         </Typography.Text>
@@ -128,47 +131,49 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
       <div className="h-0.25 w-full bg-black-850" />
       <div className="px-8 py-6 flex justify-between items-center">
         <UserCell userInfo={quote.quoteAuthor} description={formattedDate} />
-        <div className="flex items-center gap-2">
-          <Button
+        <div className="flex items-center gap-25">
+          <div className="flex items-center gap-2">
+            <Button
+              size="small"
+              type={isDownvoted ? "danger" : "secondary"}
+              variant="soft"
+              className="w-48"
+              onClick={() => handleVote("downvote")}
+            >
+              <div className="flex items-center gap-2">
+                <div>{downvotes}</div>
+               {DURAK_ENABLED && <Image
+                  src="/quotes/downvote.png"
+                  alt="downvote"
+                  width={24}
+                  height={24}
+                />}
+              </div>
+            </Button>
+            <Button
+              size="small"
+              type={isUpvoted ? "primary" : "secondary"}
+              variant="soft"
+              className="w-48"
+              onClick={() => handleVote("upvote")}
+            >
+              <div className="flex items-center gap-2">
+                <div>{upvotes}</div>
+               {DURAK_ENABLED && <Image
+                  src="/quotes/upvote.png"
+                  alt="upvote"
+                  width={24}
+                  height={24}
+                />}
+              </div>
+            </Button>
+          </div>
+          <IconButton
+            icon={suEdit02}
+            type="secondary"
             size="small"
-            type={isDownvoted ? "danger" : "secondary"}
-            variant="soft"
-            className="w-48"
-            onClick={() => handleVote("downvote")}
-          >
-            <div className="flex items-center gap-2">
-              <div>{downvotes}</div>
-              <Image
-                src="/quotes/downvote.png"
-                alt="downvote"
-                width={24}
-                height={24}
-              />
-            </div>
-          </Button>
-          <Button
-            size="small"
-            type={isUpvoted ? "primary" : "secondary"}
-            variant="soft"
-            className="w-48"
-            onClick={() => handleVote("upvote")}
-          >
-            <div className="flex items-center gap-2">
-              <div>{upvotes}</div>
-              <Image
-                src="/quotes/upvote.png"
-                alt="upvote"
-                width={24}
-                height={24}
-              />
-            </div>
-          </Button>
+          />
         </div>
-        <IconButton
-          iconPath="/icons/Icon/Edit.svg"
-          type="secondary"
-          size="small"
-        />
       </div>
     </div>
   );

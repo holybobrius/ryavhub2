@@ -7,6 +7,7 @@ import { IconView } from "@/shared/ui/IconView/IconView";
 import { Typography } from "@/shared/ui/Typography";
 import dayjs from "dayjs";
 import Image from "next/image";
+import { suPlus01 } from "stratis-ui-icons";
 
 const SMALL_QUOTE_LENGTH = 150;
 
@@ -82,7 +83,7 @@ const QuotesPage = async () => {
           </Typography.Title>
         </div>
         <div className="flex justify-between items-end">
-          <Button type="primary" size="large" variant="ghost" bordered>
+          <Button type="primary" size="large" variant="ghost" bordered suffix={<IconView icon={suPlus01} size={32} />}>
             Добавить цитату
           </Button>
           <Typography.Text size={24} className="max-w-145">
