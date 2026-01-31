@@ -44,19 +44,16 @@ export const getBestQuote = async (): Promise<Quote | null> => {
     return null;
   }
 
-  return quotes.reduce((best, current) => {
-    const bestScore =
-      (best.upvotes?.length || 0) - (best.downvotes?.length || 0);
-    const currentScore =
-      (current.upvotes?.length || 0) - (current.downvotes?.length || 0);
+  const quotesWithScores = quotes.map((quote) => ({
+    quote,
+    score: (quote.upvotes?.length || 0) - (quote.downvotes?.length || 0),
+  }));
 
-    if (currentScore > bestScore) {
-      return current;
-    } else if (currentScore === bestScore) {
-      const bestUpvotes = best.upvotes?.length || 0;
-      const currentUpvotes = current.upvotes?.length || 0;
-      return currentUpvotes > bestUpvotes ? current : best;
-    }
-    return best;
-  });
+  const maxScore = Math.max(...quotesWithScores.map((q) => q.score));
+
+  const bestQuotes = quotesWithScores
+    .filter((q) => q.score === maxScore)
+    .map((q) => q.quote);
+
+  return bestQuotes[Math.floor(Math.random() * bestQuotes.length)];
 };

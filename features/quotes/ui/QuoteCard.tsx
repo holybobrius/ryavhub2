@@ -31,8 +31,11 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
     return null;
   });
   const [isVoting, setIsVoting] = useState(false);
+  const [durakEnabled, setDurakEnabled] = useState(false);
 
-  const DURAK_ENABLED = localStorage.getItem("durak-enabled") === "true";
+  useEffect(() => {
+    setDurakEnabled(localStorage.getItem("durak-enabled") === "true");
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -148,7 +151,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
             >
               <div className="flex items-center gap-2">
                 <div>{downvotes}</div>
-               {DURAK_ENABLED && <Image
+               {durakEnabled && <Image
                   src="/quotes/downvote.png"
                   alt="downvote"
                   width={24}
@@ -166,7 +169,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
             >
               <div className="flex items-center gap-2">
                 <div>{upvotes}</div>
-               {DURAK_ENABLED && <Image
+               {durakEnabled && <Image
                   src="/quotes/upvote.png"
                   alt="upvote"
                   width={24}
