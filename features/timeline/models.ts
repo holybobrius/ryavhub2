@@ -1,11 +1,10 @@
-import { Dayjs } from "dayjs";
 import { User } from "../users/models";
 
 export interface TimelineItem {
   id: number;
   title: string;
   location: string;
-  date: Dayjs;
+  date: string;
   created_by: number;
   users: User[];
   description?: string;

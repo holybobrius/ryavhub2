@@ -255,4 +255,49 @@
   --color-avatar-bg-success: var(--color-success-1300);
   --color-avatar-content-success: var(--color-success-500);
   --color-avatar-border-success: var(--color-neutral-400);
+
+  /* CHIP */
+  /* Primary */
+  --color-chip-bg-primary-filled: var(--color-primary-500);
+  --color-chip-text-primary-filled: var(--color-black-950);
+  --color-chip-border-primary: var(--color-primary-500);
+
+  --color-chip-bg-primary-soft: var(--color-primary-1300);
+  --color-chip-text-primary-soft: var(--color-primary-500);
+
+  --color-chip-bg-primary-ghost: transparent;
+  --color-chip-text-primary-ghost: var(--color-primary-500);
+
+  /* Secondary */
+  --color-chip-bg-secondary-filled: var(--color-neutral-500);
+  --color-chip-text-secondary-filled: var(--color-white);
+  --color-chip-border-secondary: var(--color-neutral-400);
+
+  --color-chip-bg-secondary-soft: var(--color-neutral-1300);
+  --color-chip-text-secondary-soft: var(--color-white);
+
+  --color-chip-bg-secondary-ghost: transparent;
+  --color-chip-text-secondary-ghost: var(--color-white);
+
+  /* Danger */
+  --color-chip-bg-danger-filled: var(--color-danger-500);
+  --color-chip-text-danger-filled: var(--color-white);
+  --color-chip-border-danger: var(--color-danger-500);
+
+  --color-chip-bg-danger-soft: var(--color-danger-1300);
+  --color-chip-text-danger-soft: var(--color-danger-500);
+
+  --color-chip-bg-danger-ghost: transparent;
+  --color-chip-text-danger-ghost: var(--color-danger-500);
+
+  /* Success */
+  --color-chip-bg-success-filled: var(--color-success-500);
+  --color-chip-text-success-filled: var(--color-white);
+  --color-chip-border-success: var(--color-success-500);
+
+  --color-chip-bg-success-soft: var(--color-success-1300);
+  --color-chip-text-success-soft: var(--color-success-500);
+
+  --color-chip-bg-success-ghost: transparent;
+  --color-chip-text-success-ghost: var(--color-success-500);
 }
