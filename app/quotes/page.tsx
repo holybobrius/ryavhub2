@@ -65,7 +65,7 @@ const QuotesPage = async () => {
   return (
     <div>
       <section
-        className="py-38.25 px-15 h-[calc(100vh-4rem)]"
+        className="py-38.25 px-15 h-[calc(100vh-4rem)] flex flex-col justify-end"
         style={{
           backgroundImage: "url(/quotes-hero.webp)",
           backgroundSize: "cover",
@@ -73,7 +73,7 @@ const QuotesPage = async () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="flex flex-col gap-19">
+        <div className="flex flex-col gap-25">
           <Typography.Display className="max-w-175" level={1}>
             КОЛЛЕКЦИЯ ЦИТАТ
           </Typography.Display>

@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <div>
       <section
-        className="py-38.25 px-15 h-[calc(100vh-4rem)]"
+        className="py-38.25 px-15 h-[calc(100vh-4rem)] flex flex-col justify-end"
         style={{
           backgroundImage: "url(/quotes-hero.webp)",
           backgroundSize: "cover",
@@ -12,7 +12,7 @@ export default function Loading() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="flex flex-col gap-19">
+        <div className="flex flex-col gap-25">
           <Typography.Display className="max-w-175" level={1}>
             КОЛЛЕКЦИЯ ЦИТАТ
           </Typography.Display>
@@ -25,9 +25,32 @@ export default function Loading() {
           <div className="h-12 w-48 bg-black-850 rounded-lg animate-pulse" />
           <Typography.Text size={24} className="max-w-145">
             В редизайне мы уделили этому разделу особое внимание и решили
-            добавить небольшой интерактив: теперь, как и в Блядких мемах, можно
+            добавить небольшой интерактив: теперь, как и в Блядских мемах, можно
             оценивать цитаты!
           </Typography.Text>
+        </div>
+      </section>
+      <section
+        className="py-25 px-15 h-screen mb-38"
+        style={{
+          backgroundImage: "url(/best-quote-bg.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-11">
+            <div>
+              <div className="h-14 w-[40rem] bg-black-850 rounded-lg animate-pulse mb-4" />
+              <div className="relative w-[588px] h-[588px]">
+                <div className="w-full h-full bg-black-850 rounded-full animate-pulse" />
+                <div className="absolute top-0 left-0 w-[320px] h-[260px] bg-black-850 rounded-lg animate-pulse" />
+              </div>
+            </div>
+            <div className="h-6 w-[36rem] bg-black-850 rounded animate-pulse" />
+          </div>
+          <div className="w-[222px] h-[320px] bg-black-950 rounded-lg animate-pulse" />
         </div>
       </section>
       <section className="px-15 mb-38">
@@ -66,4 +89,3 @@ export default function Loading() {
     </div>
   );
 }
-

@@ -20,9 +20,9 @@ const baseClasses =
 const variants = {
   dark: {
     default:
-      "text-text-secondary hover:text-text-base after:bg-text-secondary after:scale-0 hover:after:scale-100 hover:after:bg-text-primary",
+      "text-text-white hover:text-text-base after:bg-text-primary after:scale-0 hover:after:scale-100 hover:after:bg-text-primary",
     active:
-      "text-text-secondary hover:text-text-base after:bg-text-secondary after:scale-100 hover:after:bg-text-primary",
+      "text-text-white hover:text-text-base after:bg-text-primary after:scale-100 hover:after:bg-text-primary",
   },
   light: {
     default:

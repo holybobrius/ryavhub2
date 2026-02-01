@@ -33,8 +33,10 @@ const Navbar = async () => {
 
   return (
     <div className="flex items-center justify-between bg-black-950 px-15 py-4.5 h-16">
+      <div className="flex items-center gap-16">
       <NavbarLogo />
       <NavMenu items={items} color="dark" />
+      </div>
       {user ? <NavbarUserInfo user={user} /> : <Button>Войти</Button>}
     </div>
   );
