@@ -1,6 +1,6 @@
 import { getTimelineItems } from "@/features/timeline/getTimelineItems";
-import { TimelineItem as TimelineItemComponent } from "@/features/timeline/ui/TimelineItem";
 import { TimelineItem as TimelineItemType } from "@/features/timeline/models";
+import { TimelineWithLine } from "@/features/timeline/ui/TimelineWithLine";
 import { Button } from "@/shared/ui/Button";
 import { IconView } from "@/shared/ui/IconView/IconView";
 import { Typography } from "@/shared/ui/Typography";
@@ -28,48 +28,34 @@ const TimelinePage = async () => {
     .map(([year, items]) => ({ year: parseInt(year), items }))
     .sort((a, b) => b.year - a.year);
 
-  return <div>
-    <section
-      className="py-38.25 px-15 h-[calc(100vh-4rem)] flex flex-col justify-end"
-      style={{
-        backgroundImage: "url(/timeline-hero.webp)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="flex flex-col gap-25">
-        <Typography.Display className="max-w-175" level={1}>
-          ТАЙМЛАЙН СОБЫТИЙ
-        </Typography.Display>
-        <div className="flex flex-col gap-14">
-          <Typography.Title level={2} className="max-w-220">
-            Добавляйте ключевые события хаба, чтобы вместе создать живую историю сообщества.
-          </Typography.Title>
-          <Button type="primary" size="large" variant="ghost" bordered className="w-fit" suffix={<IconView icon={suPlus01} size={32} />}>
-            Добавить событие
-          </Button>
-        </div>
-      </div>
-    </section>
-    <section className="px-15 mb-38 mt-38">
-      <div className="flex flex-col gap-19">
-        {groupedTimeline.map(group => (
-          <div key={group.year} className="flex gap-5 justify-between">
-            <Typography.Display className="text-primary-500 mt-12" level={4}>{group.year}</Typography.Display>
-            <div className="flex flex-col gap-5 w-3/5">
-              {group.items.map(item => (
-                <div key={item.id} className="flex flex-col gap-6">
-                  <TimelineItemComponent item={item} />
-                  <div className="h-0.25 w-full bg-black-850 my-20" />
-                </div>
-              ))}
-            </div>
+  return (
+    <div>
+      <section
+        className="py-38.25 px-15 h-[calc(100vh-4rem)] flex flex-col justify-end"
+        style={{
+          backgroundImage: "url(/timeline-hero.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="flex flex-col gap-25">
+          <Typography.Display className="max-w-175" level={1}>
+            ТАЙМЛАЙН СОБЫТИЙ
+          </Typography.Display>
+          <div className="flex flex-col gap-14">
+            <Typography.Title level={2} className="max-w-220">
+              Добавляйте ключевые события хаба, чтобы вместе создать живую историю сообщества.
+            </Typography.Title>
+            <Button type="primary" size="large" variant="ghost" bordered className="w-fit" suffix={<IconView icon={suPlus01} size={32} />}>
+              Добавить событие
+            </Button>
           </div>
-        ))}
-      </div>
-    </section>
-  </div>
+        </div>
+      </section>
+      <TimelineWithLine groupedTimeline={groupedTimeline} />
+    </div>
+  );
 };
 
 export default TimelinePage;
