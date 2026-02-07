@@ -15,18 +15,20 @@ interface Props {
 }
 
 export const TimelineWithLine = ({ groupedTimeline }: Props) => {
-  const itemRefs = useRef<Map<number, HTMLElement>>(new Map());
   const dotRefs = useRef<Map<number, HTMLElement>>(new Map());
   const lineWrapperRef = useRef<HTMLDivElement>(null);
   const firstItemDotRef = useRef<HTMLDivElement>(null);
-  const lineElementRef = useRef<HTMLDivElement>(null);
+  const yearColumnRef = useRef<HTMLDivElement>(null);
+  const itemsColumnRef = useRef<HTMLDivElement>(null);
+
   const [activeLineHeight, setActiveLineHeight] = useState(0);
   const [activeItemIndices, setActiveItemIndices] = useState<Set<number>>(
     new Set()
   );
   const [lineTop, setLineTop] = useState(0);
   const [activeYear, setActiveYear] = useState<number | null>(null);
-  const [fixedDotLeft, setFixedDotLeft] = useState<number | null>(null);
+  const [lineLeftPx, setLineLeftPx] = useState<number | null>(null);
+  const [dotOffsetPx, setDotOffsetPx] = useState<number | null>(null);
 
   // Build a mapping of globalIndex -> year for determining active year
   const indexToYear = useRef<Map<number, number>>(new Map());
@@ -69,6 +71,22 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
       setActiveYear(null);
     }
 
+    // Calculate line left position: centered between year column right edge and items column left edge
+    if (
+      yearColumnRef.current &&
+      itemsColumnRef.current &&
+      lineWrapperRef.current
+    ) {
+      const wrapperRect = lineWrapperRef.current.getBoundingClientRect();
+      const yearRect = yearColumnRef.current.getBoundingClientRect();
+      const itemsRect = itemsColumnRef.current.getBoundingClientRect();
+      const centerX = (yearRect.right + itemsRect.left) / 2;
+      const linePx = centerX - wrapperRect.left;
+      setLineLeftPx(linePx);
+      // Dot offset: line position relative to items column left edge, minus half dot width (6px)
+      setDotOffsetPx(linePx - (itemsRect.left - wrapperRect.left) - 6);
+    }
+
     // Calculate the active line height: always ends at viewport center
     if (lineWrapperRef.current && firstItemDotRef.current) {
       const lineRect = lineWrapperRef.current.getBoundingClientRect();
@@ -89,12 +107,6 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
         setActiveLineHeight(0);
       }
     }
-
-    // Calculate fixed dot left position from the actual line element
-    if (lineElementRef.current) {
-      const bgLineRect = lineElementRef.current.getBoundingClientRect();
-      setFixedDotLeft(bgLineRect.left + bgLineRect.width / 2);
-    }
   }, []);
 
   useEffect(() => {
@@ -111,14 +123,6 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
     };
   }, [groupedTimeline, updateActiveState]);
 
-  const setItemRef = (element: HTMLElement | null, id: number) => {
-    if (element) {
-      itemRefs.current.set(id, element);
-    } else {
-      itemRefs.current.delete(id);
-    }
-  };
-
   const setDotRef = (element: HTMLElement | null, id: number) => {
     if (element) {
       dotRefs.current.set(id, element);
@@ -128,52 +132,51 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
   };
 
   let globalIndex = 0;
+  let yearColumnRefSet = false;
+  let itemsColumnRefSet = false;
 
   return (
     <section className="px-15 mb-38 mt-38">
       <div ref={lineWrapperRef} className="flex flex-col gap-19 relative">
         {/* Continuous background line (inactive - black-500) */}
-        <div
-          ref={lineElementRef}
-          className="absolute w-0.5 bg-black-500 pointer-events-none"
-          style={{
-            left: "calc(40% - 0.35rem)",
-            top: lineTop,
-            height: `calc(100% - ${lineTop}px - 2rem)`,
-          }}
-        />
+        {lineLeftPx !== null && (
+          <div
+            className="absolute w-0.5 bg-black-500 pointer-events-none"
+            style={{
+              left: lineLeftPx,
+              top: lineTop,
+              height: `calc(100% - ${lineTop}px - 2rem)`,
+            }}
+          />
+        )}
 
         {/* Continuous active line (primary-500) - always ends at viewport center */}
-        {activeLineHeight > 0 && (
+        {activeLineHeight > 0 && lineLeftPx !== null && (
           <div
             className="absolute w-0.5 bg-primary-500 pointer-events-none"
             style={{
-              left: "calc(40% - 0.35rem)",
+              left: lineLeftPx,
               top: lineTop,
               height: `${activeLineHeight}px`,
             }}
           />
         )}
 
-        {/* Dot fixed at viewport center on the line */}
-        {fixedDotLeft !== null && (
-          <div
-            className="fixed w-4 h-4 rounded-full bg-primary-500 z-20 pointer-events-none"
-            style={{
-              left: fixedDotLeft,
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        )}
-
         {groupedTimeline.map((group) => {
           const isYearActive = activeYear === group.year;
+          // Capture refs from the first group to measure column positions
+          const captureYearRef = !yearColumnRefSet;
+          const captureItemsRef = !itemsColumnRefSet;
+          if (captureYearRef) yearColumnRefSet = true;
+          if (captureItemsRef) itemsColumnRefSet = true;
 
           return (
             <div key={group.year} className="flex gap-5">
               {/* Year column - sticky at viewport center when active */}
-              <div className="w-2/5 flex flex-col items-start pl-8 relative">
+              <div
+                ref={captureYearRef ? yearColumnRef : undefined}
+                className="w-2/5 flex flex-col items-start pl-8 relative"
+              >
                 <div
                   className="sticky"
                   style={{ top: "50vh", transform: "translateY(-50%)" }}
@@ -188,7 +191,10 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
               </div>
 
               {/* Items column with dots */}
-              <div className="w-3/5 flex flex-col gap-5">
+              <div
+                ref={captureItemsRef ? itemsColumnRef : undefined}
+                className="w-3/5 flex flex-col gap-5"
+              >
                 {group.items.map((item) => {
                   const currentGlobalIndex = globalIndex++;
                   const isActive = activeItemIndices.has(currentGlobalIndex);
@@ -197,7 +203,6 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                   return (
                     <div
                       key={`${group.year}-${item.id}`}
-                      ref={(el) => setItemRef(el, currentGlobalIndex)}
                       data-item-id={currentGlobalIndex}
                       className="flex flex-col gap-6"
                     >
@@ -217,7 +222,7 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                             ${isActive ? "bg-primary-500" : "bg-black-500"}
                           `}
                           style={{
-                            left: "-1.4375rem",
+                            left: dotOffsetPx ?? "-1.4375rem",
                             top: "50%",
                             transform: "translateY(-50%)",
                           }}
