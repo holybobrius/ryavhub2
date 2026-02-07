@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { TimelineItem as TimelineItemComponent } from "./TimelineItem";
 import { TimelineItem as TimelineItemType } from "../models";
 import { Typography } from "@/shared/ui/Typography";
@@ -16,72 +16,114 @@ interface Props {
 
 export const TimelineWithLine = ({ groupedTimeline }: Props) => {
   const itemRefs = useRef<Map<number, HTMLElement>>(new Map());
+  const dotRefs = useRef<Map<number, HTMLElement>>(new Map());
   const lineWrapperRef = useRef<HTMLDivElement>(null);
   const firstItemDotRef = useRef<HTMLDivElement>(null);
+  const lineElementRef = useRef<HTMLDivElement>(null);
   const [activeLineHeight, setActiveLineHeight] = useState(0);
-  const [activeItemIndices, setActiveItemIndices] = useState<Set<number>>(new Set());
+  const [activeItemIndices, setActiveItemIndices] = useState<Set<number>>(
+    new Set()
+  );
   const [lineTop, setLineTop] = useState(0);
+  const [activeYear, setActiveYear] = useState<number | null>(null);
+  const [fixedDotLeft, setFixedDotLeft] = useState<number | null>(null);
 
+  // Build a mapping of globalIndex -> year for determining active year
+  const indexToYear = useRef<Map<number, number>>(new Map());
   useEffect(() => {
-    const updateActiveState = () => {
-      const viewportCenter = window.innerHeight / 2;
-      const activeIndices = new Set<number>();
+    const map = new Map<number, number>();
+    let idx = 0;
+    for (const group of groupedTimeline) {
+      for (const _ of group.items) {
+        map.set(idx, group.year);
+        idx++;
+      }
+    }
+    indexToYear.current = map;
+  }, [groupedTimeline]);
 
-      // Find which items are active (past viewport center)
-      itemRefs.current.forEach((element, id) => {
-        if (!element) return;
-        const rect = element.getBoundingClientRect();
-        const itemCenter = rect.top + rect.height / 2;
-        if (itemCenter < viewportCenter) {
-          activeIndices.add(id);
-        }
-      });
+  const updateActiveState = useCallback(() => {
+    const viewportCenter = window.innerHeight / 2;
+    const activeIndices = new Set<number>();
 
-      setActiveItemIndices(activeIndices);
+    // Find which items are active (their dot has passed viewport center)
+    dotRefs.current.forEach((dotElement, id) => {
+      if (!dotElement) return;
+      const dotRect = dotElement.getBoundingClientRect();
+      const dotCenter = dotRect.top + dotRect.height / 2;
+      if (dotCenter < viewportCenter) {
+        activeIndices.add(id);
+      }
+    });
 
-      // Calculate the active line height based on the last active item's position
-      if (activeIndices.size > 0 && lineWrapperRef.current && firstItemDotRef.current) {
-        const lastActiveId = Math.max(...activeIndices);
-        const lastActiveEl = itemRefs.current.get(lastActiveId);
-        const firstDotEl = firstItemDotRef.current;
+    setActiveItemIndices(activeIndices);
 
-        if (lastActiveEl && firstDotEl) {
-          const lineRect = lineWrapperRef.current.getBoundingClientRect();
-          const firstDotRect = firstDotEl.getBoundingClientRect();
-          const itemRect = lastActiveEl.getBoundingClientRect();
+    // Determine the active year from the last active item
+    if (activeIndices.size > 0) {
+      const lastActiveId = Math.max(...activeIndices);
+      const year = indexToYear.current.get(lastActiveId);
+      if (year !== undefined) {
+        setActiveYear(year);
+      }
+    } else {
+      setActiveYear(null);
+    }
 
-          // Line starts at the first dot's position
-          const lineStart = firstDotRect.top - lineRect.top + firstDotRect.height / 2;
-          // Active line goes to the center of the last active item
-          const activeEnd = itemRect.top - lineRect.top + itemRect.height / 2;
+    // Calculate the active line height: always ends at viewport center
+    if (lineWrapperRef.current && firstItemDotRef.current) {
+      const lineRect = lineWrapperRef.current.getBoundingClientRect();
+      const firstDotRect = firstItemDotRef.current.getBoundingClientRect();
 
-          setLineTop(lineStart);
-          setActiveLineHeight(activeEnd - lineStart);
-        }
+      // Line starts at the first dot's position
+      const lineStart =
+        firstDotRect.top - lineRect.top + firstDotRect.height / 2;
+      setLineTop(lineStart);
+
+      // Active line ends at viewport center (converted to wrapper-relative coords)
+      const viewportCenterInWrapper = viewportCenter - lineRect.top;
+      const activeHeight = viewportCenterInWrapper - lineStart;
+
+      if (activeHeight > 0) {
+        setActiveLineHeight(activeHeight);
       } else {
         setActiveLineHeight(0);
       }
-    };
+    }
 
+    // Calculate fixed dot left position from the actual line element
+    if (lineElementRef.current) {
+      const bgLineRect = lineElementRef.current.getBoundingClientRect();
+      setFixedDotLeft(bgLineRect.left + bgLineRect.width / 2);
+    }
+  }, []);
+
+  useEffect(() => {
     // Initial check
     updateActiveState();
 
     // Update on scroll and resize
-    const handleScroll = () => updateActiveState();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", updateActiveState, { passive: true });
     window.addEventListener("resize", updateActiveState);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", updateActiveState);
       window.removeEventListener("resize", updateActiveState);
     };
-  }, [groupedTimeline]);
+  }, [groupedTimeline, updateActiveState]);
 
   const setItemRef = (element: HTMLElement | null, id: number) => {
     if (element) {
       itemRefs.current.set(id, element);
     } else {
       itemRefs.current.delete(id);
+    }
+  };
+
+  const setDotRef = (element: HTMLElement | null, id: number) => {
+    if (element) {
+      dotRefs.current.set(id, element);
+    } else {
+      dotRefs.current.delete(id);
     }
   };
 
@@ -92,62 +134,106 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
       <div ref={lineWrapperRef} className="flex flex-col gap-19 relative">
         {/* Continuous background line (inactive - black-500) */}
         <div
+          ref={lineElementRef}
           className="absolute w-0.5 bg-black-500 pointer-events-none"
-          style={{ left: "calc(40% - 0.35rem)", top: lineTop, height: `calc(100% - ${lineTop}px - 2rem)` }}
+          style={{
+            left: "calc(40% - 0.35rem)",
+            top: lineTop,
+            height: `calc(100% - ${lineTop}px - 2rem)`,
+          }}
         />
 
-        {/* Continuous active line (primary-500) - fills from top based on scroll */}
+        {/* Continuous active line (primary-500) - always ends at viewport center */}
         {activeLineHeight > 0 && (
           <div
-            className="absolute w-0.5 bg-primary-500 transition-all duration-150 ease-out pointer-events-none"
-            style={{ left: "calc(40% - 0.35rem)", top: lineTop, height: `${activeLineHeight}px` }}
+            className="absolute w-0.5 bg-primary-500 pointer-events-none"
+            style={{
+              left: "calc(40% - 0.35rem)",
+              top: lineTop,
+              height: `${activeLineHeight}px`,
+            }}
           />
         )}
 
-        {groupedTimeline.map((group) => (
-          <div key={group.year} className="flex gap-5">
-            {/* Year column */}
-            <div className="w-2/5 flex flex-col items-end pr-8">
-              <Typography.Display className="text-primary-500 mt-4" level={4}>
-                {group.year}
-              </Typography.Display>
-            </div>
+        {/* Dot fixed at viewport center on the line */}
+        {fixedDotLeft !== null && (
+          <div
+            className="fixed w-4 h-4 rounded-full bg-primary-500 z-20 pointer-events-none"
+            style={{
+              left: fixedDotLeft,
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        )}
 
-            {/* Items column with dots */}
-            <div className="w-3/5 flex flex-col gap-5">
-              {group.items.map((item) => {
-                const currentGlobalIndex = globalIndex++;
-                const isActive = activeItemIndices.has(currentGlobalIndex);
-                const isFirstItem = currentGlobalIndex === 0;
+        {groupedTimeline.map((group) => {
+          const isYearActive = activeYear === group.year;
 
-                return (
-                  <div
-                    key={`${group.year}-${item.id}`}
-                    ref={(el) => setItemRef(el, currentGlobalIndex)}
-                    data-item-id={currentGlobalIndex}
-                    className="flex flex-col gap-6"
+          return (
+            <div key={group.year} className="flex gap-5">
+              {/* Year column - sticky at viewport center when active */}
+              <div className="w-2/5 flex flex-col items-start pl-8 relative">
+                <div
+                  className="sticky"
+                  style={{ top: "50vh", transform: "translateY(-50%)" }}
+                >
+                  <Typography.Display
+                    className={`transition-colors duration-300 ${isYearActive ? "text-primary-500" : "text-black-500"}`}
+                    level={4}
                   >
-                    <div className="relative">
-                      {/* Dot - ref for first item to calculate line position */}
-                      <div
-                        ref={isFirstItem ? firstItemDotRef : null}
-                        className={`
-                          absolute w-3 h-3 rounded-full transition-colors duration-300 z-10
-                          ${isActive ? "bg-primary-500" : "bg-black-500"}
-                        `}
-                        style={{ left: "-1.4375rem", top: "50%", transform: "translateY(-50%)" }}
-                      />
+                    {group.year}
+                  </Typography.Display>
+                </div>
+              </div>
 
-                      {/* Timeline item content */}
-                      <TimelineItemComponent item={item} />
+              {/* Items column with dots */}
+              <div className="w-3/5 flex flex-col gap-5">
+                {group.items.map((item) => {
+                  const currentGlobalIndex = globalIndex++;
+                  const isActive = activeItemIndices.has(currentGlobalIndex);
+                  const isFirstItem = currentGlobalIndex === 0;
+
+                  return (
+                    <div
+                      key={`${group.year}-${item.id}`}
+                      ref={(el) => setItemRef(el, currentGlobalIndex)}
+                      data-item-id={currentGlobalIndex}
+                      className="flex flex-col gap-6"
+                    >
+                      <div className="relative">
+                        {/* Dot on the line */}
+                        <div
+                          ref={(el) => {
+                            if (isFirstItem) {
+                              (
+                                firstItemDotRef as React.MutableRefObject<HTMLDivElement | null>
+                              ).current = el;
+                            }
+                            setDotRef(el, currentGlobalIndex);
+                          }}
+                          className={`
+                            absolute w-3 h-3 rounded-full transition-colors duration-300 z-10
+                            ${isActive ? "bg-primary-500" : "bg-black-500"}
+                          `}
+                          style={{
+                            left: "-1.4375rem",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                          }}
+                        />
+
+                        {/* Timeline item content */}
+                        <TimelineItemComponent item={item} />
+                      </div>
+                      <div className="h-0.25 w-full bg-black-850 my-20" />
                     </div>
-                    <div className="h-0.25 w-full bg-black-850 my-20" />
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
