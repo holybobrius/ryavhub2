@@ -171,11 +171,10 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
           if (captureItemsRef) itemsColumnRefSet = true;
 
           return (
-            <div key={group.year} className="flex gap-5">
-              {/* Year column - sticky at viewport center when active */}
+            <div key={group.year} className="flex">
               <div
                 ref={captureYearRef ? yearColumnRef : undefined}
-                className="w-2/5 flex flex-col items-start pl-8 relative"
+                className="w-1/5 shrink-0 flex flex-col items-start relative"
               >
                 <div
                   className="sticky"
@@ -190,10 +189,11 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                 </div>
               </div>
 
-              {/* Items column with dots */}
+              <div className="flex-1" />
+
               <div
                 ref={captureItemsRef ? itemsColumnRef : undefined}
-                className="w-3/5 flex flex-col gap-5"
+                className="shrink-0 w-3/5 flex flex-col gap-5"
               >
                 {group.items.map((item) => {
                   const currentGlobalIndex = globalIndex++;
