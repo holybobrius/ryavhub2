@@ -9,3 +9,8 @@ export interface TimelineItem {
   users: User[];
   description?: string;
 }
+
+export interface GroupedTimeline {
+  year: number;
+  items: TimelineItem[];
+}

@@ -1,5 +1,8 @@
 import { getTimelineItems } from "@/features/timeline/getTimelineItems";
-import { TimelineItem as TimelineItemType } from "@/features/timeline/models";
+import {
+  GroupedTimeline,
+  TimelineItem as TimelineItemType,
+} from "@/features/timeline/models";
 import { TimelineWithLine } from "@/features/timeline/ui/TimelineWithLine";
 import { Button } from "@/shared/ui/Button";
 import { IconView } from "@/shared/ui/IconView/IconView";
@@ -7,15 +10,12 @@ import { Typography } from "@/shared/ui/Typography";
 import { suPlus01 } from "stratis-ui-icons";
 import dayjs from "dayjs";
 
-interface GroupedTimeline {
-  year: number;
-  items: TimelineItemType[];
-}
-
 const TimelinePage = async () => {
   const timelineItems = await getTimelineItems();
 
-  const groupedByYear = timelineItems.reduce<Record<number, TimelineItemType[]>>((acc, item) => {
+  const groupedByYear = timelineItems.reduce<
+    Record<number, TimelineItemType[]>
+  >((acc, item) => {
     const year = dayjs(item.date).year();
     if (!acc[year]) {
       acc[year] = [];
@@ -45,9 +45,17 @@ const TimelinePage = async () => {
           </Typography.Display>
           <div className="flex flex-col gap-14">
             <Typography.Title level={2} className="max-w-220">
-              Добавляйте ключевые события хаба, чтобы вместе создать живую историю сообщества.
+              Добавляйте ключевые события хаба, чтобы вместе создать живую
+              историю сообщества.
             </Typography.Title>
-            <Button type="primary" size="large" variant="ghost" bordered className="w-fit" suffix={<IconView icon={suPlus01} size={32} />}>
+            <Button
+              type="primary"
+              size="large"
+              variant="ghost"
+              bordered
+              className="w-fit"
+              suffix={<IconView icon={suPlus01} size={32} />}
+            >
               Добавить событие
             </Button>
           </div>
