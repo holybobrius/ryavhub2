@@ -123,15 +123,18 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
 
   return (
     <section className="px-15 mb-38 mt-38">
-      <div ref={lineWrapperRef} className="flex flex-col gap-19 relative">
+      <div
+        ref={lineWrapperRef}
+        className="flex flex-col gap-19 relative pt-[100px] pb-[100px]"
+      >
         {lineLayout && (
           <>
             <div
               className="absolute w-0.5 bg-black-500 pointer-events-none"
               style={{
                 left: lineLayout.leftPx,
-                top: lineTop,
-                height: `calc(100% - ${lineTop}px - 2rem)`,
+                top: lineTop - 100,
+                height: `calc(100% - ${lineTop}px - 2rem + 200px)`,
               }}
             />
             {activeLineHeight > 0 && (
@@ -139,11 +142,31 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                 className="absolute w-0.5 bg-primary-500 pointer-events-none"
                 style={{
                   left: lineLayout.leftPx,
-                  top: lineTop,
-                  height: `${activeLineHeight}px`,
+                  top: lineTop - 100,
+                  height: `${activeLineHeight + 100}px`,
                 }}
               />
             )}
+            <div
+              className="absolute w-0.5 pointer-events-none z-20"
+              style={{
+                left: lineLayout.leftPx,
+                top: lineTop - 100,
+                height: 100,
+                background:
+                  "linear-gradient(to bottom, var(--color-black-950), transparent)",
+              }}
+            />
+            <div
+              className="absolute w-0.5 pointer-events-none z-20"
+              style={{
+                left: lineLayout.leftPx,
+                bottom: `calc(2rem - 100px)`,
+                height: 100,
+                background:
+                  "linear-gradient(to top, var(--color-black-950), transparent)",
+              }}
+            />
           </>
         )}
 
@@ -158,10 +181,11 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                 style={{ top: "50vh", transform: "translateY(-50%)" }}
               >
                 <Typography.Display
-                  className={`transition-colors duration-300 ${activeYear === group.year
-                    ? "text-primary-500"
-                    : "text-black-500"
-                    }`}
+                  className={`transition-colors duration-300 ${
+                    activeYear === group.year
+                      ? "text-primary-500"
+                      : "text-black-500"
+                  }`}
                   level={4}
                 >
                   {group.year}
@@ -184,10 +208,11 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                   <div className="relative">
                     <div
                       ref={(el) => setDotRef(el, fi.globalIndex)}
-                      className={`absolute w-3 h-3 rounded-full transition-colors duration-300 z-10 ${activeIndices.has(fi.globalIndex)
-                        ? "bg-primary-500"
-                        : "bg-black-500"
-                        }`}
+                      className={`absolute w-3 h-3 rounded-full transition-colors duration-300 z-10 ${
+                        activeIndices.has(fi.globalIndex)
+                          ? "bg-primary-500"
+                          : "bg-black-500"
+                      }`}
                       style={{
                         left: lineLayout?.dotOffsetPx ?? "-1.4375rem",
                         top: "50%",
