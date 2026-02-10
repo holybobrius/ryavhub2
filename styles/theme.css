@@ -33,8 +33,8 @@
 
   --color-neutral-100: #bbbbbb;
   --color-neutral-200: #9a9a9a;
-  --color-neutral-300: #6c6c6c;
-  --color-neutral-400: #4f4f4f;
+  --color-neutral-300: #6a6a6a;
+  --color-neutral-400: #464646;
   --color-neutral-500: #232323;
   --color-neutral-600: #212122;
   --color-neutral-700: #1f1f21;
@@ -300,4 +300,9 @@
 
   --color-chip-bg-success-ghost: transparent;
   --color-chip-text-success-ghost: var(--color-success-500);
+
+  /* Disabled */
+  --color-chip-bg-disabled: var(--color-neutral-600);
+  --color-chip-text-disabled: var(--color-neutral-400);
+  --color-chip-border-disabled: var(--color-neutral-400);
 }

@@ -20,7 +20,7 @@ export const getTimelineItems = async (): Promise<TimelineItem[]> => {
               name: users.find((u) => u.id === p.user_id)?.name || "",
               avatarUrl: "",
             })),
-          description: "asd",
+          description: n.description ?? undefined,
         };
     });
 };

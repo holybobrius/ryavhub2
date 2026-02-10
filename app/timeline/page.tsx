@@ -1,33 +1,10 @@
-import { getTimelineItems } from "@/features/timeline/getTimelineItems";
-import {
-  GroupedTimeline,
-  TimelineItem as TimelineItemType,
-} from "@/features/timeline/models";
-import { TimelineWithLine } from "@/features/timeline/ui/TimelineWithLine";
+import { TimelineWithSuspense } from "@/features/timeline/ui/TimelineWithSuspense";
 import { Button } from "@/shared/ui/Button";
 import { IconView } from "@/shared/ui/IconView/IconView";
 import { Typography } from "@/shared/ui/Typography";
 import { suPlus01 } from "stratis-ui-icons";
-import dayjs from "dayjs";
 
-const TimelinePage = async () => {
-  const timelineItems = await getTimelineItems();
-
-  const groupedByYear = timelineItems.reduce<
-    Record<number, TimelineItemType[]>
-  >((acc, item) => {
-    const year = dayjs(item.date).year();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(item);
-    return acc;
-  }, {});
-
-  const groupedTimeline: GroupedTimeline[] = Object.entries(groupedByYear)
-    .map(([year, items]) => ({ year: parseInt(year), items }))
-    .sort((a, b) => b.year - a.year);
-
+const TimelinePage = () => {
   return (
     <div>
       <section
@@ -61,7 +38,7 @@ const TimelinePage = async () => {
           </div>
         </div>
       </section>
-      <TimelineWithLine groupedTimeline={groupedTimeline} />
+      <TimelineWithSuspense />
     </div>
   );
 };

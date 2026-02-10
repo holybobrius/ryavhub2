@@ -84,7 +84,7 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
         const itemsRect = itemsCol.getBoundingClientRect();
         const centerX = (yearRect.right + itemsRect.left) / 2;
         const leftPx = centerX - wrapperRect.left;
-        const dotOffsetPx = leftPx - (itemsRect.left - wrapperRect.left) - 6;
+        const dotOffsetPx = leftPx - (itemsRect.left - wrapperRect.left) - 5;
         setLineLayout({ leftPx, dotOffsetPx });
       }
 
@@ -123,15 +123,18 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
 
   return (
     <section className="px-15 mb-38 mt-38">
-      <div ref={lineWrapperRef} className="flex flex-col gap-19 relative">
+      <div
+        ref={lineWrapperRef}
+        className="flex flex-col gap-19 relative pt-[100px] pb-[100px]"
+      >
         {lineLayout && (
           <>
             <div
               className="absolute w-0.5 bg-black-500 pointer-events-none"
               style={{
                 left: lineLayout.leftPx,
-                top: lineTop,
-                height: `calc(100% - ${lineTop}px - 2rem)`,
+                top: lineTop - 100,
+                height: `calc(100% - ${lineTop}px - 2rem + 200px)`,
               }}
             />
             {activeLineHeight > 0 && (
@@ -139,11 +142,31 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                 className="absolute w-0.5 bg-primary-500 pointer-events-none"
                 style={{
                   left: lineLayout.leftPx,
-                  top: lineTop,
-                  height: `${activeLineHeight}px`,
+                  top: lineTop - 100,
+                  height: `${activeLineHeight + 100}px`,
                 }}
               />
             )}
+            <div
+              className="absolute w-0.5 pointer-events-none z-20"
+              style={{
+                left: lineLayout.leftPx,
+                top: lineTop - 100,
+                height: 100,
+                background:
+                  "linear-gradient(to bottom, var(--color-black-950), transparent)",
+              }}
+            />
+            <div
+              className="absolute w-0.5 pointer-events-none z-20"
+              style={{
+                left: lineLayout.leftPx,
+                bottom: `calc(2rem - 100px)`,
+                height: 100,
+                background:
+                  "linear-gradient(to top, var(--color-black-950), transparent)",
+              }}
+            />
           </>
         )}
 
@@ -196,7 +219,10 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                         transform: "translateY(-50%)",
                       }}
                     />
-                    <TimelineItemComponent item={fi.item} />
+                    <TimelineItemComponent
+                      item={fi.item}
+                      disabled={!activeIndices.has(fi.globalIndex)}
+                    />
                   </div>
                   <div className="h-0.25 w-full bg-black-850 my-20" />
                 </div>
