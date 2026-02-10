@@ -158,11 +158,10 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                 style={{ top: "50vh", transform: "translateY(-50%)" }}
               >
                 <Typography.Display
-                  className={`transition-colors duration-300 ${
-                    activeYear === group.year
-                      ? "text-primary-500"
-                      : "text-black-500"
-                  }`}
+                  className={`transition-colors duration-300 ${activeYear === group.year
+                    ? "text-primary-500"
+                    : "text-black-500"
+                    }`}
                   level={4}
                 >
                   {group.year}
@@ -185,18 +184,17 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                   <div className="relative">
                     <div
                       ref={(el) => setDotRef(el, fi.globalIndex)}
-                      className={`absolute w-3 h-3 rounded-full transition-colors duration-300 z-10 ${
-                        activeIndices.has(fi.globalIndex)
-                          ? "bg-primary-500"
-                          : "bg-black-500"
-                      }`}
+                      className={`absolute w-3 h-3 rounded-full transition-colors duration-300 z-10 ${activeIndices.has(fi.globalIndex)
+                        ? "bg-primary-500"
+                        : "bg-black-500"
+                        }`}
                       style={{
                         left: lineLayout?.dotOffsetPx ?? "-1.4375rem",
                         top: "50%",
                         transform: "translateY(-50%)",
                       }}
                     />
-                    <TimelineItemComponent item={fi.item} />
+                    <TimelineItemComponent item={fi.item} disabled={!activeIndices.has(fi.globalIndex)} />
                   </div>
                   <div className="h-0.25 w-full bg-black-850 my-20" />
                 </div>
