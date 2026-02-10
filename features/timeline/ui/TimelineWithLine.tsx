@@ -84,7 +84,7 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
         const itemsRect = itemsCol.getBoundingClientRect();
         const centerX = (yearRect.right + itemsRect.left) / 2;
         const leftPx = centerX - wrapperRect.left;
-        const dotOffsetPx = leftPx - (itemsRect.left - wrapperRect.left) - 6;
+        const dotOffsetPx = leftPx - (itemsRect.left - wrapperRect.left) - 5;
         setLineLayout({ leftPx, dotOffsetPx });
       }
 
@@ -194,7 +194,10 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
                         transform: "translateY(-50%)",
                       }}
                     />
-                    <TimelineItemComponent item={fi.item} disabled={!activeIndices.has(fi.globalIndex)} />
+                    <TimelineItemComponent
+                      item={fi.item}
+                      disabled={!activeIndices.has(fi.globalIndex)}
+                    />
                   </div>
                   <div className="h-0.25 w-full bg-black-850 my-20" />
                 </div>
