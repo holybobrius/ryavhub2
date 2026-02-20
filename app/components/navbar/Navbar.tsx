@@ -1,4 +1,3 @@
-import { FC } from "react";
 import NavbarLogo from "./NavbarLogo";
 import { NavMenu } from "@/shared/ui/NavMenu/NavMenu";
 import { Button } from "@/shared/ui/Button/Button";

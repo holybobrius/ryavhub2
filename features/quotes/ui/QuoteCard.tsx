@@ -7,14 +7,8 @@ import { Button } from "@/shared/ui/Button";
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/features/auth/useAuth";
-import {
-  suEditContained,
-  suPlus01,
-  suMinimise01,
-  suEdit02,
-} from "stratis-ui-icons";
+import { suEdit02 } from "stratis-ui-icons";
 import { IconButton } from "@/shared/ui/Button/IconButton";
-import { IconView } from "@/shared/ui/IconView/IconView";
 
 interface Props {
   quote: Quote;
@@ -128,7 +122,7 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
         setIsVoting(false);
       }
     },
-    [user, quote.id, upvotes, downvotes, userVote, isVoting]
+    [user, quote.id, upvotes, downvotes, userVote, isVoting],
   );
 
   const isUpvoted = userVote === "upvote";

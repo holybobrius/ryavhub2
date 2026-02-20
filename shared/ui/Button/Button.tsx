@@ -47,14 +47,14 @@ const buttonStyles: Record<`${ButtonType}-${ButtonVariant}`, string> = {
 const getButtonStyles = (
   type: ButtonType,
   variant: ButtonVariant,
-  bordered: boolean
+  bordered: boolean,
 ): string => {
   const styles = buttonStyles[`${type}-${variant}`] || "";
   if (variant === "ghost" && bordered) {
     return styles
       .split(" ")
       .filter(
-        (cls) => !cls.startsWith("hover:bg-") && !cls.startsWith("active:bg-")
+        (cls) => !cls.startsWith("hover:bg-") && !cls.startsWith("active:bg-"),
       )
       .join(" ");
   }

@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -87,7 +87,7 @@ export async function POST(
     console.error("Error voting on quote:", error);
     return NextResponse.json(
       { error: "Failed to vote on quote" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

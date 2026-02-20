@@ -2,8 +2,8 @@
 import { JSDOM } from "jsdom";
 const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
 global.document = dom.window.document;
-global.window = dom.window as any;
-global.navigator = dom.window.navigator as any;
+global.window = dom.window as unknown as Window & typeof globalThis;
+global.navigator = dom.window.navigator as unknown as Navigator;
 
 import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { render } from "@testing-library/react";
@@ -13,7 +13,9 @@ import { Quote } from "../models";
 
 // Mock images to avoid Next.js errors
 mock.module("next/image", () => ({
-  default: (props: any) => <img {...props} />,
+  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <img {...props} />
+  ),
 }));
 
 // Mock localStorage
@@ -34,7 +36,10 @@ mock.module("@/features/auth/useAuth", () => ({
 const mockQuote: Quote = {
   id: 1,
   quote: "Test quote text",
-  quoteAuthor: { name: "Test User", avatarUrl: "https://example.com/avatar.jpg" },
+  quoteAuthor: {
+    name: "Test User",
+    avatarUrl: "https://example.com/avatar.jpg",
+  },
   date: new Date(),
   upvotes: [{ id: 1, created_by: 1 }],
   downvotes: [],
@@ -47,28 +52,52 @@ describe("QuoteCard", () => {
   });
 
   it("should render quote text", () => {
-    const { getByText } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getByText } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     expect(getByText("Test quote text")).toBeInTheDocument();
   });
 
   it("should render author name", () => {
-    const { getByText } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getByText } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     expect(getByText("Test User")).toBeInTheDocument();
   });
 
   it("should show upvote count", () => {
-    const { getByText } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getByText } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     expect(getByText("1")).toBeInTheDocument();
   });
 
   it("should show downvote count as 0", () => {
-    const { getAllByRole } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getAllByRole } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
-    const downvoteButton = getAllByRole("button").find(
-      b => b.textContent?.includes("0")
+    const downvoteButton = getAllByRole("button").find((b) =>
+      b.textContent?.includes("0"),
     );
     expect(downvoteButton).toBeInTheDocument();
   });
@@ -76,26 +105,36 @@ describe("QuoteCard", () => {
 
 describe("QuoteCard voting", () => {
   beforeEach(() => {
-
     // Suppress console.error to avoid error logs in test output
     global.console.error = mock(() => {});
     global.fetch = mock(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({ upvotes: 2, downvotes: 0, userVote: { type: "upvote" } }),
-      })
-    ) as any;
+        json: () =>
+          Promise.resolve({
+            upvotes: 2,
+            downvotes: 0,
+            userVote: { type: "upvote" },
+          }),
+      }),
+    ) as unknown as typeof fetch;
 
     // Set the mock to return a user
     mockUseAuth.mockReturnValue({ user: { id: 1, name: "User" } });
   });
 
   it("should send upvote request when clicking upvote button", async () => {
-    const { getAllByRole } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getAllByRole } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     // Find buttons by their content - upvote button contains "1", downvote contains "0"
     const buttons = getAllByRole("button");
-    const upvoteButton = buttons.find(b => b.textContent?.includes("1"))!;
+    const upvoteButton = buttons.find((b) => b.textContent?.includes("1"))!;
 
     await userEvent.click(upvoteButton);
 
@@ -104,15 +143,21 @@ describe("QuoteCard voting", () => {
       expect.objectContaining({
         method: "POST",
         body: JSON.stringify({ type: "upvote" }),
-      })
+      }),
     );
   });
 
   it("should send downvote request when clicking downvote button", async () => {
-    const { getAllByRole } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getAllByRole } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     const buttons = getAllByRole("button");
-    const downvoteButton = buttons.find(b => b.textContent?.includes("0"))!;
+    const downvoteButton = buttons.find((b) => b.textContent?.includes("0"))!;
 
     await userEvent.click(downvoteButton);
 
@@ -121,7 +166,7 @@ describe("QuoteCard voting", () => {
       expect.objectContaining({
         method: "POST",
         body: JSON.stringify({ type: "downvote" }),
-      })
+      }),
     );
   });
 
@@ -130,13 +175,19 @@ describe("QuoteCard voting", () => {
       Promise.resolve({
         ok: false,
         json: () => Promise.resolve({ error: "Failed to vote" }),
-      })
-    ) as any;
+      }),
+    ) as unknown as typeof fetch;
 
-    const { getAllByRole, getByText } = render(<QuoteCard quote={mockQuote} formattedDate="1 января 2024" size="default" />);
+    const { getAllByRole, getByText } = render(
+      <QuoteCard
+        quote={mockQuote}
+        formattedDate="1 января 2024"
+        size="default"
+      />,
+    );
 
     const buttons = getAllByRole("button");
-    const upvoteButton = buttons.find(b => b.textContent?.includes("1"))!;
+    const upvoteButton = buttons.find((b) => b.textContent?.includes("1"))!;
 
     await userEvent.click(upvoteButton);
 

@@ -33,7 +33,7 @@ export const getQuotesList = async (): Promise<Quote[]> => {
             created_by: Number(r.created_by),
           })),
       };
-    })
+    }),
   );
 };
 

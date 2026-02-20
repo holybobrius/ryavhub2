@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { TimelineItem as TimelineItemComponent } from "./TimelineItem";
 import { GroupedTimeline, TimelineItem as TimelineItemType } from "../models";
 import { Typography } from "@/shared/ui/Typography";
@@ -33,27 +33,36 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
   const [lineTop, setLineTop] = useState(0);
   const [lineLayout, setLineLayout] = useState<LineLayout | null>(null);
 
-  const flatItems: FlatItem[] = [];
-  for (const group of groupedTimeline) {
-    for (const item of group.items) {
-      flatItems.push({ globalIndex: flatItems.length, year: group.year, item });
+  const flatItems = useMemo(() => {
+    const items: FlatItem[] = [];
+    for (const group of groupedTimeline) {
+      for (const item of group.items) {
+        items.push({ globalIndex: items.length, year: group.year, item });
+      }
     }
-  }
+    return items;
+  }, [groupedTimeline]);
 
-  const indexToYear = new Map<number, number>();
-  for (const fi of flatItems) {
-    indexToYear.set(fi.globalIndex, fi.year);
-  }
-
-  const itemsByYear = new Map<number, FlatItem[]>();
-  for (const fi of flatItems) {
-    let arr = itemsByYear.get(fi.year);
-    if (!arr) {
-      arr = [];
-      itemsByYear.set(fi.year, arr);
+  const indexToYear = useMemo(() => {
+    const map = new Map<number, number>();
+    for (const fi of flatItems) {
+      map.set(fi.globalIndex, fi.year);
     }
-    arr.push(fi);
-  }
+    return map;
+  }, [flatItems]);
+
+  const itemsByYear = useMemo(() => {
+    const map = new Map<number, FlatItem[]>();
+    for (const fi of flatItems) {
+      let arr = map.get(fi.year);
+      if (!arr) {
+        arr = [];
+        map.set(fi.year, arr);
+      }
+      arr.push(fi);
+    }
+    return map;
+  }, [flatItems]);
 
   useEffect(() => {
     const update = () => {
@@ -95,7 +104,7 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
         const start = dotRect.top - wrapperRect.top + dotRect.height / 2;
         setLineTop(start);
         setActiveLineHeight(
-          Math.max(0, viewportCenter - wrapperRect.top - start)
+          Math.max(0, viewportCenter - wrapperRect.top - start),
         );
       }
     };
@@ -107,7 +116,7 @@ export const TimelineWithLine = ({ groupedTimeline }: Props) => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, [groupedTimeline]);
+  }, [groupedTimeline, indexToYear]);
 
   const setDotRef = (el: HTMLElement | null, index: number) => {
     if (el) {

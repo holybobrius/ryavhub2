@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { FC } from "react";
 import { Typography } from "../Typography";
 import { Avatar } from "../Avatar/Avatar";

@@ -22,12 +22,17 @@ describe("POST /api/quotes/[id]/vote", () => {
   });
 
   it("should return 400 for invalid quote ID", async () => {
-    const request = new NextRequest("http://localhost/api/quotes/invalid/vote", {
-      method: "POST",
-      body: JSON.stringify({ type: "upvote" }),
-    });
+    const request = new NextRequest(
+      "http://localhost/api/quotes/invalid/vote",
+      {
+        method: "POST",
+        body: JSON.stringify({ type: "upvote" }),
+      },
+    );
 
-    const response = await POST(request, { params: Promise.resolve({ id: "invalid" }) });
+    const response = await POST(request, {
+      params: Promise.resolve({ id: "invalid" }),
+    });
 
     expect(response.status).toBe(400);
   });
@@ -38,7 +43,9 @@ describe("POST /api/quotes/[id]/vote", () => {
       body: JSON.stringify({ type: "invalid" }),
     });
 
-    const response = await POST(request, { params: Promise.resolve({ id: "1" }) });
+    const response = await POST(request, {
+      params: Promise.resolve({ id: "1" }),
+    });
 
     expect(response.status).toBe(400);
   });
@@ -61,7 +68,9 @@ describe("POST /api/quotes/[id]/vote", () => {
       body: JSON.stringify({ type: "upvote" }),
     });
 
-    const response = await POST(request, { params: Promise.resolve({ id: "1" }) });
+    const response = await POST(request, {
+      params: Promise.resolve({ id: "1" }),
+    });
     const data = await response.json();
 
     expect(data).toEqual({
@@ -88,7 +97,9 @@ describe("POST /api/quotes/[id]/vote", () => {
       body: JSON.stringify({ type: "upvote" }),
     });
 
-    const response = await POST(request, { params: Promise.resolve({ id: "1" }) });
+    const response = await POST(request, {
+      params: Promise.resolve({ id: "1" }),
+    });
 
     expect(response.status).toBe(200);
   });

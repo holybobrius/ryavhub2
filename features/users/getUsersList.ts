@@ -1,5 +1,3 @@
-import { cookies } from "next/headers";
-import { validateSession } from "@/shared/model/validateSession";
 import { User } from "./models";
 import { db } from "@/lib/db";
 

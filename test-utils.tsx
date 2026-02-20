@@ -10,9 +10,7 @@ interface Options {
 export function renderWithProviders(ui: React.ReactElement, options?: Options) {
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     return (
-      <AuthProvider user={options?.authUser ?? null}>
-        {children}
-      </AuthProvider>
+      <AuthProvider user={options?.authUser ?? null}>{children}</AuthProvider>
     );
   };
   return render(ui, { wrapper: Wrapper });
