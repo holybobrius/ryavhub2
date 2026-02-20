@@ -7,7 +7,12 @@ import { Button } from "@/shared/ui/Button";
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/features/auth/useAuth";
-import { suEditContained, suPlus01, suMinimise01, suEdit02 } from "stratis-ui-icons";
+import {
+  suEditContained,
+  suPlus01,
+  suMinimise01,
+  suEdit02,
+} from "stratis-ui-icons";
 import { IconButton } from "@/shared/ui/Button/IconButton";
 import { IconView } from "@/shared/ui/IconView/IconView";
 
@@ -151,12 +156,14 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
             >
               <div className="flex items-center gap-2">
                 <div>{downvotes}</div>
-               {durakEnabled && <Image
-                  src="/quotes/downvote.png"
-                  alt="downvote"
-                  width={24}
-                  height={24}
-                />}
+                {durakEnabled && (
+                  <Image
+                    src="/quotes/downvote.png"
+                    alt="downvote"
+                    width={24}
+                    height={24}
+                  />
+                )}
               </div>
             </Button>
             <Button
@@ -169,20 +176,18 @@ export const QuoteCard = ({ quote, formattedDate, className, size }: Props) => {
             >
               <div className="flex items-center gap-2">
                 <div>{upvotes}</div>
-               {durakEnabled && <Image
-                  src="/quotes/upvote.png"
-                  alt="upvote"
-                  width={24}
-                  height={24}
-                />}
+                {durakEnabled && (
+                  <Image
+                    src="/quotes/upvote.png"
+                    alt="upvote"
+                    width={24}
+                    height={24}
+                  />
+                )}
               </div>
             </Button>
           </div>
-          <IconButton
-            icon={suEdit02}
-            type="secondary"
-            size="small"
-          />
+          <IconButton icon={suEdit02} type="secondary" size="small" />
         </div>
       </div>
     </div>

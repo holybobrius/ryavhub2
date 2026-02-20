@@ -31,10 +31,10 @@ export const Footer = ({ showNavMenu }: Props) => {
   ];
 
   return (
-    <div className="h-74.5 bg-primary flex justify-center px-15 pt-13 pb-8 relative overflow-hidden items-start">
+    <div className="h-74.5 bg-black-900 flex justify-center px-15 pt-13 pb-8 relative overflow-hidden items-start">
       <div className="w-full flex justify-between z-10">
-        {showNavMenu ? <NavMenu items={items} color="light" /> : <></>}
-        <Typography.Text className="text-text-surface" size={16}>
+        {showNavMenu ? <NavMenu items={items} /> : <></>}
+        <Typography.Text className="text-black-500" size={16}>
           © 2021-2026
         </Typography.Text>
       </div>

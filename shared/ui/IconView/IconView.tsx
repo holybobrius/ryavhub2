@@ -18,7 +18,15 @@ interface Props {
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
     if (domNode instanceof Element) {
-      if (domNode.name === "svg" || domNode.name === "path" || domNode.name === "circle" || domNode.name === "rect" || domNode.name === "polygon" || domNode.name === "line" || domNode.name === "polyline") {
+      if (
+        domNode.name === "svg" ||
+        domNode.name === "path" ||
+        domNode.name === "circle" ||
+        domNode.name === "rect" ||
+        domNode.name === "polygon" ||
+        domNode.name === "line" ||
+        domNode.name === "polyline"
+      ) {
         if (domNode.attribs) {
           delete domNode.attribs.fill;
           domNode.attribs.stroke = "currentColor";
@@ -28,7 +36,12 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-export const IconView: FC<Props> = ({ icon, size = 24, className = "", color }) => {
+export const IconView: FC<Props> = ({
+  icon,
+  size = 24,
+  className = "",
+  color,
+}) => {
   const parsed = useMemo(() => {
     const element = parse(icon.data, options);
     if (!element) return null;
@@ -36,7 +49,12 @@ export const IconView: FC<Props> = ({ icon, size = 24, className = "", color }) 
     return (
       <div
         className={`${className} ${color ? `text-${color}` : ""}`}
-        style={{ width: size, height: size, display: "inline-flex", fill: 'transparent' }}
+        style={{
+          width: size,
+          height: size,
+          display: "inline-flex",
+          fill: "transparent",
+        }}
       >
         {element}
       </div>

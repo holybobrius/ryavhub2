@@ -1,6 +1,9 @@
 import { Suspense } from "react";
 import { getTimelineItems } from "@/features/timeline/getTimelineItems";
-import { GroupedTimeline, TimelineItem as TimelineItemType } from "@/features/timeline/models";
+import {
+  GroupedTimeline,
+  TimelineItem as TimelineItemType,
+} from "@/features/timeline/models";
 import { TimelineWithLine } from "@/features/timeline/ui/TimelineWithLine";
 import { TimelineSkeleton } from "@/features/timeline/ui/TimelineSkeleton";
 import dayjs from "dayjs";

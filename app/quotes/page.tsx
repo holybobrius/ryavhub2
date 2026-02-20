@@ -83,7 +83,13 @@ const QuotesPage = async () => {
           </Typography.Title>
         </div>
         <div className="flex justify-between items-end">
-          <Button type="primary" size="large" variant="ghost" bordered suffix={<IconView icon={suPlus01} size={32} />}>
+          <Button
+            type="primary"
+            size="large"
+            variant="ghost"
+            bordered
+            suffix={<IconView icon={suPlus01} size={32} />}
+          >
             Добавить цитату
           </Button>
           <Typography.Text size={24} className="max-w-145">

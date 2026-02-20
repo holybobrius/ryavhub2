@@ -31,10 +31,7 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   return (
-    <html
-      lang="en"
-      className={`${geologica.variable} ${unbounded.variable}`}
-    >
+    <html lang="en" className={`${geologica.variable} ${unbounded.variable}`}>
       <body className="min-h-full flex flex-col">
         <AuthProvider user={user || null}>
           <Navbar />

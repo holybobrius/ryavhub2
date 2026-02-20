@@ -59,7 +59,10 @@ export const TimelineItem = ({ item, disabled = false }: Props) => {
         </div>
       </div>
       <div className="w-1/2">
-        <Typography.Text size={20} className={`transition-colors duration-200 ${disabled ? "text-neutral-500" : "text-black-500"}`}>
+        <Typography.Text
+          size={20}
+          className={`transition-colors duration-200 ${disabled ? "text-neutral-500" : "text-black-500"}`}
+        >
           {item.description}
         </Typography.Text>
       </div>

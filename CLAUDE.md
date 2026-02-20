@@ -4,29 +4,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+This project uses **bun** as the package manager.
+
 ```bash
+# Install dependencies
+bun install
+
 # Start development server
-npm run dev
+bun run dev
 
 # Build for production
-npm run build
+bun run build
 
 # Start production server
-npm start
+bun start
 
 # Run linting
-npm run lint
-npm run lint:fix
+bun run lint
+bun run lint:fix
 
 # Format code
-npm run format
-npm run format:check
+bun run format
+bun run format:check
 
 # Database operations
-npm run db:push       # Push schema changes to database (development)
-npm run db:migrate    # Create and apply migrations
-npm run db:generate   # Generate Prisma client
-npm run db:studio     # Open Prisma Studio
+bun run db:push       # Push schema changes to database (development)
+bun run db:migrate    # Create and apply migrations
+bun run db:generate   # Generate Prisma client
+bun run db:studio     # Open Prisma Studio
 ```
 
 ## Architecture Overview
@@ -91,7 +96,7 @@ The app uses Prisma with MySQL. Key models:
 - **gauntlet_games**: Gaming challenge system
 - **sessions**: Session management
 
-After modifying `prisma/schema.prisma`, run `npm run db:generate` to regenerate the Prisma client, then `npm run db:push` to sync changes to the database.
+After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate the Prisma client, then `bun run db:push` to sync changes to the database.
 
 ### Styling Conventions
 
