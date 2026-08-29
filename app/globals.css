@@ -1,6 +1,14 @@
 @import "tailwindcss";
+/* Порядок важен: сброс дефолтов → токены дизайнера → наши переопределения */
+@import "../styles/reset-defaults.css";
+@import "../styles/tokens.css";
+@import "../styles/theme.css";
 
 html,
 body {
   min-height: 100%;
+}
+
+body {
+  @apply bg-surface-bg-page text-surface-text-base font-body;
 }
