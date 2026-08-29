@@ -1,6 +1,7 @@
 "use client";
 
 import * as Ariakit from "@ariakit/react";
+import { useRef } from "react";
 import type { ReactNode } from "react";
 import "../Input/input.css";
 import "./select.css";
@@ -282,6 +283,7 @@ function ComboboxSelect(props: SelectProps) {
     },
   });
 
+  const fieldRef = useRef<HTMLDivElement>(null);
   const open = Ariakit.useStoreState(combobox, "open");
   const search = Ariakit.useStoreState(combobox, "value");
   const matches = search
@@ -298,7 +300,7 @@ function ComboboxSelect(props: SelectProps) {
           <LabelMark required={shell.required} />
         </Ariakit.ComboboxLabel>
       )}
-      <div className="input__field select__trigger">
+      <div ref={fieldRef} className="input__field select__trigger">
         <Ariakit.Combobox
           store={combobox}
           disabled={shell.disabled}
@@ -314,6 +316,9 @@ function ComboboxSelect(props: SelectProps) {
         gutter={4}
         sameWidth
         portal
+        // Привязываем выпадашку ко ВСЕМУ полю, а не к внутреннему input,
+        // иначе sameWidth берёт узкую ширину input и смещается вправо.
+        getAnchorRect={() => fieldRef.current?.getBoundingClientRect() ?? null}
         className="dropdown"
       >
         {matches.length > 0 ? (
