@@ -1,0 +1,124 @@
+/*
+  Switch (toggle): нативный <input type=checkbox role=switch> скрыт, визуал —
+  .switch__track с бегунком .switch__thumb. On/off — :checked; интерактив —
+  псевдоклассы. Токены --color-toggle-{off|on}-{track-bg|track-border|thumb}.
+  Смещение бегунка = track-width - thumb - 2*padding.
+*/
+@layer components {
+  .switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: var(--color-surface-text-base);
+  }
+  .switch[data-disabled="true"] {
+    cursor: not-allowed;
+    color: var(--color-surface-text-disabled);
+  }
+
+  .switch__input {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--ryav-toggle-track-width);
+    height: var(--ryav-toggle-track-height);
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .switch__track {
+    position: relative;
+    flex: none;
+    width: var(--ryav-toggle-track-width);
+    height: var(--ryav-toggle-track-height);
+    border: var(--ryav-toggle-border-width) solid var(--sw-border);
+    border-radius: var(--ryav-toggle-track-radius);
+    background: var(--sw-track);
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    --sw-track: var(--color-toggle-off-track-bg-default);
+    --sw-border: var(--color-toggle-off-track-border-default);
+    --sw-thumb: var(--color-toggle-off-thumb-default);
+  }
+  .switch__thumb {
+    position: absolute;
+    top: 50%;
+    left: var(--ryav-toggle-thumb-padding);
+    width: var(--ryav-toggle-thumb-size);
+    height: var(--ryav-toggle-thumb-size);
+    border-radius: var(--ryav-toggle-thumb-radius);
+    background: var(--sw-thumb);
+    transform: translateY(-50%);
+    transition:
+      transform 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  /* off, интерактив */
+  .switch__input:not(:checked):hover ~ .switch__track {
+    --sw-track: var(--color-toggle-off-track-bg-hover);
+    --sw-border: var(--color-toggle-off-track-border-hover);
+    --sw-thumb: var(--color-toggle-off-thumb-hover);
+  }
+  .switch__input:not(:checked):active ~ .switch__track {
+    --sw-track: var(--color-toggle-off-track-bg-pressed);
+    --sw-border: var(--color-toggle-off-track-border-pressed);
+    --sw-thumb: var(--color-toggle-off-thumb-pressed);
+  }
+  .switch__input:not(:checked):focus-visible ~ .switch__track {
+    --sw-track: var(--color-toggle-off-track-bg-focused);
+    --sw-border: var(--color-toggle-off-track-border-focused);
+    box-shadow: 0 0 0 var(--ryav-toggle-focus-ring-width)
+      var(--color-toggle-focus-ring-color);
+  }
+
+  /* on */
+  .switch__input:checked ~ .switch__track {
+    --sw-track: var(--color-toggle-on-track-bg-default);
+    --sw-border: transparent;
+    --sw-thumb: var(--color-toggle-on-thumb-default);
+  }
+  .switch__input:checked ~ .switch__track .switch__thumb {
+    transform: translateY(-50%)
+      translateX(
+        calc(
+          var(--ryav-toggle-track-width) - var(--ryav-toggle-thumb-size) - 2 *
+            var(--ryav-toggle-thumb-padding)
+        )
+      );
+  }
+  .switch__input:checked:hover ~ .switch__track {
+    --sw-track: var(--color-toggle-on-track-bg-hover);
+    --sw-thumb: var(--color-toggle-on-thumb-hover);
+  }
+  .switch__input:checked:active ~ .switch__track {
+    --sw-track: var(--color-toggle-on-track-bg-pressed);
+    --sw-thumb: var(--color-toggle-on-thumb-pressed);
+  }
+  .switch__input:checked:focus-visible ~ .switch__track {
+    box-shadow: 0 0 0 var(--ryav-toggle-focus-ring-width)
+      var(--color-toggle-focus-ring-color);
+  }
+
+  /* disabled */
+  .switch__input:disabled ~ .switch__track {
+    box-shadow: none;
+    --sw-track: var(--color-toggle-off-track-bg-disabled);
+    --sw-border: var(--color-toggle-off-track-border-disabled);
+    --sw-thumb: var(--color-toggle-off-thumb-disabled);
+  }
+  .switch__input:disabled:checked ~ .switch__track {
+    --sw-track: var(--color-toggle-on-track-bg-disabled);
+    --sw-border: transparent;
+    --sw-thumb: var(--color-toggle-on-thumb-disabled);
+  }
+}
