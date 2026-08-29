@@ -1,0 +1,151 @@
+/*
+  Стили инпута из токенов --color-input-* / --ryav-input-*.
+  Состояния:
+    - hover / focused / disabled — нативные псевдоклассы (:hover,
+      :focus-within, :disabled/[data-disabled]);
+    - error — проп (data-error на обёртке), т.к. это не состояние DOM;
+    - filled — НЕ отдельное правило: типизированный текст красится в base
+      (--in-text), а плейсхолдер в placeholder-цвет через ::placeholder,
+      так что «заполнено» получается само собой.
+*/
+@layer components {
+  .input {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--in-gap-y);
+    width: 100%;
+
+    /* набор по умолчанию; правила ниже переопределяют переменные */
+    --in-border: var(--color-input-border-default);
+    --in-icon: var(--color-input-icon-default);
+    --in-label: var(--color-input-label-default);
+    --in-helper: var(--color-input-helper-default);
+    --in-text: var(--color-input-text-value-filled);
+    --in-placeholder: var(--color-input-text-placeholder-default);
+  }
+
+  .input__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ryav-input-required-mark-gap);
+    color: var(--in-label);
+    font-family: var(--font-body);
+    font-size: var(--text-label-md);
+    font-weight: var(--font-weight-medium);
+  }
+  .input__required {
+    color: var(--color-input-required-mark-color);
+  }
+
+  .input__field {
+    display: flex;
+    align-items: center;
+    gap: var(--in-gap);
+    height: var(--in-height);
+    padding-inline: var(--in-padding-x);
+    border: var(--border-width-1) solid var(--in-border);
+    border-radius: var(--in-border-radius);
+    background-color: transparent;
+    cursor: text;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .input__icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--in-icon);
+  }
+  .input__icon > *,
+  .input__icon svg {
+    width: var(--in-icon-size);
+    height: var(--in-icon-size);
+  }
+
+  .input__control {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--in-text);
+    font-family: var(--font-body);
+    font-size: var(--in-font-size);
+    line-height: 1;
+  }
+  .input__control::placeholder {
+    color: var(--in-placeholder);
+  }
+
+  .input__helper {
+    color: var(--in-helper);
+    font-family: var(--font-body);
+    font-size: var(--text-label-sm);
+  }
+
+  /* размеры */
+  .input[data-size="sm"] {
+    --in-height: var(--ryav-input-sm-height);
+    --in-padding-x: var(--ryav-input-sm-padding-x);
+    --in-gap: var(--ryav-input-sm-gap);
+    --in-gap-y: var(--ryav-input-sm-gap-y);
+    --in-icon-size: var(--ryav-input-sm-icon-size);
+    --in-border-radius: var(--ryav-input-sm-border-radius);
+    --in-font-size: var(--text-label-md);
+  }
+  .input[data-size="md"] {
+    --in-height: var(--ryav-input-md-height);
+    --in-padding-x: var(--ryav-input-md-padding-x);
+    --in-gap: var(--ryav-input-md-gap);
+    --in-gap-y: var(--ryav-input-md-gap-y);
+    --in-icon-size: var(--ryav-input-md-icon-size);
+    --in-border-radius: var(--ryav-input-md-border-radius);
+    --in-font-size: var(--text-body-sm);
+  }
+  .input[data-size="lg"] {
+    --in-height: var(--ryav-input-lg-height);
+    --in-padding-x: var(--ryav-input-lg-padding-x);
+    --in-gap: var(--ryav-input-lg-gap);
+    --in-gap-y: var(--ryav-input-lg-gap-y);
+    --in-icon-size: var(--ryav-input-lg-icon-size);
+    --in-border-radius: var(--ryav-input-lg-border-radius);
+    --in-font-size: var(--text-body-md);
+  }
+
+  /* interactive, вне error/disabled */
+  .input:not([data-error]):not([data-disabled])
+    .input__field:hover:not(:focus-within) {
+    --in-border: var(--color-input-border-hover);
+  }
+  .input:not([data-error]):not([data-disabled]) .input__field:focus-within {
+    --in-border: var(--color-input-border-focused);
+    box-shadow: 0 0 0 var(--ryav-input-focus-ring-width)
+      var(--color-input-focus-ring-color);
+  }
+
+  /* error (проп) */
+  .input[data-error]:not([data-disabled]) {
+    --in-border: var(--color-input-border-error);
+    --in-icon: var(--color-input-icon-error);
+    --in-helper: var(--color-input-helper-error);
+  }
+  .input[data-error]:not([data-disabled]) .input__field:focus-within {
+    --in-border: var(--color-input-border-error-focused);
+    box-shadow: 0 0 0 var(--ryav-input-focus-ring-width)
+      var(--color-input-focus-ring-color);
+  }
+
+  /* disabled */
+  .input[data-disabled] {
+    --in-border: var(--color-input-border-disabled);
+    --in-icon: var(--color-input-icon-disabled);
+    --in-label: var(--color-input-label-disabled);
+    --in-helper: var(--color-input-helper-disabled);
+    --in-text: var(--color-input-text-value-disabled);
+    --in-placeholder: var(--color-input-text-placeholder-disabled);
+  }
+  .input[data-disabled] .input__field {
+    cursor: not-allowed;
+  }
+}
