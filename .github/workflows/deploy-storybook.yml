@@ -3,6 +3,18 @@ name: Deploy Storybook
 on:
   push:
     branches: [main]
+    # Деплоим только когда меняются входные данные Storybook-сборки.
+    paths:
+      - "shared/**"
+      - "features/**"
+      - "styles/**"
+      - ".storybook/**"
+      - "app/fonts.ts"
+      - "app/fonts/**"
+      - "app/globals.css"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/deploy-storybook.yml"
   workflow_dispatch:
 
 # Права для публикации на GitHub Pages
