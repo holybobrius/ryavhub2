@@ -1,0 +1,97 @@
+/*
+  Upload (dropzone): пунктирная область для drag&drop + клик. Состояния —
+  default/hover/drag-over/error/disabled через переменные --dz-*. hover/focus —
+  псевдоклассы; drag-over/error/disabled — data-атрибуты (стейт/пропы).
+  Токены --color-drop-zone-* / --ryav-drop-zone-*.
+*/
+@layer components {
+  .upload {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .upload__zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--ryav-drop-zone-gap);
+    width: 100%;
+    padding: var(--ryav-drop-zone-padding-y) var(--ryav-drop-zone-padding-x);
+    border: var(--ryav-drop-zone-border-width) dashed var(--dz-border);
+    border-radius: var(--ryav-drop-zone-border-radius);
+    background: var(--dz-bg);
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    --dz-border: var(--color-drop-zone-border-default);
+    --dz-bg: var(--color-drop-zone-bg-default);
+    --dz-heading: var(--color-drop-zone-heading-default);
+    --dz-desc: var(--color-drop-zone-description-default);
+    --dz-icon: var(--color-drop-zone-icon-default);
+  }
+
+  .upload__icon {
+    width: var(--ryav-drop-zone-icon-size);
+    height: var(--ryav-drop-zone-icon-size);
+    color: var(--dz-icon);
+  }
+  .upload__heading {
+    font-family: var(--font-body);
+    font-size: var(--text-body-md);
+    font-weight: var(--font-weight-medium);
+    color: var(--dz-heading);
+  }
+  .upload__desc {
+    max-width: 40ch;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: var(--dz-desc);
+  }
+  .upload__error {
+    margin-top: var(--spacing-4);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-drop-zone-error-text);
+  }
+
+  /* hover / focus (вне error/disabled) */
+  .upload:not([data-error]):not([data-disabled]) .upload__zone:hover {
+    --dz-border: var(--color-drop-zone-border-hover);
+    --dz-bg: var(--color-drop-zone-bg-hover);
+  }
+  .upload:not([data-disabled]) .upload__zone:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--ryav-drop-zone-focus-ring-width)
+      var(--color-drop-zone-focus-ring-color);
+    --dz-border: var(--color-drop-zone-border-drag-over);
+  }
+
+  /* drag-over (перетаскивание файла над зоной) */
+  .upload[data-dragging] .upload__zone {
+    --dz-border: var(--color-drop-zone-border-drag-over);
+    --dz-bg: var(--color-drop-zone-bg-drag-over);
+  }
+
+  /* error */
+  .upload[data-error] .upload__zone {
+    --dz-border: var(--color-drop-zone-border-error);
+  }
+
+  /* disabled */
+  .upload[data-disabled] .upload__zone {
+    cursor: not-allowed;
+    box-shadow: none;
+    --dz-border: var(--color-drop-zone-border-disabled);
+    --dz-bg: var(--color-drop-zone-bg-default);
+    --dz-heading: var(--color-drop-zone-heading-disabled);
+    --dz-desc: var(--color-drop-zone-description-disabled);
+    --dz-icon: var(--color-drop-zone-icon-disabled);
+  }
+}

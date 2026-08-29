@@ -106,6 +106,11 @@ Prisma 7 setup: connection URL lives in `prisma.config.ts` (not in the schema), 
 
 After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate the Prisma client, then `bun run db:push` to sync changes to the database.
 
+### Upload (dropzone)
+
+- `Upload` (`shared/ui/Upload`) is a drag&drop zone + click-to-pick (`"use client"`): hidden `<input type=file>` triggered by a button, drag state + size validation in state. States (hover/focus/drag-over/error/disabled) switch `--dz-*` vars; `error` and `disabled` are data-attrs, drag-over is component state. Colors from `--color-drop-zone-*`, dashed border. `maxSize` (bytes) shows a built-in "превышает размер" error; accepted files come back via `onFilesChange`.
+- Not built yet: the selected-files list — `--color-file-item-*` / `--ryav-file-item-*` tokens exist for a future FileItem (name, size, progress bar, remove).
+
 ### Selection controls (Checkbox / Radio / Switch)
 
 - `Checkbox`, `Radio`, `Switch` (`shared/ui/{Checkbox,Radio,Switch}`) are styled native inputs: a visually-hidden `<input>` inside a `<label>` drives state + a11y, a custom visual sibling is styled from tokens. States (hover/pressed/focused/disabled) come from input pseudo-classes via the `~` sibling combinator, switching `--cb-*`/`--rb-*`/`--sw-*` custom properties.
