@@ -1,0 +1,497 @@
+/*
+  Стили кнопки, сгенерированы из токенов --color-button-* / --ryav-button-*.
+  Файл ссылается на токены по ИМЕНИ (var), поэтому переживает ре-экспорт
+  значений из Figma без регенерации. Регенерировать только если дизайнер
+  добавит/уберёт вариант, тип или состояние.
+
+  Состояния — нативные псевдоклассы: :hover, :active (pressed),
+  :focus-visible (focused), :disabled. Никакого JS-стейта.
+*/
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--btn-gap);
+    height: var(--btn-height);
+    padding-inline: var(--btn-padding-x);
+    border-radius: var(--ryav-button-md-border-radius);
+    border: var(--border-width-1) solid var(--btn-border);
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    /* по умолчанию берём default-набор; псевдоклассы переопределяют ниже */
+    --btn-bg: var(--btn-bg-default);
+    --btn-text: var(--btn-text-default);
+    --btn-icon: var(--btn-icon-default);
+    --btn-border: var(--btn-border-default);
+  }
+
+  .btn__icon {
+    display: inline-flex;
+    color: var(--btn-icon);
+  }
+  .btn__icon > *,
+  .btn__icon svg {
+    width: var(--btn-icon-size);
+    height: var(--btn-icon-size);
+  }
+
+  .btn__avatar {
+    display: inline-flex;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+  }
+  .btn__avatar > *,
+  .btn__avatar img {
+    width: var(--btn-icon-size);
+    height: var(--btn-icon-size);
+    object-fit: cover;
+  }
+
+  .btn[data-size="sm"] {
+    --btn-height: var(--ryav-button-sm-height);
+    --btn-padding-x: var(--ryav-button-sm-padding-x);
+    --btn-gap: var(--ryav-button-sm-gap);
+    --btn-icon-size: var(--ryav-button-sm-icon-size);
+    font-size: var(--text-label-md);
+  }
+  .btn[data-size="md"] {
+    --btn-height: var(--ryav-button-md-height);
+    --btn-padding-x: var(--ryav-button-md-padding-x);
+    --btn-gap: var(--ryav-button-md-gap);
+    --btn-icon-size: var(--ryav-button-md-icon-size);
+    font-size: var(--text-body-sm);
+  }
+  .btn[data-size="lg"] {
+    --btn-height: var(--ryav-button-lg-height);
+    --btn-padding-x: var(--ryav-button-lg-padding-x);
+    --btn-gap: var(--ryav-button-lg-gap);
+    --btn-icon-size: var(--ryav-button-lg-icon-size);
+    font-size: var(--text-body-md);
+  }
+  .btn[data-icon-only="true"] {
+    padding-inline: 0;
+  }
+  .btn[data-size="sm"][data-icon-only="true"] {
+    width: var(--ryav-button-icon-only-sm-size);
+  }
+  .btn[data-size="md"][data-icon-only="true"] {
+    width: var(--ryav-button-icon-only-md-size);
+  }
+  .btn[data-size="lg"][data-icon-only="true"] {
+    width: var(--ryav-button-icon-only-lg-size);
+  }
+
+  /* focused: применяем focused-набор + кольцо фокуса */
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--ryav-button-focus-ring-width)
+      var(--color-button-focus-ring-color);
+    --btn-bg: var(--btn-bg-focused);
+    --btn-text: var(--btn-text-focused);
+    --btn-icon: var(--btn-icon-focused);
+    --btn-border: var(--btn-border-focused);
+  }
+  .btn:hover {
+    --btn-bg: var(--btn-bg-hover);
+    --btn-text: var(--btn-text-hover);
+    --btn-icon: var(--btn-icon-hover);
+    --btn-border: var(--btn-border-hover);
+  }
+  .btn:active {
+    --btn-bg: var(--btn-bg-pressed);
+    --btn-text: var(--btn-text-pressed);
+    --btn-icon: var(--btn-icon-pressed);
+    --btn-border: var(--btn-border-pressed);
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    --btn-bg: var(--btn-bg-disabled);
+    --btn-text: var(--btn-text-disabled);
+    --btn-icon: var(--btn-icon-disabled);
+    --btn-border: var(--btn-border-disabled);
+  }
+
+  /* Палитры: каждая связка tone+variant объявляет свой набор по состояниям */
+  .btn[data-tone="primary"][data-variant="filled"] {
+    --btn-bg-default: var(--color-button-primary-filled-bg-default);
+    --btn-text-default: var(--color-button-primary-filled-text-default);
+    --btn-icon-default: var(--color-button-primary-filled-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-primary-filled-bg-hover);
+    --btn-text-hover: var(--color-button-primary-filled-text-hover);
+    --btn-icon-hover: var(--color-button-primary-filled-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-primary-filled-bg-pressed);
+    --btn-text-pressed: var(--color-button-primary-filled-text-pressed);
+    --btn-icon-pressed: var(--color-button-primary-filled-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-primary-filled-bg-focused);
+    --btn-text-focused: var(--color-button-primary-filled-text-focused);
+    --btn-icon-focused: var(--color-button-primary-filled-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-primary-filled-bg-disabled);
+    --btn-text-disabled: var(--color-button-primary-filled-text-disabled);
+    --btn-icon-disabled: var(--color-button-primary-filled-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="primary"][data-variant="outlined"] {
+    --btn-bg-default: transparent;
+    --btn-text-default: var(--color-button-primary-outlined-text-default);
+    --btn-icon-default: var(--color-button-primary-outlined-icon-default);
+    --btn-border-default: var(--color-button-primary-outlined-border-default);
+    --btn-bg-hover: transparent;
+    --btn-text-hover: var(--color-button-primary-outlined-text-hover);
+    --btn-icon-hover: var(--color-button-primary-outlined-icon-hover);
+    --btn-border-hover: var(--color-button-primary-outlined-border-hover);
+    --btn-bg-pressed: transparent;
+    --btn-text-pressed: var(--color-button-primary-outlined-text-pressed);
+    --btn-icon-pressed: var(--color-button-primary-outlined-icon-pressed);
+    --btn-border-pressed: var(--color-button-primary-outlined-border-pressed);
+    --btn-bg-focused: transparent;
+    --btn-text-focused: var(--color-button-primary-outlined-text-focused);
+    --btn-icon-focused: var(--color-button-primary-outlined-icon-focused);
+    --btn-border-focused: var(--color-button-primary-outlined-border-focused);
+    --btn-bg-disabled: transparent;
+    --btn-text-disabled: var(--color-button-primary-outlined-text-disabled);
+    --btn-icon-disabled: var(--color-button-primary-outlined-icon-disabled);
+    --btn-border-disabled: var(--color-button-primary-outlined-border-disabled);
+  }
+  .btn[data-tone="primary"][data-variant="ghost"] {
+    --btn-bg-default: var(--color-button-primary-ghost-bg-default);
+    --btn-text-default: var(--color-button-primary-ghost-text-default);
+    --btn-icon-default: var(--color-button-primary-ghost-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-primary-ghost-bg-hover);
+    --btn-text-hover: var(--color-button-primary-ghost-text-hover);
+    --btn-icon-hover: var(--color-button-primary-ghost-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-primary-ghost-bg-pressed);
+    --btn-text-pressed: var(--color-button-primary-ghost-text-pressed);
+    --btn-icon-pressed: var(--color-button-primary-ghost-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-primary-ghost-bg-focused);
+    --btn-text-focused: var(--color-button-primary-ghost-text-focused);
+    --btn-icon-focused: var(--color-button-primary-ghost-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-primary-ghost-bg-disabled);
+    --btn-text-disabled: var(--color-button-primary-ghost-text-disabled);
+    --btn-icon-disabled: var(--color-button-primary-ghost-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="primary"][data-variant="soft"] {
+    --btn-bg-default: var(--color-button-primary-soft-bg-default);
+    --btn-text-default: var(--color-button-primary-soft-text-default);
+    --btn-icon-default: var(--color-button-primary-soft-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-primary-soft-bg-hover);
+    --btn-text-hover: var(--color-button-primary-soft-text-hover);
+    --btn-icon-hover: var(--color-button-primary-soft-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-primary-soft-bg-pressed);
+    --btn-text-pressed: var(--color-button-primary-soft-text-pressed);
+    --btn-icon-pressed: var(--color-button-primary-soft-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-primary-soft-bg-focused);
+    --btn-text-focused: var(--color-button-primary-soft-text-focused);
+    --btn-icon-focused: var(--color-button-primary-soft-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(
+      --color-button-primary-soft-bg-disabled,
+      var(--color-button-primary-soft-bg-default)
+    );
+    --btn-text-disabled: var(--color-button-primary-soft-text-disabled);
+    --btn-icon-disabled: var(--color-button-primary-soft-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="secondary"][data-variant="filled"] {
+    --btn-bg-default: var(--color-button-secondary-filled-bg-default);
+    --btn-text-default: var(--color-button-secondary-filled-text-default);
+    --btn-icon-default: var(--color-button-secondary-filled-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-secondary-filled-bg-hover);
+    --btn-text-hover: var(--color-button-secondary-filled-text-hover);
+    --btn-icon-hover: var(--color-button-secondary-filled-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-secondary-filled-bg-pressed);
+    --btn-text-pressed: var(--color-button-secondary-filled-text-pressed);
+    --btn-icon-pressed: var(--color-button-secondary-filled-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-secondary-filled-bg-focused);
+    --btn-text-focused: var(--color-button-secondary-filled-text-focused);
+    --btn-icon-focused: var(--color-button-secondary-filled-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-secondary-filled-bg-disabled);
+    --btn-text-disabled: var(--color-button-secondary-filled-text-disabled);
+    --btn-icon-disabled: var(--color-button-secondary-filled-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="secondary"][data-variant="outlined"] {
+    --btn-bg-default: transparent;
+    --btn-text-default: var(--color-button-secondary-outlined-text-default);
+    --btn-icon-default: var(--color-button-secondary-outlined-icon-default);
+    --btn-border-default: var(--color-button-secondary-outlined-border-default);
+    --btn-bg-hover: transparent;
+    --btn-text-hover: var(--color-button-secondary-outlined-text-hover);
+    --btn-icon-hover: var(--color-button-secondary-outlined-icon-hover);
+    --btn-border-hover: var(--color-button-secondary-outlined-border-hover);
+    --btn-bg-pressed: transparent;
+    --btn-text-pressed: var(--color-button-secondary-outlined-text-pressed);
+    --btn-icon-pressed: var(--color-button-secondary-outlined-icon-pressed);
+    --btn-border-pressed: var(--color-button-secondary-outlined-border-pressed);
+    --btn-bg-focused: transparent;
+    --btn-text-focused: var(--color-button-secondary-outlined-text-focused);
+    --btn-icon-focused: var(--color-button-secondary-outlined-icon-focused);
+    --btn-border-focused: var(--color-button-secondary-outlined-border-focused);
+    --btn-bg-disabled: transparent;
+    --btn-text-disabled: var(--color-button-secondary-outlined-text-disabled);
+    --btn-icon-disabled: var(--color-button-secondary-outlined-icon-disabled);
+    --btn-border-disabled: var(
+      --color-button-secondary-outlined-border-disabled
+    );
+  }
+  .btn[data-tone="secondary"][data-variant="ghost"] {
+    --btn-bg-default: var(--color-button-secondary-ghost-bg-default);
+    --btn-text-default: var(--color-button-secondary-ghost-text-default);
+    --btn-icon-default: var(--color-button-secondary-ghost-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-secondary-ghost-bg-hover);
+    --btn-text-hover: var(--color-button-secondary-ghost-text-hover);
+    --btn-icon-hover: var(--color-button-secondary-ghost-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-secondary-ghost-bg-pressed);
+    --btn-text-pressed: var(--color-button-secondary-ghost-text-pressed);
+    --btn-icon-pressed: var(--color-button-secondary-ghost-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-secondary-ghost-bg-focused);
+    --btn-text-focused: var(--color-button-secondary-ghost-text-focused);
+    --btn-icon-focused: var(--color-button-secondary-ghost-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-secondary-ghost-bg-disabled);
+    --btn-text-disabled: var(--color-button-secondary-ghost-text-disabled);
+    --btn-icon-disabled: var(--color-button-secondary-ghost-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="secondary"][data-variant="soft"] {
+    --btn-bg-default: var(--color-button-secondary-soft-bg-default);
+    --btn-text-default: var(--color-button-secondary-soft-text-default);
+    --btn-icon-default: var(--color-button-secondary-soft-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-secondary-soft-bg-hover);
+    --btn-text-hover: var(--color-button-secondary-soft-text-hover);
+    --btn-icon-hover: var(--color-button-secondary-soft-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-secondary-soft-bg-pressed);
+    --btn-text-pressed: var(--color-button-secondary-soft-text-pressed);
+    --btn-icon-pressed: var(--color-button-secondary-soft-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-secondary-soft-bg-focused);
+    --btn-text-focused: var(--color-button-secondary-soft-text-focused);
+    --btn-icon-focused: var(--color-button-secondary-soft-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(
+      --color-button-secondary-soft-bg-disabled,
+      var(--color-button-secondary-soft-bg-default)
+    );
+    --btn-text-disabled: var(--color-button-secondary-soft-text-disabled);
+    --btn-icon-disabled: var(--color-button-secondary-soft-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="tertiary"][data-variant="filled"] {
+    --btn-bg-default: var(--color-button-tertiary-filled-bg-default);
+    --btn-text-default: var(--color-button-tertiary-filled-text-default);
+    --btn-icon-default: var(--color-button-tertiary-filled-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-tertiary-filled-bg-hover);
+    --btn-text-hover: var(--color-button-tertiary-filled-text-hover);
+    --btn-icon-hover: var(--color-button-tertiary-filled-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-tertiary-filled-bg-pressed);
+    --btn-text-pressed: var(--color-button-tertiary-filled-text-pressed);
+    --btn-icon-pressed: var(--color-button-tertiary-filled-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-tertiary-filled-bg-focused);
+    --btn-text-focused: var(--color-button-tertiary-filled-text-focused);
+    --btn-icon-focused: var(--color-button-tertiary-filled-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-tertiary-filled-bg-disabled);
+    --btn-text-disabled: var(--color-button-tertiary-filled-text-disabled);
+    --btn-icon-disabled: var(--color-button-tertiary-filled-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="tertiary"][data-variant="outlined"] {
+    --btn-bg-default: transparent;
+    --btn-text-default: var(--color-button-tertiary-outlined-text-default);
+    --btn-icon-default: var(--color-button-tertiary-outlined-icon-default);
+    --btn-border-default: var(--color-button-tertiary-outlined-border-default);
+    --btn-bg-hover: transparent;
+    --btn-text-hover: var(--color-button-tertiary-outlined-text-hover);
+    --btn-icon-hover: var(--color-button-tertiary-outlined-icon-hover);
+    --btn-border-hover: var(--color-button-tertiary-outlined-border-hover);
+    --btn-bg-pressed: transparent;
+    --btn-text-pressed: var(--color-button-tertiary-outlined-text-pressed);
+    --btn-icon-pressed: var(--color-button-tertiary-outlined-icon-pressed);
+    --btn-border-pressed: var(--color-button-tertiary-outlined-border-pressed);
+    --btn-bg-focused: transparent;
+    --btn-text-focused: var(--color-button-tertiary-outlined-text-focused);
+    --btn-icon-focused: var(--color-button-tertiary-outlined-icon-focused);
+    --btn-border-focused: var(--color-button-tertiary-outlined-border-focused);
+    --btn-bg-disabled: transparent;
+    --btn-text-disabled: var(--color-button-tertiary-outlined-text-disabled);
+    --btn-icon-disabled: var(--color-button-tertiary-outlined-icon-disabled);
+    --btn-border-disabled: var(
+      --color-button-tertiary-outlined-border-disabled
+    );
+  }
+  .btn[data-tone="tertiary"][data-variant="ghost"] {
+    --btn-bg-default: var(--color-button-tertiary-ghost-bg-default);
+    --btn-text-default: var(--color-button-tertiary-ghost-text-default);
+    --btn-icon-default: var(--color-button-tertiary-ghost-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-tertiary-ghost-bg-hover);
+    --btn-text-hover: var(--color-button-tertiary-ghost-text-hover);
+    --btn-icon-hover: var(--color-button-tertiary-ghost-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-tertiary-ghost-bg-pressed);
+    --btn-text-pressed: var(--color-button-tertiary-ghost-text-pressed);
+    --btn-icon-pressed: var(--color-button-tertiary-ghost-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-tertiary-ghost-bg-focused);
+    --btn-text-focused: var(--color-button-tertiary-ghost-text-focused);
+    --btn-icon-focused: var(--color-button-tertiary-ghost-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-tertiary-ghost-bg-disabled);
+    --btn-text-disabled: var(--color-button-tertiary-ghost-text-disabled);
+    --btn-icon-disabled: var(--color-button-tertiary-ghost-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="tertiary"][data-variant="soft"] {
+    --btn-bg-default: var(--color-button-tertiary-soft-bg-default);
+    --btn-text-default: var(--color-button-tertiary-soft-text-default);
+    --btn-icon-default: var(--color-button-tertiary-soft-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-tertiary-soft-bg-hover);
+    --btn-text-hover: var(--color-button-tertiary-soft-text-hover);
+    --btn-icon-hover: var(--color-button-tertiary-soft-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-tertiary-soft-bg-pressed);
+    --btn-text-pressed: var(--color-button-tertiary-soft-text-pressed);
+    --btn-icon-pressed: var(--color-button-tertiary-soft-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-tertiary-soft-bg-focused);
+    --btn-text-focused: var(--color-button-tertiary-soft-text-focused);
+    --btn-icon-focused: var(--color-button-tertiary-soft-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(
+      --color-button-tertiary-soft-bg-disabled,
+      var(--color-button-tertiary-soft-bg-default)
+    );
+    --btn-text-disabled: var(--color-button-tertiary-soft-text-disabled);
+    --btn-icon-disabled: var(--color-button-tertiary-soft-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="error"][data-variant="filled"] {
+    --btn-bg-default: var(--color-button-error-filled-bg-default);
+    --btn-text-default: var(--color-button-error-filled-text-default);
+    --btn-icon-default: var(--color-button-error-filled-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-error-filled-bg-hover);
+    --btn-text-hover: var(--color-button-error-filled-text-hover);
+    --btn-icon-hover: var(--color-button-error-filled-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-error-filled-bg-pressed);
+    --btn-text-pressed: var(--color-button-error-filled-text-pressed);
+    --btn-icon-pressed: var(--color-button-error-filled-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-error-filled-bg-focused);
+    --btn-text-focused: var(--color-button-error-filled-text-focused);
+    --btn-icon-focused: var(--color-button-error-filled-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-error-filled-bg-disabled);
+    --btn-text-disabled: var(--color-button-error-filled-text-disabled);
+    --btn-icon-disabled: var(--color-button-error-filled-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="error"][data-variant="outlined"] {
+    --btn-bg-default: transparent;
+    --btn-text-default: var(--color-button-error-outlined-text-default);
+    --btn-icon-default: var(--color-button-error-outlined-icon-default);
+    --btn-border-default: var(--color-button-error-outlined-border-default);
+    --btn-bg-hover: transparent;
+    --btn-text-hover: var(--color-button-error-outlined-text-hover);
+    --btn-icon-hover: var(--color-button-error-outlined-icon-hover);
+    --btn-border-hover: var(--color-button-error-outlined-border-hover);
+    --btn-bg-pressed: transparent;
+    --btn-text-pressed: var(--color-button-error-outlined-text-pressed);
+    --btn-icon-pressed: var(--color-button-error-outlined-icon-pressed);
+    --btn-border-pressed: var(--color-button-error-outlined-border-pressed);
+    --btn-bg-focused: transparent;
+    --btn-text-focused: var(--color-button-error-outlined-text-focused);
+    --btn-icon-focused: var(--color-button-error-outlined-icon-focused);
+    --btn-border-focused: var(--color-button-error-outlined-border-focused);
+    --btn-bg-disabled: transparent;
+    --btn-text-disabled: var(--color-button-error-outlined-text-disabled);
+    --btn-icon-disabled: var(--color-button-error-outlined-icon-disabled);
+    --btn-border-disabled: var(--color-button-error-outlined-border-disabled);
+  }
+  .btn[data-tone="error"][data-variant="ghost"] {
+    --btn-bg-default: var(--color-button-error-ghost-bg-default);
+    --btn-text-default: var(--color-button-error-ghost-text-default);
+    --btn-icon-default: var(--color-button-error-ghost-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-error-ghost-bg-hover);
+    --btn-text-hover: var(--color-button-error-ghost-text-hover);
+    --btn-icon-hover: var(--color-button-error-ghost-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-error-ghost-bg-pressed);
+    --btn-text-pressed: var(--color-button-error-ghost-text-pressed);
+    --btn-icon-pressed: var(--color-button-error-ghost-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-error-ghost-bg-focused);
+    --btn-text-focused: var(--color-button-error-ghost-text-focused);
+    --btn-icon-focused: var(--color-button-error-ghost-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(--color-button-error-ghost-bg-disabled);
+    --btn-text-disabled: var(--color-button-error-ghost-text-disabled);
+    --btn-icon-disabled: var(--color-button-error-ghost-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+  .btn[data-tone="error"][data-variant="soft"] {
+    --btn-bg-default: var(--color-button-error-soft-bg-default);
+    --btn-text-default: var(--color-button-error-soft-text-default);
+    --btn-icon-default: var(--color-button-error-soft-icon-default);
+    --btn-border-default: transparent;
+    --btn-bg-hover: var(--color-button-error-soft-bg-hover);
+    --btn-text-hover: var(--color-button-error-soft-text-hover);
+    --btn-icon-hover: var(--color-button-error-soft-icon-hover);
+    --btn-border-hover: transparent;
+    --btn-bg-pressed: var(--color-button-error-soft-bg-pressed);
+    --btn-text-pressed: var(--color-button-error-soft-text-pressed);
+    --btn-icon-pressed: var(--color-button-error-soft-icon-pressed);
+    --btn-border-pressed: transparent;
+    --btn-bg-focused: var(--color-button-error-soft-bg-focused);
+    --btn-text-focused: var(--color-button-error-soft-text-focused);
+    --btn-icon-focused: var(--color-button-error-soft-icon-focused);
+    --btn-border-focused: transparent;
+    --btn-bg-disabled: var(
+      --color-button-error-soft-bg-disabled,
+      var(--color-button-error-soft-bg-default)
+    );
+    --btn-text-disabled: var(--color-button-error-soft-text-disabled);
+    --btn-icon-disabled: var(--color-button-error-soft-icon-disabled);
+    --btn-border-disabled: transparent;
+  }
+}
