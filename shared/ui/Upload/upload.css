@@ -94,4 +94,96 @@
     --dz-desc: var(--color-drop-zone-description-disabled);
     --dz-icon: var(--color-drop-zone-icon-disabled);
   }
+
+  /* список выбранных файлов */
+  .upload__list {
+    list-style: none;
+    margin: var(--spacing-12) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ryav-file-item-gap);
+    padding: var(--ryav-file-item-padding-y) var(--ryav-file-item-padding-x);
+    background: var(--color-file-item-bg);
+    border: var(--ryav-file-item-border-width) solid
+      var(--color-file-item-border-default);
+    border-radius: var(--ryav-file-item-border-radius);
+  }
+  .file-item[data-error="true"] {
+    border-color: var(--color-file-item-border-error);
+  }
+
+  .file-item__icon {
+    flex: none;
+    display: inline-flex;
+    color: var(--color-file-item-icon-color);
+  }
+  .file-item__icon svg {
+    width: var(--ryav-file-item-icon-size);
+    height: var(--ryav-file-item-icon-size);
+  }
+
+  .file-item__content {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ryav-file-item-content-gap);
+  }
+  .file-item__name {
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: var(--color-file-item-name-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .file-item__meta {
+    font-family: var(--font-body);
+    font-size: var(--text-label-sm);
+    color: var(--color-file-item-meta-default);
+  }
+  .file-item[data-error="true"] .file-item__meta {
+    color: var(--color-file-item-meta-error);
+  }
+
+  .file-item__progress {
+    height: var(--ryav-file-item-progress-height);
+    margin-top: var(--ryav-file-item-content-gap);
+    border-radius: var(--ryav-file-item-progress-radius);
+    background: var(--color-file-item-progress-track);
+    overflow: hidden;
+  }
+  .file-item__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-file-item-progress-fill);
+    transition: width 0.2s ease;
+  }
+
+  .file-item__action {
+    flex: none;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-file-item-action-default);
+  }
+  .file-item__action:disabled {
+    cursor: not-allowed;
+  }
+  .file-item[data-error="true"] .file-item__action {
+    color: var(--color-file-item-action-error);
+  }
+  .file-item__action svg {
+    width: var(--ryav-file-item-action-size);
+    height: var(--ryav-file-item-action-size);
+  }
 }

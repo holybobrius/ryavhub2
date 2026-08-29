@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { DragEvent, ReactNode } from "react";
+import { FileItem } from "./FileItem";
 import "./upload.css";
 
 export interface UploadProps {
@@ -56,13 +57,19 @@ export function Upload({
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const [internalError, setInternalError] = useState<string>();
+  const [files, setFiles] = useState<File[]>([]);
 
   const displayError = error ?? internalError;
 
+  const commit = (next: File[]) => {
+    setFiles(next);
+    onFilesChange?.(next);
+  };
+
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList || disabled) return;
-    const files = Array.from(fileList);
-    if (maxSize != null && files.some((f) => f.size > maxSize)) {
+    const incoming = Array.from(fileList);
+    if (maxSize != null && incoming.some((f) => f.size > maxSize)) {
       setInternalError(
         `Файл превышает максимальный размер ${formatMb(maxSize)}`,
       );
@@ -70,9 +77,22 @@ export function Upload({
       setInternalError(undefined);
     }
     const accepted =
-      maxSize != null ? files.filter((f) => f.size <= maxSize) : files;
-    onFilesChange?.(accepted);
+      maxSize != null ? incoming.filter((f) => f.size <= maxSize) : incoming;
+    if (accepted.length === 0) return;
+    // multiple — дозаписываем (без дублей по имени+размеру); иначе заменяем
+    const next = multiple
+      ? [
+          ...files,
+          ...accepted.filter(
+            (a) => !files.some((f) => f.name === a.name && f.size === a.size),
+          ),
+        ]
+      : accepted.slice(0, 1);
+    commit(next);
   };
+
+  const removeFile = (index: number) =>
+    commit(files.filter((_, i) => i !== index));
 
   const onDragOver = (e: DragEvent) => {
     if (disabled) return;
@@ -123,6 +143,19 @@ export function Upload({
         <span className="upload__desc">{description}</span>
         {displayError && <span className="upload__error">{displayError}</span>}
       </button>
+      {files.length > 0 && (
+        <ul className="upload__list">
+          {files.map((file, i) => (
+            <li key={`${file.name}-${file.size}-${i}`}>
+              <FileItem
+                name={file.name}
+                size={file.size}
+                onRemove={disabled ? undefined : () => removeFile(i)}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
