@@ -1,9 +1,4 @@
-import { Geologica } from "next/font/google";
-import { Unbounded } from "next/font/google";
-import Navbar from "./components/navbar/Navbar";
 import "./globals.css";
-import "../styles/theme.css";
-import { Footer } from "./components/footer/Footer";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import "dayjs/locale/ru";
@@ -13,16 +8,6 @@ import { AuthProvider } from "@/lib/providers/AuthProvider";
 dayjs.extend(utc);
 dayjs.locale("ru");
 
-const geologica = Geologica({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-geologica",
-});
-
-const unbounded = Unbounded({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-unbounded",
-});
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -31,12 +16,10 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   return (
-    <html lang="en" className={`${geologica.variable} ${unbounded.variable}`}>
-      <body className="min-h-full flex flex-col">
-        <AuthProvider user={user || null}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer showNavMenu={!!user} />
+    <html lang="ru">
+      <body>
+        <AuthProvider user={user ?? null}>
+          <main>{children}</main>
         </AuthProvider>
       </body>
     </html>
