@@ -1,11 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { DragEvent, ReactNode } from "react";
 import { FileItem } from "./FileItem";
+import { PictureCard } from "./PictureCard";
 import "./upload.css";
 
+export type UploadFileType = "files" | "images";
+
 export interface UploadProps {
+  /** Как показывать выбранное: строки-файлы или сетка превью-картинок. */
+  fileType?: UploadFileType;
   heading?: ReactNode;
   description?: ReactNode;
   multiple?: boolean;
@@ -18,6 +23,12 @@ export interface UploadProps {
   /** Принятые (прошедшие валидацию) файлы. */
   onFilesChange?: (files: File[]) => void;
   className?: string;
+}
+
+// Внутренний элемент: файл + (для картинок) object URL превью.
+interface UploadItem {
+  file: File;
+  url?: string;
 }
 
 const UploadIcon = () => (
@@ -44,6 +55,7 @@ function formatMb(bytes: number) {
 }
 
 export function Upload({
+  fileType = "files",
   heading = "Загрузите файлы",
   description = "Перетащите их в эту область или нажмите для выбора. Можно загружать несколько файлов сразу.",
   multiple,
@@ -54,16 +66,29 @@ export function Upload({
   onFilesChange,
   className,
 }: UploadProps) {
+  const isImages = fileType === "images";
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const [internalError, setInternalError] = useState<string>();
-  const [files, setFiles] = useState<File[]>([]);
+  const [items, setItems] = useState<UploadItem[]>([]);
 
   const displayError = error ?? internalError;
 
-  const commit = (next: File[]) => {
-    setFiles(next);
-    onFilesChange?.(next);
+  // Ревокаем все object URL при размонтировании (ref обновляем в эффекте,
+  // писать в ref во время рендера нельзя).
+  const itemsRef = useRef(items);
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
+  useEffect(() => {
+    return () => {
+      itemsRef.current.forEach((it) => it.url && URL.revokeObjectURL(it.url));
+    };
+  }, []);
+
+  const commit = (next: UploadItem[]) => {
+    setItems(next);
+    onFilesChange?.(next.map((it) => it.file));
   };
 
   const handleFiles = (fileList: FileList | null) => {
@@ -79,20 +104,30 @@ export function Upload({
     const accepted =
       maxSize != null ? incoming.filter((f) => f.size <= maxSize) : incoming;
     if (accepted.length === 0) return;
-    // multiple — дозаписываем (без дублей по имени+размеру); иначе заменяем
-    const next = multiple
-      ? [
-          ...files,
-          ...accepted.filter(
-            (a) => !files.some((f) => f.name === a.name && f.size === a.size),
-          ),
-        ]
-      : accepted.slice(0, 1);
-    commit(next);
+
+    const isDup = (f: File, list: UploadItem[]) =>
+      list.some((it) => it.file.name === f.name && it.file.size === f.size);
+
+    const base = multiple ? items : [];
+    if (!multiple) base.forEach((it) => it.url && URL.revokeObjectURL(it.url));
+
+    const fresh: UploadItem[] = accepted
+      .filter((f) => !isDup(f, base))
+      .map((file) => ({
+        file,
+        url: isImages ? URL.createObjectURL(file) : undefined,
+      }));
+
+    commit(multiple ? [...base, ...fresh] : fresh.slice(0, 1));
   };
 
-  const removeFile = (index: number) =>
-    commit(files.filter((_, i) => i !== index));
+  const removeFile = (index: number) => {
+    const target = items[index];
+    if (target?.url) URL.revokeObjectURL(target.url);
+    commit(items.filter((_, i) => i !== index));
+  };
+
+  const resolvedAccept = accept ?? (isImages ? "image/*" : undefined);
 
   const onDragOver = (e: DragEvent) => {
     if (disabled) return;
@@ -122,7 +157,7 @@ export function Upload({
         type="file"
         hidden
         multiple={multiple}
-        accept={accept}
+        accept={resolvedAccept}
         disabled={disabled}
         onChange={(e) => handleFiles(e.target.files)}
       />
@@ -143,19 +178,33 @@ export function Upload({
         <span className="upload__desc">{description}</span>
         {displayError && <span className="upload__error">{displayError}</span>}
       </button>
-      {files.length > 0 && (
-        <ul className="upload__list">
-          {files.map((file, i) => (
-            <li key={`${file.name}-${file.size}-${i}`}>
-              <FileItem
-                name={file.name}
-                size={file.size}
-                onRemove={disabled ? undefined : () => removeFile(i)}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+
+      {items.length > 0 &&
+        (isImages ? (
+          <ul className="upload__grid">
+            {items.map((it, i) => (
+              <li key={`${it.file.name}-${it.file.size}-${i}`}>
+                <PictureCard
+                  src={it.url ?? ""}
+                  alt={it.file.name}
+                  onRemove={disabled ? undefined : () => removeFile(i)}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="upload__list">
+            {items.map((it, i) => (
+              <li key={`${it.file.name}-${it.file.size}-${i}`}>
+                <FileItem
+                  name={it.file.name}
+                  size={it.file.size}
+                  onRemove={disabled ? undefined : () => removeFile(i)}
+                />
+              </li>
+            ))}
+          </ul>
+        ))}
     </div>
   );
 }

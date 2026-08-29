@@ -11,6 +11,7 @@ const meta: Meta<typeof Upload> = {
   tags: ["autodocs"],
   parameters: { layout: "padded" },
   argTypes: {
+    fileType: { control: "inline-radio", options: ["files", "images"] },
     disabled: { control: "boolean" },
     multiple: { control: "boolean" },
     error: { control: "text" },
@@ -33,6 +34,11 @@ export const States: Story = {
       <Upload disabled />
     </div>
   ),
+};
+
+export const Images: Story = {
+  name: "Картинки (сетка превью)",
+  args: { fileType: "images", multiple: true },
 };
 
 export const WithMaxSize: Story = {

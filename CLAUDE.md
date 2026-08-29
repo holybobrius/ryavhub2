@@ -109,7 +109,7 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
 ### Upload (dropzone)
 
 - `Upload` (`shared/ui/Upload`) is a drag&drop zone + click-to-pick (`"use client"`): hidden `<input type=file>` triggered by a button, drag state + size validation in state. States (hover/focus/drag-over/error/disabled) switch `--dz-*` vars; `error` and `disabled` are data-attrs, drag-over is component state. Colors from `--color-drop-zone-*`, dashed border. `maxSize` (bytes) shows a built-in "превышает размер" error; accepted files come back via `onFilesChange`.
-- `Upload` tracks selected files in state and renders a list of `FileItem` (also exported) below the zone; remove via the item action. `FileItem` (`--color-file-item-*` / `--ryav-file-item-*`) shows icon, name, meta (size/error), optional progress bar, and a remove button.
+- `Upload` has a `fileType` prop: `"files"` (default) renders a `FileItem` row list, `"images"` renders a grid of `PictureCard` thumbnails (128px, object URLs revoked on remove/unmount; `accept` defaults to image/*). Both track selected files in state; remove via the item/card action. `FileItem` (`--color-file-item-*`) shows icon/name/meta/progress/remove; `PictureCard` (`--color-picture-card-*`) shows a thumbnail with progress overlay (%), error overlay, and remove-on-hover.
 
 ### Selection controls (Checkbox / Radio / Switch)
 
