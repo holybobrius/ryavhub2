@@ -106,6 +106,12 @@ Prisma 7 setup: connection URL lives in `prisma.config.ts` (not in the schema), 
 
 After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate the Prisma client, then `bun run db:push` to sync changes to the database.
 
+### Selection controls (Checkbox / Radio / Switch)
+
+- `Checkbox`, `Radio`, `Switch` (`shared/ui/{Checkbox,Radio,Switch}`) are styled native inputs: a visually-hidden `<input>` inside a `<label>` drives state + a11y, a custom visual sibling is styled from tokens. States (hover/pressed/focused/disabled) come from input pseudo-classes via the `~` sibling combinator, switching `--cb-*`/`--rb-*`/`--sw-*` custom properties.
+- `Checkbox` is `"use client"` (indeterminate is a DOM property set via ref; CSS uses the native `:indeterminate` pseudo-class). `Radio` and `Switch` are server-compatible.
+- Radios group via a shared native `name`. Switch is `<input type=checkbox role=switch>`.
+
 ### Select & headless primitives
 
 - `Select` (`shared/ui/Select`) is built on **Ariakit** (`@ariakit/react`) — headless a11y/keyboard/positioning, styled with our tokens. Modes: single, `searchable`, `multiple` (checkboxes), `multiple` + `tags`. The trigger reuses the Input field visual (imports `../Input/input.css`; wrapper is a `<div class="input select">`). Dropdown/options styled from `--color-dropdown-*` / `--color-menu-item-*` / `--ryav-menu-*` in `shared/ui/Select/select.css`.

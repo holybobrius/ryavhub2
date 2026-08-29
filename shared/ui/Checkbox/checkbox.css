@@ -1,0 +1,121 @@
+/*
+  Checkbox: нативный <input type=checkbox> скрыт, визуал — .checkbox__box.
+  Состояния — псевдоклассы инпута через соседний селектор (~). Три значения:
+  unchecked / checked (:checked) / indeterminate (:indeterminate — нативный
+  псевдокласс, DOM-свойство ставим из React по ref).
+*/
+@layer components {
+  .checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: var(--color-surface-text-base);
+  }
+  .checkbox[data-disabled="true"] {
+    cursor: not-allowed;
+    color: var(--color-surface-text-disabled);
+  }
+
+  .checkbox__input {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--ryav-checkbox-size);
+    height: var(--ryav-checkbox-size);
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .checkbox__box {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ryav-checkbox-size);
+    height: var(--ryav-checkbox-size);
+    border: var(--ryav-checkbox-border-width) solid var(--cb-border);
+    border-radius: var(--ryav-checkbox-border-radius);
+    background: var(--cb-bg);
+    color: var(--cb-ind);
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    --cb-bg: var(--color-checkbox-unchecked-bg-default);
+    --cb-border: var(--color-checkbox-unchecked-border-default);
+    --cb-ind: var(--color-checkbox-checked-indicator-default);
+  }
+  .checkbox__check,
+  .checkbox__dash {
+    display: none;
+    width: var(--ryav-checkbox-icon-size);
+    height: var(--ryav-checkbox-icon-size);
+  }
+
+  /* unchecked, интерактив */
+  .checkbox__input:not(:checked):not(:indeterminate):hover ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-unchecked-bg-hover);
+    --cb-border: var(--color-checkbox-unchecked-border-hover);
+  }
+  .checkbox__input:not(:checked):not(:indeterminate):active ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-unchecked-bg-pressed);
+    --cb-border: var(--color-checkbox-unchecked-border-pressed);
+  }
+  .checkbox__input:not(:checked):not(:indeterminate):focus-visible
+    ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-unchecked-bg-focused);
+    --cb-border: var(--color-checkbox-unchecked-border-focused);
+    box-shadow: 0 0 0 var(--ryav-checkbox-focus-ring-width)
+      var(--color-checkbox-focus-ring-color);
+  }
+
+  /* checked / indeterminate */
+  .checkbox__input:checked ~ .checkbox__box,
+  .checkbox__input:indeterminate ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-checked-bg-default);
+    --cb-border: transparent;
+  }
+  .checkbox__input:checked:hover ~ .checkbox__box,
+  .checkbox__input:indeterminate:hover ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-checked-bg-hover);
+  }
+  .checkbox__input:checked:active ~ .checkbox__box,
+  .checkbox__input:indeterminate:active ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-checked-bg-pressed);
+  }
+  .checkbox__input:checked:focus-visible ~ .checkbox__box,
+  .checkbox__input:indeterminate:focus-visible ~ .checkbox__box {
+    box-shadow: 0 0 0 var(--ryav-checkbox-focus-ring-width)
+      var(--color-checkbox-focus-ring-color);
+  }
+
+  /* индикаторы */
+  .checkbox__input:checked:not(:indeterminate)
+    ~ .checkbox__box
+    .checkbox__check {
+    display: block;
+  }
+  .checkbox__input:indeterminate ~ .checkbox__box .checkbox__dash {
+    display: block;
+  }
+
+  /* disabled — последним, побеждает */
+  .checkbox__input:disabled ~ .checkbox__box {
+    box-shadow: none;
+    --cb-bg: var(--color-checkbox-unchecked-bg-disabled);
+    --cb-border: var(--color-checkbox-unchecked-border-disabled);
+    --cb-ind: var(--color-checkbox-checked-indicator-disabled);
+  }
+  .checkbox__input:disabled:checked ~ .checkbox__box,
+  .checkbox__input:disabled:indeterminate ~ .checkbox__box {
+    --cb-bg: var(--color-checkbox-checked-bg-disabled);
+    --cb-border: transparent;
+  }
+}
