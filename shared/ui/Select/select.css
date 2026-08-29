@@ -1,0 +1,198 @@
+/*
+  Select: триггер переиспользует визуал поля из input.css (.input / .input__field
+  / .input__label / .input__helper — те же рамка, состояния, кольцо фокуса).
+  Здесь — только специфика: сам триггер-кнопка, выпадашка (--*-dropdown-*) и
+  пункты меню (--color-menu-item-* / --ryav-menu-*).
+*/
+@layer components {
+  .select__trigger {
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    color: var(--in-text);
+    font-family: var(--font-body);
+    font-size: var(--in-font-size);
+  }
+  .select__trigger:disabled {
+    cursor: not-allowed;
+  }
+
+  .select__value {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .select__value[data-placeholder] {
+    color: var(--in-placeholder);
+  }
+
+  .select__chevron {
+    flex: none;
+    width: var(--in-icon-size);
+    height: var(--in-icon-size);
+    color: var(--in-icon);
+    transition: transform 0.15s ease;
+  }
+  .select[data-open] .select__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* теги в триггере (мульти-теги) */
+  .select__tags {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+  }
+  .select__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    height: var(--spacing-28);
+    padding-inline: var(--spacing-8);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface-fill-secondary);
+    color: var(--color-surface-text-secondary);
+    font-size: var(--text-label-sm);
+  }
+  .select__tag-icon {
+    display: inline-flex;
+    color: var(--color-surface-icon-tertiary);
+  }
+  .select__tag-icon svg,
+  .select__tag-icon > * {
+    width: var(--ryav-icon-size-sm);
+    height: var(--ryav-icon-size-sm);
+  }
+  .select__tag-remove {
+    display: inline-flex;
+    cursor: pointer;
+    color: var(--color-surface-icon-tertiary);
+  }
+  .select__tag-remove svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* выпадашка */
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ryav-dropdown-gap);
+    padding: var(--ryav-dropdown-padding);
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--color-dropdown-bg);
+    border: var(--border-width-1) solid var(--color-dropdown-border);
+    border-radius: var(--ryav-dropdown-border-radius);
+    z-index: 50;
+  }
+
+  .dropdown__search {
+    height: var(--ryav-input-md-height);
+    margin-bottom: var(--ryav-dropdown-gap);
+    padding-inline: var(--ryav-input-md-padding-x);
+    border: var(--border-width-1) solid var(--color-input-border-default);
+    border-radius: var(--radius-xs);
+    background: transparent;
+    color: var(--color-surface-text-base);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    outline: none;
+  }
+  .dropdown__search::placeholder {
+    color: var(--color-surface-text-placeholder);
+  }
+  .dropdown__search:focus-visible {
+    border-color: var(--color-surface-border-focus);
+  }
+
+  .dropdown__empty {
+    padding: var(--ryav-menu-item-padding-x);
+    color: var(--color-surface-text-tertiary);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+  }
+
+  /* пункт меню */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ryav-menu-item-gap);
+    height: var(--ryav-menu-item-height);
+    padding-inline: var(--ryav-menu-item-padding-x);
+    border-radius: var(--ryav-menu-item-border-radius);
+    background: var(--color-menu-item-bg-default);
+    color: var(--color-menu-item-text-default);
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    cursor: pointer;
+    user-select: none;
+    scroll-margin: var(--ryav-dropdown-padding);
+  }
+  .menu-item:hover {
+    background: var(--color-menu-item-bg-hover);
+  }
+  /* активный по клавиатуре пункт (Ariakit проставляет data-active-item) */
+  .menu-item[data-active-item] {
+    background: var(--color-menu-item-bg-focused);
+    color: var(--color-menu-item-text-focused);
+  }
+  .menu-item[aria-selected="true"],
+  .menu-item[data-active-item][aria-selected="true"] {
+    background: var(--color-menu-item-bg-selected);
+    color: var(--color-menu-item-text-selected);
+  }
+  .menu-item[aria-disabled="true"] {
+    color: var(--color-menu-item-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .menu-item__icon {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-menu-item-icon-default);
+  }
+  .menu-item[aria-selected="true"] .menu-item__icon {
+    color: var(--color-menu-item-icon-selected);
+  }
+  .menu-item__icon svg,
+  .menu-item__icon > * {
+    width: var(--ryav-menu-item-icon-size);
+    height: var(--ryav-menu-item-icon-size);
+  }
+
+  .menu-item__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* чекбокс для мультивыбора */
+  .menu-item__check {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--spacing-20);
+    height: var(--spacing-20);
+    border: var(--border-width-1) solid var(--color-surface-border-secondary);
+    border-radius: var(--radius-xs);
+    color: transparent;
+  }
+  .menu-item[aria-selected="true"] .menu-item__check {
+    background: var(--color-action-primary-bg-default);
+    border-color: var(--color-action-primary-bg-default);
+    color: var(--color-action-primary-text-on-bg);
+  }
+  .menu-item__check svg {
+    width: 12px;
+    height: 12px;
+  }
+}

@@ -106,6 +106,12 @@ Prisma 7 setup: connection URL lives in `prisma.config.ts` (not in the schema), 
 
 After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate the Prisma client, then `bun run db:push` to sync changes to the database.
 
+### Select & headless primitives
+
+- `Select` (`shared/ui/Select`) is built on **Ariakit** (`@ariakit/react`) — headless a11y/keyboard/positioning, styled with our tokens. Modes: single, `searchable`, `multiple` (checkboxes), `multiple` + `tags`. The trigger reuses the Input field visual (imports `../Input/input.css`; wrapper is a `<div class="input select">`). Dropdown/options styled from `--color-dropdown-*` / `--color-menu-item-*` / `--ryav-menu-*` in `shared/ui/Select/select.css`.
+- Prefer Ariakit for any future overlay/interactive primitive (Combobox, Menu, Dialog, Tooltip) so a11y/positioning stay consistent.
+- Note: `searchable` renders the filter field at the top of the dropdown (Ariakit standard), not typed-in-trigger. Tag removal uses a `role="button"` span (avoids nested `<button>`).
+
 ### Styling Conventions
 
 - Use Tailwind v4 utility classes for layout and styling; no styled-components, no CSS modules

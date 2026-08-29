@@ -27,6 +27,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@ariakit/react": "^0.4.38",
     "@prisma/adapter-mariadb": "7",
     "@prisma/client": "7",
     "dayjs": "^1.11.23",
