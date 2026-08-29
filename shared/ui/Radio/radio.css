@@ -1,0 +1,107 @@
+/*
+  Radio: нативный <input type=radio> скрыт, визуал — .radio__box (круг) с
+  точкой-индикатором .radio__dot. Состояния — псевдоклассы через соседний (~).
+  Токены зеркалят checkbox (--color-radio-* -> --color-checkbox-*).
+*/
+@layer components {
+  .radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+    color: var(--color-surface-text-base);
+  }
+  .radio[data-disabled="true"] {
+    cursor: not-allowed;
+    color: var(--color-surface-text-disabled);
+  }
+
+  .radio__input {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--ryav-radio-size);
+    height: var(--ryav-radio-size);
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .radio__box {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ryav-radio-size);
+    height: var(--ryav-radio-size);
+    border: var(--ryav-radio-border-width) solid var(--rb-border);
+    border-radius: var(--ryav-radio-border-radius);
+    background: var(--rb-bg);
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    --rb-bg: var(--color-radio-unchecked-bg-default);
+    --rb-border: var(--color-radio-unchecked-border-default);
+    --rb-ind: var(--color-radio-checked-indicator-default);
+  }
+  .radio__dot {
+    display: none;
+    width: var(--ryav-radio-dot-size);
+    height: var(--ryav-radio-dot-size);
+    border-radius: var(--radius-full);
+    background: var(--rb-ind);
+  }
+
+  /* unchecked, интерактив */
+  .radio__input:not(:checked):hover ~ .radio__box {
+    --rb-bg: var(--color-radio-unchecked-bg-hover);
+    --rb-border: var(--color-radio-unchecked-border-hover);
+  }
+  .radio__input:not(:checked):active ~ .radio__box {
+    --rb-bg: var(--color-radio-unchecked-bg-pressed);
+    --rb-border: var(--color-radio-unchecked-border-pressed);
+  }
+  .radio__input:not(:checked):focus-visible ~ .radio__box {
+    --rb-bg: var(--color-radio-unchecked-bg-focused);
+    --rb-border: var(--color-radio-unchecked-border-focused);
+    box-shadow: 0 0 0 var(--ryav-radio-focus-ring-width)
+      var(--color-radio-focus-ring-color);
+  }
+
+  /* checked */
+  .radio__input:checked ~ .radio__box {
+    --rb-bg: var(--color-radio-checked-bg-default);
+    --rb-border: transparent;
+  }
+  .radio__input:checked ~ .radio__box .radio__dot {
+    display: block;
+  }
+  .radio__input:checked:hover ~ .radio__box {
+    --rb-bg: var(--color-radio-checked-bg-hover);
+  }
+  .radio__input:checked:active ~ .radio__box {
+    --rb-bg: var(--color-radio-checked-bg-pressed);
+  }
+  .radio__input:checked:focus-visible ~ .radio__box {
+    box-shadow: 0 0 0 var(--ryav-radio-focus-ring-width)
+      var(--color-radio-focus-ring-color);
+  }
+
+  /* disabled */
+  .radio__input:disabled ~ .radio__box {
+    box-shadow: none;
+    --rb-bg: var(--color-radio-unchecked-bg-disabled);
+    --rb-border: var(--color-radio-unchecked-border-disabled);
+    --rb-ind: var(--color-radio-checked-indicator-disabled);
+  }
+  .radio__input:disabled:checked ~ .radio__box {
+    --rb-bg: var(--color-radio-checked-bg-disabled);
+    --rb-border: transparent;
+  }
+}
