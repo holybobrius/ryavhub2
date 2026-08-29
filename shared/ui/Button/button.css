@@ -65,21 +65,21 @@
     --btn-padding-x: var(--ryav-button-sm-padding-x);
     --btn-gap: var(--ryav-button-sm-gap);
     --btn-icon-size: var(--ryav-button-sm-icon-size);
-    font-size: var(--text-label-md);
+    font-size: var(--text-body-sm);
   }
   .btn[data-size="md"] {
     --btn-height: var(--ryav-button-md-height);
     --btn-padding-x: var(--ryav-button-md-padding-x);
     --btn-gap: var(--ryav-button-md-gap);
     --btn-icon-size: var(--ryav-button-md-icon-size);
-    font-size: var(--text-body-sm);
+    font-size: var(--text-body-md);
   }
   .btn[data-size="lg"] {
     --btn-height: var(--ryav-button-lg-height);
     --btn-padding-x: var(--ryav-button-lg-padding-x);
     --btn-gap: var(--ryav-button-lg-gap);
     --btn-icon-size: var(--ryav-button-lg-icon-size);
-    font-size: var(--text-body-md);
+    font-size: var(--text-body-lg);
   }
   .btn[data-icon-only="true"] {
     padding-inline: 0;

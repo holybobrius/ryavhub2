@@ -92,7 +92,7 @@
     --in-gap-y: var(--ryav-input-sm-gap-y);
     --in-icon-size: var(--ryav-input-sm-icon-size);
     --in-border-radius: var(--ryav-input-sm-border-radius);
-    --in-font-size: var(--text-label-md);
+    --in-font-size: var(--text-body-sm);
   }
   .input[data-size="md"] {
     --in-height: var(--ryav-input-md-height);
@@ -101,7 +101,7 @@
     --in-gap-y: var(--ryav-input-md-gap-y);
     --in-icon-size: var(--ryav-input-md-icon-size);
     --in-border-radius: var(--ryav-input-md-border-radius);
-    --in-font-size: var(--text-body-sm);
+    --in-font-size: var(--text-body-md);
   }
   .input[data-size="lg"] {
     --in-height: var(--ryav-input-lg-height);
@@ -110,7 +110,7 @@
     --in-gap-y: var(--ryav-input-lg-gap-y);
     --in-icon-size: var(--ryav-input-lg-icon-size);
     --in-border-radius: var(--ryav-input-lg-border-radius);
-    --in-font-size: var(--text-body-md);
+    --in-font-size: var(--text-body-lg);
   }
 
   /* interactive, вне error/disabled */
