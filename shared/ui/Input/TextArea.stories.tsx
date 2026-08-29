@@ -24,6 +24,8 @@ const meta: Meta<typeof Input.TextArea> = {
     disabled: { control: "boolean" },
     required: { control: "boolean" },
     rows: { control: { type: "number", min: 2, max: 12 } },
+    showCount: { control: "boolean" },
+    maxLength: { control: "number" },
     label: { control: "text" },
     placeholder: { control: "text" },
     helperText: { control: "text" },
@@ -40,6 +42,18 @@ export const Playground: Story = {
     helperText: "Helper Text",
     size: "md",
     rows: 3,
+  },
+};
+
+export const Counter: Story = {
+  name: "Счётчик символов",
+  args: {
+    label: "Отзыв",
+    placeholder: "Placeholder",
+    helperText: "Helper Text",
+    showCount: true,
+    maxLength: 280,
+    defaultValue: "Съешь ещё этих мягких булок",
   },
 };
 

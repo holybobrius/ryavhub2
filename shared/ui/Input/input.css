@@ -84,6 +84,21 @@
     font-size: var(--text-label-sm);
   }
 
+  .input__footer {
+    display: flex;
+    align-items: baseline;
+    gap: var(--in-gap);
+  }
+  .input__counter {
+    /* цвет совпадает с helper: токены --color-textarea-counter-* === helper */
+    margin-left: auto;
+    flex: none;
+    color: var(--in-helper);
+    font-family: var(--font-body);
+    font-size: var(--text-label-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
   /* размеры */
   .input[data-size="sm"] {
     --in-height: var(--ryav-input-sm-height);
