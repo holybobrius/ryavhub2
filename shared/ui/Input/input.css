@@ -93,6 +93,7 @@
     --in-icon-size: var(--ryav-input-sm-icon-size);
     --in-border-radius: var(--ryav-input-sm-border-radius);
     --in-font-size: var(--text-body-sm);
+    --in-padding-y: var(--ryav-textarea-sm-padding-y);
   }
   .input[data-size="md"] {
     --in-height: var(--ryav-input-md-height);
@@ -102,6 +103,7 @@
     --in-icon-size: var(--ryav-input-md-icon-size);
     --in-border-radius: var(--ryav-input-md-border-radius);
     --in-font-size: var(--text-body-md);
+    --in-padding-y: var(--ryav-textarea-md-padding-y);
   }
   .input[data-size="lg"] {
     --in-height: var(--ryav-input-lg-height);
@@ -111,6 +113,7 @@
     --in-icon-size: var(--ryav-input-lg-icon-size);
     --in-border-radius: var(--ryav-input-lg-border-radius);
     --in-font-size: var(--text-body-lg);
+    --in-padding-y: var(--ryav-textarea-lg-padding-y);
   }
 
   /* interactive, вне error/disabled */
@@ -147,5 +150,19 @@
   }
   .input[data-disabled] .input__field {
     cursor: not-allowed;
+  }
+
+  /* многострочный режим (Input.TextArea): та же рамка, но высота по контенту,
+     контент сверху, вертикальные отступы из --ryav-textarea-*-padding-y */
+  .input[data-multiline] .input__field {
+    height: auto;
+    min-height: var(--in-height);
+    align-items: flex-start;
+    padding-block: var(--in-padding-y);
+  }
+  .input__control--textarea {
+    width: 100%;
+    line-height: 1.5;
+    resize: vertical;
   }
 }
