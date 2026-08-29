@@ -1,3 +1,9 @@
+import { Typography } from "@/shared/ui/Typography";
+
 export default function SavesPage() {
-  return null;
+  return (
+    <Typography.Heading size="xl" as="h1" color="heading">
+      Сейвы
+    </Typography.Heading>
+  );
 }
