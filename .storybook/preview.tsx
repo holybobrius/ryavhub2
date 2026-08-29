@@ -2,6 +2,7 @@ import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 // Тот же модуль шрифтов, что и в приложении (app/fonts.ts) — единый источник.
 import { geologica, ptRootUI } from "../app/fonts";
+import { ryavTheme } from "./theme";
 // Импорт глобальных стилей поднимает всю цепочку @theme: сброс дефолтов Tailwind,
 // токены дизайнера и наши переопределения. Без этой строки классов бы не было.
 import "../app/globals.css";
@@ -11,6 +12,8 @@ const preview: Preview = {
     layout: "centered",
     // Фон задаём декоратором ниже (тёмная тема), дефолтный отключаем.
     backgrounds: { disable: true },
+    // Тёмная тема страниц Docs (обвязка вокруг блоков со стори).
+    docs: { theme: ryavTheme },
   },
   decorators: [
     // Дизайн-система тёмная. На вкладке Docs каждая стори рендерится в
