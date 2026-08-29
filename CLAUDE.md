@@ -23,6 +23,10 @@ bun start
 bun run lint
 bun run lint:fix
 
+# Storybook (design system) — http://localhost:6006
+bun run storybook          # dev server
+bun run build-storybook    # static build
+
 # Format code
 bun run format
 bun run format:check
@@ -39,6 +43,7 @@ bun run db:studio     # Open Prisma Studio
 This is a **Next.js 16 application** with the **App Router**, using **TypeScript**, **Prisma ORM** with MySQL, and **Tailwind CSS v4**. The app follows a feature-based architecture with clear separation between server and client components.
 
 ### Tech Stack
+
 - **Framework**: Next.js 16.0.1 with App Router
 - **Language**: TypeScript 5
 - **Database**: MySQL with Prisma ORM
@@ -88,6 +93,7 @@ This is a **Next.js 16 application** with the **App Router**, using **TypeScript
 ### Database Models
 
 The app uses Prisma with MySQL. Key models:
+
 - **users**: User accounts with gauntlet status
 - **quotes**: User-submitted quotes with upvote/downvote
 - **quote_rankings**: User votes on quotes
@@ -96,20 +102,49 @@ The app uses Prisma with MySQL. Key models:
 - **gauntlet_games**: Gaming challenge system
 - **sessions**: Session management
 
+Prisma 7 setup: connection URL lives in `prisma.config.ts` (not in the schema), MySQL is accessed via the `@prisma/adapter-mariadb` driver adapter, and the client is generated as TypeScript into `lib/generated/prisma/` (gitignored; `postinstall` and `build` run `prisma generate`). Always import `db` from `@/lib/db` — never instantiate `PrismaClient` elsewhere.
+
 After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate the Prisma client, then `bun run db:push` to sync changes to the database.
 
 ### Styling Conventions
 
-- Use Tailwind utility classes for layout and styling
-- Custom theme with CSS custom properties for colors
-- Dark theme by default
-- Shared UI components in `shared/ui/` (Button, Typography, Avatar, etc.)
+- Use Tailwind v4 utility classes for layout and styling; no styled-components, no CSS modules
+- Design tokens live in `styles/`:
+  - `tokens.css` — exported from Figma by the designer, **never edit by hand** (replaced wholesale on re-export)
+  - `reset-defaults.css` — disables Tailwind's built-in palette/spacing/text scales so only design-system tokens exist
+  - `theme.css` — project overrides on top of tokens (font stacks via `next/font`, unit fixes)
+- Spacing tokens are in **pixels**: `p-16` = 16px, `gap-24` = 24px (not Tailwind's default `0.25rem` scale)
+- Prefer semantic tokens (`bg-surface-bg-page`, `text-surface-text-heading`, `bg-action-primary-bg-default`) over primitives (`bg-purple-500`)
+- Typography: `font-heading` (Geologica) / `font-body` (PT Root UI), sizes `text-display-*`, `text-heading-*`, `text-body-*`, `text-label-*`, tracking `tracking-<same-name>`
+- Component-specific dimensions are `--ryav-*` variables, used as arbitrary values: `p-[var(--ryav-button-padding-x)]`
+- Dark theme only
+- Shared UI components in `shared/ui/`
+- Fonts are wired in `app/fonts.ts` (single source for app + Storybook): Geologica via `next/font/google`, PT Root UI via `next/font/local` from `app/fonts/*.woff2`. **Caveat:** PT Root UI ships 300/400/500/700; the `--font-weight-semibold` token (600) has no exact face → browser falls back to 700. Flag to designer if that matters.
+- Typography is a **compound** component: `Typography.Display|Heading|Body|Label` with a `size` prop (`shared/ui/Typography`). `as` (semantic tag) is decoupled from visual size — pass `as="h1"…"h6"` for real headings; default element is `p` (`span` for Label). Weight/color via `weight` and `color` props.
+- Button (`shared/ui/Button`) has 4 axes: `variant` (filled/outlined/ghost/soft), `tone` (primary/secondary/tertiary/error — named `tone` because the native `<button type>` attribute is kept), `size` (sm/md/lg). States (hover/pressed/focused/disabled) are **native pseudo-classes**, not props/JS. Supports `leftIcon`/`rightIcon`/`avatar`; no children ⇒ square icon-only button.
+- State-heavy component styles are a generated CSS file (`shared/ui/Button/button.css`, `@layer components`) that maps `--color-button-*` / `--ryav-button-*` tokens to `--btn-*` custom properties, with pseudo-classes swapping which token feeds each var. It references tokens by name, so it survives Figma value re-exports; regenerate only if the designer adds/removes an axis value. Button font-size per size (sm14/md16/lg18) is an **assumption** — no button font-size token exists.
+- Line-heights are **provisional** (in `styles/theme.css` as `--text-*--line-height`) — the Figma export has none. Replace when the designer provides them.
+- Storybook 10 (`@storybook/nextjs-vite`, Vite builder). Stories live next to components as `*.stories.tsx` under `shared/**` or `features/**`. `.storybook/preview.tsx` imports `app/globals.css` and loads Geologica via `next/font`, so tokens/fonts match the app. Prefer stories for building UI in isolation before wiring into pages.
 
 ### Locale and Language
 
 The app is primarily in **Russian**. When working with dates, use dayjs with Russian locale:
+
 ```typescript
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 dayjs.locale("ru");
 ```
+
+## Working Style: Teach While Building
+
+The project owner has deep experience with React, TypeScript, styled-components and micro-frontends, but is **new to Next.js (App Router), Bun and Tailwind CSS**. This project is deliberately a learning vehicle for those three tools.
+
+When doing any task, explain the reasoning alongside the work — including fundamentals:
+
+- **Why this file / why here**: App Router conventions (`page.tsx`, `layout.tsx`, `loading.tsx`, `route.ts`, dynamic `[id]` segments), what Next.js does with each file.
+- **Why this pattern**: Server vs Client Components, where data fetching lives, when `"use client"` is needed, caching/rendering modes (static vs dynamic), `cookies()`/`headers()` and their consequences.
+- **Why this tool**: Bun vs Node/npm (runtime, package manager, test runner, `bunfig.toml`, `bun.lock`), Tailwind v4 (`@theme`, utility classes vs styled-components mental model, CSS-first config).
+- Draw comparisons to what the owner already knows (styled-components → Tailwind, CRA/Vite SPA → Next.js, Jest → `bun test`).
+
+Keep explanations concise and attached to the actual change being made, not abstract lectures. Communicate in Russian.

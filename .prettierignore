@@ -1,0 +1,7 @@
+lib/generated/
+.next/
+coverage/
+bun.lock
+
+# Экспорт токенов из Figma — не форматируем, заменяется целиком
+styles/tokens.css

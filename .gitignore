@@ -62,3 +62,10 @@ logs
 
 # Environment-specific scripts (user-specific)
 claude_code_zai_env.sh
+
+# Prisma generated client
+/lib/generated/
+
+# Storybook
+storybook-static/
+*storybook.log

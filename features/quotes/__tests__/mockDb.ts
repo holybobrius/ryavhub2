@@ -10,8 +10,15 @@ export const mockQuotes = [
   },
 ];
 
-export const mockRankings = [
-  { id: 1n, quote_id: 2n, created_by: 1n, type: "Upvote" as const },
+type Ranking = {
+  id: bigint;
+  quote_id: bigint;
+  created_by: bigint;
+  type: "Upvote" | "Downvote";
+};
+
+export const mockRankings: Ranking[] = [
+  { id: 1n, quote_id: 2n, created_by: 1n, type: "Upvote" },
 ];
 
 export const mockUsers = [
@@ -25,7 +32,7 @@ export const mockDb = {
   },
   quote_rankings: {
     findMany: mock(() => Promise.resolve(mockRankings)),
-    findFirst: mock(() => Promise.resolve(null)),
+    findFirst: mock((): Promise<Ranking | null> => Promise.resolve(null)),
     create: mock(() => Promise.resolve({ id: 1n })),
     update: mock(() => Promise.resolve(undefined)),
     delete: mock(() => Promise.resolve(undefined)),

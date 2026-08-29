@@ -56,6 +56,6 @@ describe("getBestQuote", () => {
     const result = await getBestQuote();
 
     expect(result).not.toBeNull();
-    expect([1, 2]).toContain(result?.id);
+    expect([1, 2]).toContain(result!.id);
   });
 });
