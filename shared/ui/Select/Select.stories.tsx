@@ -104,7 +104,7 @@ export const MultiTags: Story = {
     helperText: "Helper Text",
     multiple: true,
     tags: true,
-    defaultValue: ["react", "svelte"],
+    defaultValue: ["react", "svelte", "vue", "solid", "angular"],
   },
 };
 

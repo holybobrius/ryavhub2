@@ -195,4 +195,33 @@
     width: 12px;
     height: 12px;
   }
+
+  /* поле поиска прямо в триггере (searchable single) */
+  .select__search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--in-text);
+    font-family: var(--font-body);
+    font-size: var(--in-font-size);
+  }
+  .select__search-input::placeholder {
+    color: var(--in-placeholder);
+  }
+  .select__search-icon {
+    flex: none;
+    width: var(--in-icon-size);
+    height: var(--in-icon-size);
+    color: var(--in-icon);
+  }
+
+  /* мульти-теги: триггер растёт по высоте, теги переносятся */
+  .select[data-tags] .select__trigger {
+    height: auto;
+    min-height: var(--in-height);
+    align-items: center;
+    padding-block: var(--spacing-4);
+  }
 }

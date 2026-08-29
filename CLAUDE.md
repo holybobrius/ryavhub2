@@ -110,7 +110,7 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
 
 - `Select` (`shared/ui/Select`) is built on **Ariakit** (`@ariakit/react`) — headless a11y/keyboard/positioning, styled with our tokens. Modes: single, `searchable`, `multiple` (checkboxes), `multiple` + `tags`. The trigger reuses the Input field visual (imports `../Input/input.css`; wrapper is a `<div class="input select">`). Dropdown/options styled from `--color-dropdown-*` / `--color-menu-item-*` / `--ryav-menu-*` in `shared/ui/Select/select.css`.
 - Prefer Ariakit for any future overlay/interactive primitive (Combobox, Menu, Dialog, Tooltip) so a11y/positioning stay consistent.
-- Note: `searchable` renders the filter field at the top of the dropdown (Ariakit standard), not typed-in-trigger. Tag removal uses a `role="button"` span (avoids nested `<button>`).
+- `searchable` (single only) makes the trigger an editable input you type into to filter (Ariakit Combobox path; combobox operates on the option label, mapped back to value in onChange). Multi/tags use the Select path (chevron, no search). Tag removal uses a `role="button"` span (avoids nested `<button>`); the tags trigger grows in height as tags wrap.
 
 ### Styling Conventions
 
