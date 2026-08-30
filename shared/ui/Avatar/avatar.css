@@ -1,0 +1,235 @@
+/*
+  Стили аватара, сгенерированы из токенов --color-avatar-* / --ryav-avatar-*.
+  Файл ссылается на токены по ИМЕНИ (var), поэтому переживает ре-экспорт
+  значений из Figma. Регенерировать только если дизайнер добавит/уберёт
+  размер, цвет или тип заливки.
+
+  Оси: data-size (16..64), data-shape (circle/square),
+  data-type (soft/filled/tinted) × data-color (12 цветов).
+  Размер буквы-текста (--av-font) токена не имеет — значения провизорные,
+  как line-height'ы; уточнить у дизайнера.
+*/
+@layer components {
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    width: var(--av-size);
+    height: var(--av-size);
+    border-radius: var(--av-radius);
+    background-color: var(--av-bg);
+    color: var(--av-fg);
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold, 700);
+    font-size: var(--av-font);
+    line-height: 1;
+    user-select: none;
+
+    /* дефолт — soft neutral; data-атрибуты переопределяют ниже */
+    --av-bg: var(--color-avatar-soft-neutral-bg);
+    --av-fg: var(--color-avatar-soft-neutral-foreground);
+  }
+
+  .avatar__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar__icon {
+    display: inline-flex;
+    width: var(--av-icon);
+    height: var(--av-icon);
+  }
+  .avatar__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Кольцо-обводка (для стопок аватарок) */
+  .avatar[data-ring] {
+    box-shadow: 0 0 0 var(--ryav-avatar-ring-width)
+      var(--color-avatar-ring-color);
+  }
+
+  /* Форма */
+  .avatar[data-shape="circle"] {
+    --av-radius: var(--ryav-avatar-border-radius-circle);
+  }
+  .avatar[data-shape="square"] {
+    --av-radius: var(--ryav-avatar-border-radius-square);
+  }
+
+  .avatar[data-size="16"] {
+    --av-size: var(--ryav-avatar-16-size);
+    --av-icon: var(--ryav-avatar-16-icon-size);
+    --av-font: 9px;
+  }
+  .avatar[data-size="20"] {
+    --av-size: var(--ryav-avatar-20-size);
+    --av-icon: var(--ryav-avatar-20-icon-size);
+    --av-font: 10px;
+  }
+  .avatar[data-size="24"] {
+    --av-size: var(--ryav-avatar-24-size);
+    --av-icon: var(--ryav-avatar-24-icon-size);
+    --av-font: 12px;
+  }
+  .avatar[data-size="28"] {
+    --av-size: var(--ryav-avatar-28-size);
+    --av-icon: var(--ryav-avatar-28-icon-size);
+    --av-font: 13px;
+  }
+  .avatar[data-size="32"] {
+    --av-size: var(--ryav-avatar-32-size);
+    --av-icon: var(--ryav-avatar-32-icon-size);
+    --av-font: 14px;
+  }
+  .avatar[data-size="40"] {
+    --av-size: var(--ryav-avatar-40-size);
+    --av-icon: var(--ryav-avatar-40-icon-size);
+    --av-font: 18px;
+  }
+  .avatar[data-size="64"] {
+    --av-size: var(--ryav-avatar-64-size);
+    --av-icon: var(--ryav-avatar-64-icon-size);
+    --av-font: 28px;
+  }
+
+  /* Filled: цветная заливка + светлый текст (neutral — исключение) */
+  .avatar[data-type="filled"] {
+    --av-fg: var(--color-avatar-filled-foreground);
+  }
+  .avatar[data-type="filled"][data-color="neutral"] {
+    --av-bg: var(--color-avatar-filled-neutral-bg);
+  }
+  .avatar[data-type="filled"][data-color="primary"] {
+    --av-bg: var(--color-avatar-filled-primary-bg);
+  }
+  .avatar[data-type="filled"][data-color="red"] {
+    --av-bg: var(--color-avatar-filled-red-bg);
+  }
+  .avatar[data-type="filled"][data-color="orange"] {
+    --av-bg: var(--color-avatar-filled-orange-bg);
+  }
+  .avatar[data-type="filled"][data-color="yellow"] {
+    --av-bg: var(--color-avatar-filled-yellow-bg);
+  }
+  .avatar[data-type="filled"][data-color="lime"] {
+    --av-bg: var(--color-avatar-filled-lime-bg);
+  }
+  .avatar[data-type="filled"][data-color="green"] {
+    --av-bg: var(--color-avatar-filled-green-bg);
+  }
+  .avatar[data-type="filled"][data-color="cyan"] {
+    --av-bg: var(--color-avatar-filled-cyan-bg);
+  }
+  .avatar[data-type="filled"][data-color="blue"] {
+    --av-bg: var(--color-avatar-filled-blue-bg);
+  }
+  .avatar[data-type="filled"][data-color="pink"] {
+    --av-bg: var(--color-avatar-filled-pink-bg);
+  }
+  .avatar[data-type="filled"][data-color="magenta"] {
+    --av-bg: var(--color-avatar-filled-magenta-bg);
+  }
+  .avatar[data-type="filled"][data-color="purple"] {
+    --av-bg: var(--color-avatar-filled-purple-bg);
+  }
+  .avatar[data-type="filled"][data-color="neutral"] {
+    --av-fg: var(--color-avatar-filled-neutral-foreground);
+  }
+
+  /* Soft: мягкая полупрозрачная заливка + цветной текст */
+  .avatar[data-type="soft"][data-color="neutral"] {
+    --av-bg: var(--color-avatar-soft-neutral-bg);
+    --av-fg: var(--color-avatar-soft-neutral-foreground);
+  }
+  .avatar[data-type="soft"][data-color="primary"] {
+    --av-bg: var(--color-avatar-soft-primary-bg);
+    --av-fg: var(--color-avatar-soft-primary-foreground);
+  }
+  .avatar[data-type="soft"][data-color="red"] {
+    --av-bg: var(--color-avatar-soft-red-bg);
+    --av-fg: var(--color-avatar-soft-red-foreground);
+  }
+  .avatar[data-type="soft"][data-color="orange"] {
+    --av-bg: var(--color-avatar-soft-orange-bg);
+    --av-fg: var(--color-avatar-soft-orange-foreground);
+  }
+  .avatar[data-type="soft"][data-color="yellow"] {
+    --av-bg: var(--color-avatar-soft-yellow-bg);
+    --av-fg: var(--color-avatar-soft-yellow-foreground);
+  }
+  .avatar[data-type="soft"][data-color="lime"] {
+    --av-bg: var(--color-avatar-soft-lime-bg);
+    --av-fg: var(--color-avatar-soft-lime-foreground);
+  }
+  .avatar[data-type="soft"][data-color="green"] {
+    --av-bg: var(--color-avatar-soft-green-bg);
+    --av-fg: var(--color-avatar-soft-green-foreground);
+  }
+  .avatar[data-type="soft"][data-color="cyan"] {
+    --av-bg: var(--color-avatar-soft-cyan-bg);
+    --av-fg: var(--color-avatar-soft-cyan-foreground);
+  }
+  .avatar[data-type="soft"][data-color="blue"] {
+    --av-bg: var(--color-avatar-soft-blue-bg);
+    --av-fg: var(--color-avatar-soft-blue-foreground);
+  }
+  .avatar[data-type="soft"][data-color="pink"] {
+    --av-bg: var(--color-avatar-soft-pink-bg);
+    --av-fg: var(--color-avatar-soft-pink-foreground);
+  }
+  .avatar[data-type="soft"][data-color="magenta"] {
+    --av-bg: var(--color-avatar-soft-magenta-bg);
+    --av-fg: var(--color-avatar-soft-magenta-foreground);
+  }
+  .avatar[data-type="soft"][data-color="purple"] {
+    --av-bg: var(--color-avatar-soft-purple-bg);
+    --av-fg: var(--color-avatar-soft-purple-foreground);
+  }
+
+  /* Tinted: единый серый фон + цветной текст */
+  .avatar[data-type="tinted"] {
+    --av-bg: var(--color-avatar-tinted-bg);
+  }
+  .avatar[data-type="tinted"][data-color="neutral"] {
+    --av-fg: var(--color-avatar-tinted-neutral-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="primary"] {
+    --av-fg: var(--color-avatar-tinted-primary-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="red"] {
+    --av-fg: var(--color-avatar-tinted-red-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="orange"] {
+    --av-fg: var(--color-avatar-tinted-orange-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="yellow"] {
+    --av-fg: var(--color-avatar-tinted-yellow-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="lime"] {
+    --av-fg: var(--color-avatar-tinted-lime-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="green"] {
+    --av-fg: var(--color-avatar-tinted-green-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="cyan"] {
+    --av-fg: var(--color-avatar-tinted-cyan-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="blue"] {
+    --av-fg: var(--color-avatar-tinted-blue-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="pink"] {
+    --av-fg: var(--color-avatar-tinted-pink-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="magenta"] {
+    --av-fg: var(--color-avatar-tinted-magenta-foreground);
+  }
+  .avatar[data-type="tinted"][data-color="purple"] {
+    --av-fg: var(--color-avatar-tinted-purple-foreground);
+  }
+}
