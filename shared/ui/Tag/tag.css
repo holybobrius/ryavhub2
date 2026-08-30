@@ -1,0 +1,292 @@
+/*
+  Стили тега, сгенерированы из токенов --color-tag-* / --ryav-tag-*.
+  Ссылки на токены по ИМЕНИ (var) — переживает ре-экспорт значений.
+  Регенерировать только при добавлении/удалении цвета или типа.
+
+  Оси: data-type (soft/filled/tinted) × data-color (12 цветов).
+  Крестик (.tag__close) — состояния default/hover/pressed через псевдоклассы,
+  переключающие --tag-close-*. Размер только sm.
+*/
+@layer components {
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ryav-tag-sm-gap);
+    width: fit-content;
+    height: var(--ryav-tag-sm-height);
+    padding-inline: var(--ryav-tag-sm-padding-x);
+    border-radius: var(--ryav-tag-sm-border-radius);
+    background-color: var(--tag-bg);
+    color: var(--tag-fg);
+    font-family: var(--font-body);
+    font-size: var(--text-label-md);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+
+    /* дефолт — soft secondary; data-атрибуты переопределяют ниже */
+    --tag-bg: var(--color-tag-soft-secondary-bg);
+    --tag-fg: var(--color-tag-soft-secondary-foreground);
+    --tag-close: var(--color-tag-soft-secondary-close-default);
+    --tag-close-hover: var(--color-tag-soft-secondary-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-secondary-close-pressed);
+    --tag-count: var(--color-tag-soft-secondary-count);
+  }
+
+  .tag[data-disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .tag__label {
+    display: inline-block;
+  }
+
+  /* Левая иконка — наследует цвет текста (currentColor). */
+  .tag__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: var(--ryav-tag-sm-icon-size);
+    height: var(--ryav-tag-sm-icon-size);
+  }
+  .tag__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Слот аватара (передаётся <Avatar size={16}>). */
+  .tag__avatar {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  /* Счётчик — свой цвет, лёгкий сдвиг вниз (count-down). */
+  .tag__count {
+    position: relative;
+    top: var(--ryav-tag-sm-count-down);
+    color: var(--tag-count);
+  }
+
+  /* Крестик — нативная кнопка, цвет по состояниям. */
+  .tag__close {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: var(--ryav-tag-sm-icon-close-size);
+    height: var(--ryav-tag-sm-icon-close-size);
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--tag-close);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .tag__close svg {
+    width: 100%;
+    height: 100%;
+  }
+  .tag__close:hover {
+    color: var(--tag-close-hover);
+  }
+  .tag__close:active {
+    color: var(--tag-close-pressed);
+  }
+  .tag__close:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Filled: цветной фон + единый светлый текст (secondary — исключение) */
+  .tag[data-type="filled"] {
+    --tag-fg: var(--color-tag-filled-foreground);
+    --tag-close: var(--color-tag-filled-close-default);
+    --tag-close-hover: var(--color-tag-filled-close-hover);
+    --tag-close-pressed: var(--color-tag-filled-close-pressed);
+    --tag-count: var(--color-tag-filled-count);
+  }
+  .tag[data-type="filled"][data-color="secondary"] {
+    --tag-bg: var(--color-tag-filled-bg-secondary);
+  }
+  .tag[data-type="filled"][data-color="primary"] {
+    --tag-bg: var(--color-tag-filled-bg-primary);
+  }
+  .tag[data-type="filled"][data-color="red"] {
+    --tag-bg: var(--color-tag-filled-bg-red);
+  }
+  .tag[data-type="filled"][data-color="orange"] {
+    --tag-bg: var(--color-tag-filled-bg-orange);
+  }
+  .tag[data-type="filled"][data-color="yellow"] {
+    --tag-bg: var(--color-tag-filled-bg-yellow);
+  }
+  .tag[data-type="filled"][data-color="lime"] {
+    --tag-bg: var(--color-tag-filled-bg-lime);
+  }
+  .tag[data-type="filled"][data-color="blue"] {
+    --tag-bg: var(--color-tag-filled-bg-blue);
+  }
+  .tag[data-type="filled"][data-color="cyan"] {
+    --tag-bg: var(--color-tag-filled-bg-cyan);
+  }
+  .tag[data-type="filled"][data-color="green"] {
+    --tag-bg: var(--color-tag-filled-bg-green);
+  }
+  .tag[data-type="filled"][data-color="magenta"] {
+    --tag-bg: var(--color-tag-filled-bg-magenta);
+  }
+  .tag[data-type="filled"][data-color="pink"] {
+    --tag-bg: var(--color-tag-filled-bg-pink);
+  }
+  .tag[data-type="filled"][data-color="purple"] {
+    --tag-bg: var(--color-tag-filled-bg-purple);
+  }
+  .tag[data-type="filled"][data-color="secondary"] {
+    --tag-fg: var(--color-tag-filled-foreground-secondary);
+    --tag-close: var(--color-tag-filled-close-default-secondary);
+    --tag-close-hover: var(--color-tag-filled-close-hover-secondary);
+    --tag-close-pressed: var(--color-tag-filled-close-pressed-secondary);
+    --tag-count: var(--color-tag-filled-count-secondary);
+  }
+
+  /* Soft: всё пер-цветно */
+  .tag[data-type="soft"][data-color="secondary"] {
+    --tag-bg: var(--color-tag-soft-secondary-bg);
+    --tag-fg: var(--color-tag-soft-secondary-foreground);
+    --tag-close: var(--color-tag-soft-secondary-close-default);
+    --tag-close-hover: var(--color-tag-soft-secondary-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-secondary-close-pressed);
+    --tag-count: var(--color-tag-soft-secondary-count);
+  }
+  .tag[data-type="soft"][data-color="primary"] {
+    --tag-bg: var(--color-tag-soft-primary-bg);
+    --tag-fg: var(--color-tag-soft-primary-foreground);
+    --tag-close: var(--color-tag-soft-primary-close-default);
+    --tag-close-hover: var(--color-tag-soft-primary-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-primary-close-pressed);
+    --tag-count: var(--color-tag-soft-primary-count);
+  }
+  .tag[data-type="soft"][data-color="red"] {
+    --tag-bg: var(--color-tag-soft-red-bg);
+    --tag-fg: var(--color-tag-soft-red-foreground);
+    --tag-close: var(--color-tag-soft-red-close-default);
+    --tag-close-hover: var(--color-tag-soft-red-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-red-close-pressed);
+    --tag-count: var(--color-tag-soft-red-count);
+  }
+  .tag[data-type="soft"][data-color="orange"] {
+    --tag-bg: var(--color-tag-soft-orange-bg);
+    --tag-fg: var(--color-tag-soft-orange-foreground);
+    --tag-close: var(--color-tag-soft-orange-close-default);
+    --tag-close-hover: var(--color-tag-soft-orange-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-orange-close-pressed);
+    --tag-count: var(--color-tag-soft-orange-count);
+  }
+  .tag[data-type="soft"][data-color="yellow"] {
+    --tag-bg: var(--color-tag-soft-yellow-bg);
+    --tag-fg: var(--color-tag-soft-yellow-foreground);
+    --tag-close: var(--color-tag-soft-yellow-close-default);
+    --tag-close-hover: var(--color-tag-soft-yellow-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-yellow-close-pressed);
+    --tag-count: var(--color-tag-soft-yellow-count);
+  }
+  .tag[data-type="soft"][data-color="lime"] {
+    --tag-bg: var(--color-tag-soft-lime-bg);
+    --tag-fg: var(--color-tag-soft-lime-foreground);
+    --tag-close: var(--color-tag-soft-lime-close-default);
+    --tag-close-hover: var(--color-tag-soft-lime-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-lime-close-pressed);
+    --tag-count: var(--color-tag-soft-lime-count);
+  }
+  .tag[data-type="soft"][data-color="blue"] {
+    --tag-bg: var(--color-tag-soft-blue-bg);
+    --tag-fg: var(--color-tag-soft-blue-foreground);
+    --tag-close: var(--color-tag-soft-blue-close-default);
+    --tag-close-hover: var(--color-tag-soft-blue-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-blue-close-pressed);
+    --tag-count: var(--color-tag-soft-blue-count);
+  }
+  .tag[data-type="soft"][data-color="cyan"] {
+    --tag-bg: var(--color-tag-soft-cyan-bg);
+    --tag-fg: var(--color-tag-soft-cyan-foreground);
+    --tag-close: var(--color-tag-soft-cyan-close-default);
+    --tag-close-hover: var(--color-tag-soft-cyan-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-cyan-close-pressed);
+    --tag-count: var(--color-tag-soft-cyan-count);
+  }
+  .tag[data-type="soft"][data-color="green"] {
+    --tag-bg: var(--color-tag-soft-green-bg);
+    --tag-fg: var(--color-tag-soft-green-foreground);
+    --tag-close: var(--color-tag-soft-green-close-default);
+    --tag-close-hover: var(--color-tag-soft-green-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-green-close-pressed);
+    --tag-count: var(--color-tag-soft-green-count);
+  }
+  .tag[data-type="soft"][data-color="magenta"] {
+    --tag-bg: var(--color-tag-soft-magenta-bg);
+    --tag-fg: var(--color-tag-soft-magenta-foreground);
+    --tag-close: var(--color-tag-soft-magenta-close-default);
+    --tag-close-hover: var(--color-tag-soft-magenta-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-magenta-close-pressed);
+    --tag-count: var(--color-tag-soft-magenta-count);
+  }
+  .tag[data-type="soft"][data-color="pink"] {
+    --tag-bg: var(--color-tag-soft-pink-bg);
+    --tag-fg: var(--color-tag-soft-pink-foreground);
+    --tag-close: var(--color-tag-soft-pink-close-default);
+    --tag-close-hover: var(--color-tag-soft-pink-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-pink-close-pressed);
+    --tag-count: var(--color-tag-soft-pink-count);
+  }
+  .tag[data-type="soft"][data-color="purple"] {
+    --tag-bg: var(--color-tag-soft-purple-bg);
+    --tag-fg: var(--color-tag-soft-purple-foreground);
+    --tag-close: var(--color-tag-soft-purple-close-default);
+    --tag-close-hover: var(--color-tag-soft-purple-close-hover);
+    --tag-close-pressed: var(--color-tag-soft-purple-close-pressed);
+    --tag-count: var(--color-tag-soft-purple-count);
+  }
+
+  /* Tinted: единый серый фон + единый крестик/счётчик, fg пер-цветный */
+  .tag[data-type="tinted"] {
+    --tag-bg: var(--color-tag-tinted-bg);
+    --tag-close: var(--color-tag-tinted-close-default);
+    --tag-close-hover: var(--color-tag-tinted-close-hover);
+    --tag-close-pressed: var(--color-tag-tinted-close-pressed);
+    --tag-count: var(--color-tag-tinted-count);
+  }
+  .tag[data-type="tinted"][data-color="secondary"] {
+    --tag-fg: var(--color-tag-tinted-foreground-secondary);
+  }
+  .tag[data-type="tinted"][data-color="primary"] {
+    --tag-fg: var(--color-tag-tinted-foreground-primary);
+  }
+  .tag[data-type="tinted"][data-color="red"] {
+    --tag-fg: var(--color-tag-tinted-foreground-red);
+  }
+  .tag[data-type="tinted"][data-color="orange"] {
+    --tag-fg: var(--color-tag-tinted-foreground-orange);
+  }
+  .tag[data-type="tinted"][data-color="yellow"] {
+    --tag-fg: var(--color-tag-tinted-foreground-yellow);
+  }
+  .tag[data-type="tinted"][data-color="lime"] {
+    --tag-fg: var(--color-tag-tinted-foreground-lime);
+  }
+  .tag[data-type="tinted"][data-color="blue"] {
+    --tag-fg: var(--color-tag-tinted-foreground-blue);
+  }
+  .tag[data-type="tinted"][data-color="cyan"] {
+    --tag-fg: var(--color-tag-tinted-foreground-cyan);
+  }
+  .tag[data-type="tinted"][data-color="green"] {
+    --tag-fg: var(--color-tag-tinted-foreground-green);
+  }
+  .tag[data-type="tinted"][data-color="magenta"] {
+    --tag-fg: var(--color-tag-tinted-foreground-magenta);
+  }
+  .tag[data-type="tinted"][data-color="pink"] {
+    --tag-fg: var(--color-tag-tinted-foreground-pink);
+  }
+  .tag[data-type="tinted"][data-color="purple"] {
+    --tag-fg: var(--color-tag-tinted-foreground-purple);
+  }
+}
