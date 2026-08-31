@@ -155,16 +155,20 @@
 
   .menu-item__icon {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: none;
     color: var(--color-menu-item-icon-default);
   }
   .menu-item[aria-selected="true"] .menu-item__icon {
     color: var(--color-menu-item-icon-selected);
   }
+  /* Размер задаёт токен; Icon-примитив ставит size инлайном — перебиваем
+     через !important, иначе иконка из барреля рендерится крупнее и «плывёт». */
   .menu-item__icon svg,
   .menu-item__icon > * {
-    width: var(--ryav-menu-item-icon-size);
-    height: var(--ryav-menu-item-icon-size);
+    width: var(--ryav-menu-item-icon-size) !important;
+    height: var(--ryav-menu-item-icon-size) !important;
   }
 
   .menu-item__label {
