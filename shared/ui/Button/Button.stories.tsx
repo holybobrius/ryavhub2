@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Button } from "./Button";
 import { Typography } from "../Typography";
+import { IconPencil } from "../icons";
 import type { ButtonTone, ButtonVariant } from "./Button";
 
 /**
@@ -32,13 +33,6 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-// Демо-иконка (в проде передаётся реальная из набора иконок).
-const Sparkle = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2z" />
-  </svg>
-);
-
 const DemoAvatar = () => (
   <span
     aria-hidden="true"
@@ -56,8 +50,8 @@ export const Playground: Story = {
     variant: "filled",
     tone: "primary",
     size: "md",
-    leftIcon: <Sparkle />,
-    rightIcon: <Sparkle />,
+    leftIcon: <IconPencil />,
+    rightIcon: <IconPencil />,
   },
 };
 
@@ -123,13 +117,13 @@ export const WithIcons: Story = {
   name: "Иконки и аватар",
   render: () => (
     <div className="flex flex-wrap items-center gap-12">
-      <Button leftIcon={<Sparkle />}>Иконка слева</Button>
-      <Button rightIcon={<Sparkle />}>Иконка справа</Button>
-      <Button leftIcon={<Sparkle />} rightIcon={<Sparkle />}>
+      <Button leftIcon={<IconPencil />}>Иконка слева</Button>
+      <Button rightIcon={<IconPencil />}>Иконка справа</Button>
+      <Button leftIcon={<IconPencil />} rightIcon={<IconPencil />}>
         Обе
       </Button>
       <Button avatar={<DemoAvatar />}>С аватаром</Button>
-      <Button leftIcon={<Sparkle />} aria-label="Только иконка" />
+      <Button leftIcon={<IconPencil />} aria-label="Только иконка" />
     </div>
   ),
 };

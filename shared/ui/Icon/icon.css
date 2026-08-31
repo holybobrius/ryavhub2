@@ -1,0 +1,19 @@
+@layer components {
+  .icon {
+    display: inline-flex;
+    flex: none;
+    /* Цвет наследуется: SVG нарисован на currentColor. */
+    color: inherit;
+  }
+
+  .icon > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Пак stratis-ui-icons экспортирует линейные иконки с багом: в корне svg
+       стоит fill="currentColor", из-за чего замкнутые контуры (карандаш, лупа,
+       корзина) заливаются сплошняком. Гасим заливку — рисуем только stroke.
+       CSS перебивает inline presentation-атрибут fill. */
+    fill: none;
+  }
+}
