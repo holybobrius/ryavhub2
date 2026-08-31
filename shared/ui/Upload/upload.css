@@ -124,9 +124,12 @@
     display: inline-flex;
     color: var(--color-file-item-icon-color);
   }
+  /* Размер задаёт токен; Icon-примитив ставит width/height инлайном,
+     поэтому перебиваем через !important. */
+  .file-item__icon > *,
   .file-item__icon svg {
-    width: var(--ryav-file-item-icon-size);
-    height: var(--ryav-file-item-icon-size);
+    width: var(--ryav-file-item-icon-size) !important;
+    height: var(--ryav-file-item-icon-size) !important;
   }
 
   .file-item__content {
@@ -151,6 +154,9 @@
   }
   .file-item[data-error="true"] .file-item__meta {
     color: var(--color-file-item-meta-error);
+  }
+  .file-item[data-success="true"] .file-item__meta {
+    color: var(--color-file-item-meta-success);
   }
 
   .file-item__progress {

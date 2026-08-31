@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { IconFileAttach } from "../icons";
 import "./upload.css";
 
 export interface FileItemProps {
@@ -9,27 +10,12 @@ export interface FileItemProps {
   progress?: number;
   /** Текст ошибки — красная рамка/мета вместо размера. */
   error?: string;
+  /** Успешная загрузка — зелёная мета, прогресс скрыт. `error` важнее. */
+  success?: boolean;
   icon?: ReactNode;
   onRemove?: () => void;
   className?: string;
 }
-
-const FileIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M14 3v5h5"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const RemoveIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -53,22 +39,34 @@ export function FileItem({
   size,
   progress,
   error,
+  success,
   icon,
   onRemove,
   className,
 }: FileItemProps) {
-  const meta = error ?? (size != null ? formatSize(size) : undefined);
+  // error важнее success; успех подсвечивает мету зелёным.
+  const isSuccess = success && !error;
+  const sizeText = size != null ? formatSize(size) : undefined;
+  let meta: string | undefined;
+  if (error) {
+    meta = error;
+  } else if (isSuccess) {
+    meta = sizeText ? `${sizeText} — Загружено` : "Загружено";
+  } else {
+    meta = sizeText;
+  }
 
   return (
     <div
       className={["file-item", className].filter(Boolean).join(" ")}
       data-error={error ? "true" : undefined}
+      data-success={isSuccess ? "true" : undefined}
     >
-      <span className="file-item__icon">{icon ?? <FileIcon />}</span>
+      <span className="file-item__icon">{icon ?? <IconFileAttach />}</span>
       <div className="file-item__content">
         <span className="file-item__name">{name}</span>
         {meta && <span className="file-item__meta">{meta}</span>}
-        {progress != null && (
+        {progress != null && !isSuccess && (
           <div className="file-item__progress">
             <div
               className="file-item__progress-fill"

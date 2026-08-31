@@ -34,6 +34,7 @@ import {
   suTrash01,
   suSettings,
   suMenu01,
+  suFileAttach01,
 } from "stratis-ui-icons";
 import { makeIcon } from "./makeIcon";
 
@@ -49,6 +50,7 @@ export const IconPencil = makeIcon(suPencil01.data);
 export const IconTrash = makeIcon(suTrash01.data);
 export const IconSettings = makeIcon(suSettings.data);
 export const IconMenu = makeIcon(suMenu01.data);
+export const IconFileAttach = makeIcon(suFileAttach01.data);
 
 // Примитив и фабрика — на случай кастомных/внешних SVG.
 export { Icon, type IconProps } from "../Icon/Icon";
