@@ -42,10 +42,13 @@
     display: inline-flex;
     color: var(--btn-icon);
   }
+  /* Размер иконки задаёт кнопка (sm 16 / md 20 / lg 24). Наш Icon-примитив
+     ставит width/height инлайн-стилем, поэтому перебиваем через !important —
+     иначе иконка из барреля игнорировала бы размер кнопки. */
   .btn__icon > *,
   .btn__icon svg {
-    width: var(--btn-icon-size);
-    height: var(--btn-icon-size);
+    width: var(--btn-icon-size) !important;
+    height: var(--btn-icon-size) !important;
   }
 
   .btn__avatar {
