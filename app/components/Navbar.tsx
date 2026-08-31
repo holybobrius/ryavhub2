@@ -4,20 +4,11 @@ import { IconChevronRight } from "@/shared/ui/icons";
 import type { User } from "@/features/auth/models";
 import { NavLink } from "./NavLink";
 import { UserMenu } from "./UserMenu";
+import { NAV_ITEMS } from "./navItems";
 
 interface NavbarProps {
   user: User | null;
 }
-
-// Навигация показывается только авторизованному (в гостевом виде — лого + Войти).
-const NAV_ITEMS = [
-  { href: "/", label: "Главная" },
-  { href: "/saves", label: "Сейвы" },
-  { href: "/quotes", label: "Цитаты" },
-  { href: "/timeline", label: "Таймлайн" },
-  { href: "/video", label: "Видео" },
-  { href: "/cringepg", label: "КринжПГ" },
-];
 
 /**
  * Верхний навбар приложения. Server-компонент: получает user из layout.

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { geologica, ptRootUI } from "./fonts";
 import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import "dayjs/locale/ru";
@@ -32,6 +33,7 @@ export default async function RootLayout({
           <main className="min-h-screen bg-surface-bg-layout px-40 py-32">
             {children}
           </main>
+          <Footer user={user ?? null} />
         </AuthProvider>
       </body>
     </html>
