@@ -1,0 +1,40 @@
+@layer components {
+  /* Навигационная ссылка навбара: текст без фона, состояния через
+     нативные псевдоклассы (как Button). Активная страница — [data-active]. */
+  .nav-link {
+    --nl-color: var(--color-nav-link-text-default);
+
+    display: inline-flex;
+    align-items: center;
+    padding: var(--ryav-nav-link-padding-y) var(--ryav-nav-link-padding-x);
+    border-radius: var(--radius-xs);
+    color: var(--nl-color);
+    font-family: var(--font-body);
+    font-size: var(--text-body-md);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    --nl-color: var(--color-nav-link-text-hover);
+  }
+  .nav-link:active {
+    --nl-color: var(--color-nav-link-text-pressed);
+  }
+
+  /* Активная страница — белый; ставим после hover/active, чтобы активная
+     ссылка оставалась выделенной даже под курсором. */
+  .nav-link[data-active="true"] {
+    --nl-color: var(--color-nav-link-text-active);
+  }
+
+  /* Фокус с клавиатуры — кольцо + белый текст; последним, чтобы кольцо
+     показывалось поверх любого состояния. */
+  .nav-link:focus-visible {
+    --nl-color: var(--color-nav-link-text-focused);
+    outline: none;
+    box-shadow: 0 0 0 var(--ryav-nav-link-focus-ring-width)
+      var(--color-nav-link-focus-ring-color);
+  }
+}

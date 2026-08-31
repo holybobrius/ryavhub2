@@ -1,6 +1,6 @@
 import "./globals.css";
-import Link from "next/link";
 import { geologica, ptRootUI } from "./fonts";
+import { Navbar } from "./components/Navbar";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import "dayjs/locale/ru";
@@ -26,15 +26,12 @@ export default async function RootLayout({
     <html lang="ru" className={`${geologica.variable} ${ptRootUI.variable}`}>
       <body>
         <AuthProvider user={user ?? null}>
-          {/* Временная навигация до появления дизайн-системы */}
-          <nav className="flex gap-24 px-40 py-16 text-body-md text-nav-link-text-default">
-            <Link href="/">Главная</Link>
-            <Link href="/quotes">Цитаты</Link>
-            <Link href="/timeline">Таймлайн</Link>
-            <Link href="/saves">Сейвы</Link>
-            {user && <span className="ml-auto">{user.name}</span>}
-          </nav>
-          <main className="px-40 py-32">{children}</main>
+          <Navbar user={user ?? null} />
+          {/* Фон контента на ступень светлее страницы/навбара (bg-page),
+              чтобы визуально отделить основную область. */}
+          <main className="min-h-screen bg-surface-bg-layout px-40 py-32">
+            {children}
+          </main>
         </AuthProvider>
       </body>
     </html>
