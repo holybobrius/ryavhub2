@@ -25,7 +25,6 @@ describe("getBestQuote", () => {
 
   it("should return null when no quotes exist", async () => {
     mockDb.quotes.findMany.mockResolvedValueOnce([]);
-    mockDb.quote_rankings.findMany.mockResolvedValueOnce([]);
 
     const result = await getBestQuote();
 
@@ -34,11 +33,24 @@ describe("getBestQuote", () => {
 
   it("should return quote with highest score", async () => {
     mockDb.quotes.findMany.mockResolvedValueOnce([
-      { id: 1n, quote: "Quote 1", quote_by: 1n, date: new Date() },
-      { id: 2n, quote: "Quote 2", quote_by: 2n, date: new Date() },
-    ]);
-    mockDb.quote_rankings.findMany.mockResolvedValueOnce([
-      { id: 1n, quote_id: 1n, created_by: 1n, type: "Upvote" as const },
+      {
+        id: 1n,
+        quote: "Quote 1",
+        quote_by: 1n,
+        date: new Date(),
+        users_quotes_quote_byTousers: { id: 1n, name: "User 1" },
+        quote_rankings: [
+          { id: 1n, quote_id: 1n, created_by: 1n, type: "Upvote" as const },
+        ],
+      },
+      {
+        id: 2n,
+        quote: "Quote 2",
+        quote_by: 2n,
+        date: new Date(),
+        users_quotes_quote_byTousers: { id: 2n, name: "User 2" },
+        quote_rankings: [],
+      },
     ]);
 
     const result = await getBestQuote();
@@ -48,10 +60,23 @@ describe("getBestQuote", () => {
 
   it("should return a quote when all scores are equal", async () => {
     mockDb.quotes.findMany.mockResolvedValueOnce([
-      { id: 1n, quote: "Quote 1", quote_by: 1n, date: new Date() },
-      { id: 2n, quote: "Quote 2", quote_by: 2n, date: new Date() },
+      {
+        id: 1n,
+        quote: "Quote 1",
+        quote_by: 1n,
+        date: new Date(),
+        users_quotes_quote_byTousers: { id: 1n, name: "User 1" },
+        quote_rankings: [],
+      },
+      {
+        id: 2n,
+        quote: "Quote 2",
+        quote_by: 2n,
+        date: new Date(),
+        users_quotes_quote_byTousers: { id: 2n, name: "User 2" },
+        quote_rankings: [],
+      },
     ]);
-    mockDb.quote_rankings.findMany.mockResolvedValueOnce([]);
 
     const result = await getBestQuote();
 

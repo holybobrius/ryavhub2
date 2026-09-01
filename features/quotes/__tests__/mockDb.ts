@@ -1,12 +1,25 @@
 import { mock } from "bun:test";
 
+// Форма строки как её отдаёт Prisma с include: автор и оценки приходят
+// вложенными в саму цитату — одним запросом, без выборки по каждой.
 export const mockQuotes = [
-  { id: 1n, quote: "Test quote", quote_by: 1n, date: new Date("2024-01-01") },
+  {
+    id: 1n,
+    quote: "Test quote",
+    quote_by: 1n,
+    date: new Date("2024-01-01"),
+    users_quotes_quote_byTousers: { id: 1n, name: "User 1" },
+    quote_rankings: [],
+  },
   {
     id: 2n,
     quote: "Another quote",
     quote_by: 2n,
     date: new Date("2024-01-02"),
+    users_quotes_quote_byTousers: { id: 2n, name: "User 2" },
+    quote_rankings: [
+      { id: 1n, quote_id: 2n, created_by: 1n, type: "Upvote" as const },
+    ],
   },
 ];
 

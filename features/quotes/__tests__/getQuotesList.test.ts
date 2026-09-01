@@ -7,29 +7,13 @@ mock.module("@/lib/db", () => ({
   db: mockDb,
 }));
 
-// Mock the getUserById function
-const mockGetUserById = mock(async (id: number) => {
-  const users = [
-    { id: 1, name: "User 1", avatarUrl: "" },
-    { id: 2, name: "User 2", avatarUrl: "" },
-  ];
-  return users.find((u) => u.id === id);
-});
-
-mock.module("../users/getUsersList", () => ({
-  getUserById: mockGetUserById,
-}));
-
 describe("getQuotesList", () => {
   beforeEach(() => {
     mockDb.quotes.findMany.mockClear();
-    mockDb.quote_rankings.findMany.mockClear();
-    mockGetUserById.mockClear();
   });
 
   it("should return empty array when no quotes exist", async () => {
     mockDb.quotes.findMany.mockResolvedValueOnce([]);
-    mockDb.quote_rankings.findMany.mockResolvedValueOnce([]);
 
     const result = await getQuotesList();
 
@@ -52,5 +36,19 @@ describe("getQuotesList", () => {
       upvotes: [{ id: 1, created_by: 1 }],
       downvotes: [],
     });
+  });
+
+  it("should take the author from the included relation", async () => {
+    const result = await getQuotesList();
+
+    expect(result[0].quoteAuthor.name).toBe("User 1");
+    expect(result[1].quoteAuthor.name).toBe("User 2");
+  });
+
+  it("should hit the database once, without a query per quote", async () => {
+    await getQuotesList();
+
+    expect(mockDb.quotes.findMany).toHaveBeenCalledTimes(1);
+    expect(mockDb.quote_rankings.findMany).not.toHaveBeenCalled();
   });
 });
