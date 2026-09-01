@@ -20,6 +20,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Сгенерированный Prisma-клиент — не наш код
     "lib/generated/**",
+    // Сборка Storybook: минифицированные бандлы, линтить нечего
+    // (в .gitignore он есть, но flat config его не читает)
+    "storybook-static/**",
   ]),
 ]);
 
