@@ -30,7 +30,7 @@ export default async function RootLayout({
           <Navbar user={user ?? null} />
           {/* Фон контента на ступень светлее страницы/навбара (bg-page),
               чтобы визуально отделить основную область. */}
-          <main className="min-h-screen bg-surface-bg-layout px-40 py-32">
+          <main className="min-h-screen bg-surface-bg-layout px-[var(--ryav-grid-margin-desktop-xl)] py-32">
             {children}
           </main>
           <Footer user={user ?? null} />

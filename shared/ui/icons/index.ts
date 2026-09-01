@@ -35,6 +35,8 @@ import {
   suSettings,
   suMenu01,
   suFileAttach01,
+  suArrowUpRight,
+  suArrowUp,
 } from "stratis-ui-icons";
 import { makeIcon } from "./makeIcon";
 
@@ -51,6 +53,13 @@ export const IconTrash = makeIcon(suTrash01.data);
 export const IconSettings = makeIcon(suSettings.data);
 export const IconMenu = makeIcon(suMenu01.data);
 export const IconFileAttach = makeIcon(suFileAttach01.data);
+export const IconArrowUpRight = makeIcon(suArrowUpRight.data);
+
+// ПЛЕЙСХОЛДЕР: в макете реакции — «палец вверх/вниз» (thumb-up / thumb-down),
+// но в stratis-ui-icons@1.5.2 (821 иконка, последняя версия) их нет.
+// Пока стрелка вверх; для дизлайка та же иконка поворачивается на 180°
+// (см. QuoteCard). Когда иконки приедут в пак — меняются эти две строки.
+export const IconThumbUp = makeIcon(suArrowUp.data);
 
 // Примитив и фабрика — на случай кастомных/внешних SVG.
 export { Icon, type IconProps } from "../Icon/Icon";
