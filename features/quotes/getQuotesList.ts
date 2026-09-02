@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Quote } from "./models";
+import { selectBestQuotes } from "./getBestQuotes";
 
 /**
  * Все цитаты с автором и оценками.
@@ -27,7 +28,10 @@ export const getQuotesList = async (): Promise<Quote[]> => {
     return {
       id: Number(n.id),
       quote: n.quote,
-      quoteAuthor: { name: n.users_quotes_quote_byTousers?.name ?? "" },
+      quoteAuthor: {
+        id: n.quote_by == null ? undefined : Number(n.quote_by),
+        name: n.users_quotes_quote_byTousers?.name ?? "",
+      },
       date: n.date || new Date(),
       upvotes: byType("Upvote"),
       downvotes: byType("Downvote"),
@@ -35,25 +39,21 @@ export const getQuotesList = async (): Promise<Quote[]> => {
   });
 };
 
+/**
+ * Цитата с наибольшим рейтингом; при ничьей — случайная из лидеров.
+ * Полный список победителей отдаёт `selectBestQuotes`.
+ *
+ * `preloadedQuotes` избавляет от второй выгрузки, если список уже загружен.
+ */
 export const getBestQuote = async (
   preloadedQuotes?: Quote[],
 ): Promise<Quote | null> => {
   const quotes = preloadedQuotes ?? (await getQuotesList());
+  const best = selectBestQuotes(quotes);
 
-  if (quotes.length === 0) {
+  if (best.length === 0) {
     return null;
   }
 
-  const quotesWithScores = quotes.map((quote) => ({
-    quote,
-    score: (quote.upvotes?.length || 0) - (quote.downvotes?.length || 0),
-  }));
-
-  const maxScore = Math.max(...quotesWithScores.map((q) => q.score));
-
-  const bestQuotes = quotesWithScores
-    .filter((q) => q.score === maxScore)
-    .map((q) => q.quote);
-
-  return bestQuotes[Math.floor(Math.random() * bestQuotes.length)];
+  return best[Math.floor(Math.random() * best.length)];
 };
