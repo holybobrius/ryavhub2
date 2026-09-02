@@ -37,6 +37,8 @@ import {
   suFileAttach01,
   suArrowUpRight,
   suArrowUp,
+  suDiamond,
+  suMessageCircle,
 } from "stratis-ui-icons";
 import { makeIcon } from "./makeIcon";
 
@@ -60,6 +62,8 @@ export const IconArrowUpRight = makeIcon(suArrowUpRight.data);
 // Пока стрелка вверх; для дизлайка та же иконка поворачивается на 180°
 // (см. QuoteCard). Когда иконки приедут в пак — меняются эти две строки.
 export const IconThumbUp = makeIcon(suArrowUp.data);
+export const IconDiamond = makeIcon(suDiamond.data);
+export const IconMessageCircle = makeIcon(suMessageCircle.data);
 
 // Примитив и фабрика — на случай кастомных/внешних SVG.
 export { Icon, type IconProps } from "../Icon/Icon";
