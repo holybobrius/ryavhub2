@@ -4,6 +4,7 @@ import { getQuotesList } from "@/features/quotes/getQuotesList";
 import { selectBestQuotes } from "@/features/quotes/getBestQuotes";
 import { QuoteCard } from "@/features/quotes/ui/QuoteCard";
 import { BestQuote } from "@/features/quotes/ui/BestQuote";
+import { QuoteMarquee } from "@/features/quotes/ui/QuoteMarquee";
 import { LeaderboardCard } from "@/shared/ui/Leaderboard";
 import { Typography } from "@/shared/ui/Typography";
 import { IconMessageCircle, IconThumbUp } from "@/shared/ui/icons";
@@ -33,6 +34,11 @@ export default async function QuotesPage() {
   return (
     <div className="flex flex-col gap-60">
       <QuotesHero quotesCount={quotesCount} rankingsCount={rankingsCount} />
+
+      {/* Лента идёт от края до края: гасим горизонтальный padding <main>
+          отрицательными полями на ту же величину (full-bleed).
+          TODO: фразы пока моковые — подставим реальный список, когда будет */}
+      <QuoteMarquee className="mx-[calc(var(--ryav-grid-margin-desktop-xl)*-1)]" />
 
       <BestQuote quotes={bestQuotes} />
 
