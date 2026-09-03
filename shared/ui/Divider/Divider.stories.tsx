@@ -1,0 +1,65 @@
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Divider } from "./Divider";
+import { Typography } from "../Typography";
+
+/**
+ * Разделительная линия. Оси: `orientation` (horizontal/vertical) и `tone`
+ * (default/secondary — токены `--color-divider-color-*`).
+ *
+ * Своих отступов не имеет: интервалы задаёт раскладка вокруг.
+ */
+const meta: Meta<typeof Divider> = {
+  title: "UI/Divider",
+  component: Divider,
+  tags: ["autodocs"],
+  parameters: { layout: "padded" },
+  argTypes: {
+    orientation: {
+      control: "inline-radio",
+      options: ["horizontal", "vertical"],
+    },
+    tone: { control: "inline-radio", options: ["default", "secondary"] },
+  },
+};
+export default meta;
+
+type Story = StoryObj<typeof Divider>;
+
+export const Horizontal: Story = {
+  args: { orientation: "horizontal", tone: "default" },
+  render: (args) => (
+    <div className="flex flex-col gap-24">
+      <Typography.Body size="md">Текст над линией</Typography.Body>
+      <Divider {...args} />
+      <Typography.Body size="md">Текст под линией</Typography.Body>
+    </div>
+  ),
+};
+
+/** Оба тона рядом: `secondary` заметно тусклее. */
+export const Tones: Story = {
+  render: () => (
+    <div className="flex flex-col gap-24">
+      <Typography.Label size="sm" color="tertiary">
+        default
+      </Typography.Label>
+      <Divider tone="default" />
+      <Typography.Label size="sm" color="tertiary">
+        secondary
+      </Typography.Label>
+      <Divider tone="secondary" />
+    </div>
+  ),
+};
+
+/** Вертикальная линия растягивается по высоте флекс-строки. */
+export const Vertical: Story = {
+  args: { orientation: "vertical" },
+  render: (args) => (
+    <div className="flex h-40 items-center gap-16">
+      <Typography.Body size="md">Слева</Typography.Body>
+      <Divider {...args} />
+      <Typography.Body size="md">Справа</Typography.Body>
+    </div>
+  ),
+};
