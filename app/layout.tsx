@@ -11,9 +11,7 @@ import { AuthProvider } from "@/lib/providers/AuthProvider";
 dayjs.extend(utc);
 dayjs.locale("ru");
 
-// Layout читает cookies() для auth, поэтому весь сайт рендерится на каждый
-// запрос. Объявляем это явно, чтобы Next не пытался пререндерить страницы
-// в статику на этапе build.
+// Layout читает cookies() для auth — пререндер в статику невозможен.
 export const dynamic = "force-dynamic";
 
 export default async function RootLayout({
@@ -28,8 +26,7 @@ export default async function RootLayout({
       <body>
         <AuthProvider user={user ?? null}>
           <Navbar user={user ?? null} />
-          {/* Фон контента на ступень светлее страницы/навбара (bg-page),
-              чтобы визуально отделить основную область. */}
+
           <main className="min-h-screen bg-surface-bg-layout px-page-margin pb-inset-xl">
             {children}
           </main>

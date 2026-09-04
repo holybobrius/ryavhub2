@@ -1,6 +1,4 @@
 @layer components {
-  /* Навигационная ссылка навбара: текст без фона, состояния через
-     нативные псевдоклассы (как Button). Активная страница — [data-active]. */
   .nav-link {
     --nl-color: var(--color-nav-link-text-default);
 
@@ -23,14 +21,12 @@
     --nl-color: var(--color-nav-link-text-pressed);
   }
 
-  /* Активная страница — белый; ставим после hover/active, чтобы активная
-     ссылка оставалась выделенной даже под курсором. */
+  /* Активная — после hover/active, чтобы оставалась выделенной под курсором;
+     :focus-visible ниже последним, чтобы кольцо било любое состояние. */
   .nav-link[data-active="true"] {
     --nl-color: var(--color-nav-link-text-active);
   }
 
-  /* Фокус с клавиатуры — кольцо + белый текст; последним, чтобы кольцо
-     показывалось поверх любого состояния. */
   .nav-link:focus-visible {
     --nl-color: var(--color-nav-link-text-focused);
     outline: none;

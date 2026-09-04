@@ -52,11 +52,9 @@ describe("BestQuote", () => {
       />,
     );
 
-    // назад с первой — попадаем на последнюю
     await user.click(getByLabelText(/Предыдущая/));
     expect(getByText("Третья")).not.toBeNull();
 
-    // вперёд с последней — снова первая
     await user.click(getByLabelText(/Следующая/));
     expect(getByText("Первая")).not.toBeNull();
   });

@@ -1,18 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Input } from "./Input";
 
-/**
- * Текстовое поле ввода. Поддержка лейбла, иконок слева и справа,
- * плейсхолдера, хелпера и обязательной метки. Оси: size (sm/md/lg).
- * Состояния hover/focused — нативные (наведи/поставь курсор); error и
- * disabled — пропы. Всё на токенах инпута.
- */
 const meta: Meta<typeof Input> = {
   title: "UI/Input",
   component: Input,
   tags: ["autodocs"],
   parameters: { layout: "padded" },
-  // Инпут по ширине тянется на 100% — ограничиваем контейнером.
   decorators: [
     (Story) => (
       <div style={{ maxWidth: 360 }}>
@@ -46,7 +39,6 @@ const SearchIcon = () => (
   </svg>
 );
 
-// Интерактивная стори — первой, чтобы autodocs показал её сверху с контролами.
 export const Playground: Story = {
   args: {
     label: "Label",

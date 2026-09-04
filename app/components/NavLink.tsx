@@ -8,15 +8,9 @@ import "./nav-link.css";
 interface NavLinkProps {
   href: string;
   children: ReactNode;
-  /** Явно задать активность; по умолчанию — по совпадению с текущим путём. */
   active?: boolean;
 }
 
-/**
- * Навигационная ссылка навбара. Клиентский компонент: подсвечивает активную
- * страницу через usePathname(). Состояния (hover/pressed/focused) — в CSS.
- * Живёт только в навбаре, поэтому здесь, а не в shared/ui + Storybook.
- */
 export const NavLink = ({ href, children, active }: NavLinkProps) => {
   const pathname = usePathname();
   const isActive =

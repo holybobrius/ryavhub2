@@ -19,41 +19,27 @@ import {
 } from "@/shared/ui/icons";
 import { QuotesHero } from "./components/QuotesHero";
 
-/**
- * Server Component: данные берём прямо в компоненте, без API-роута и
- * useEffect — запросы к БД выполняются на сервере при рендере страницы.
- */
 export default async function QuotesPage() {
   const [{ quotesCount, rankingsCount }, quotes] = await Promise.all([
     getQuotesStats(),
     getQuotesList(),
   ]);
 
-  // Победителей может быть несколько — при равном рейтинге показываем все,
-  // переключение внутри BestQuote.
   const bestQuotes = selectBestQuotes(quotes);
 
-  // Свежие цитаты сверху (в БД они лежат по возрастанию id).
   const orderedQuotes = [...quotes].reverse();
 
-  // Рейтинги считаем из уже загруженного списка — без похода в БД.
   const { mostLiked, mostDisliked, mostQuoted } =
     buildQuotesLeaderboards(quotes);
 
-  // Значения фильтров — оттуда же: авторы с ненулевым числом цитат и годы.
   const { authors, years } = buildQuotesFilters(quotes);
 
   return (
-    // Интервалы между блоками разные, поэтому не общий gap контейнера,
-    // а mt- на каждом блоке. Крупный шаг между зонами — токен
-    // --ryav-layout-block-gap (184px), у него есть и половинный (92px).
-    // Шаги 96 и 56 ниже в токенах не заведены — спросить у дизайнера.
     <div className="flex flex-col">
       <QuotesHero quotesCount={quotesCount} rankingsCount={rankingsCount} />
 
-      {/* Лента идёт от края до края: гасим горизонтальный padding <main>
-          отрицательными полями на ту же величину (full-bleed).
-          TODO: фразы пока моковые — подставим реальный список, когда будет */}
+      {/* Отрицательный margin гасит padding <main> — лента идёт от края до края.
+          Шаги 96 и 56 в токенах не заведены — спросить у дизайнера. */}
       <QuoteMarquee className="mt-96 -mx-page-margin" />
 
       <BestQuote quotes={bestQuotes} className="mt-layout-block" />
@@ -81,9 +67,6 @@ export default async function QuotesPage() {
           Все цитаты
         </Typography.Heading>
 
-        {/* Поле занимает всё свободное место (flex-1 = basis 0), кнопка
-            держит свою ширину по содержимому (shrink-0).
-            TODO: поиск и создание цитаты пока не подключены. */}
         <div className="flex items-start gap-space-xl">
           <div className="flex min-w-0 flex-1 flex-col gap-space-md">
             <div className="flex items-center gap-space-md">

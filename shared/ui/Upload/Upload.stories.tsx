@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Upload } from "./Upload";
 
-/**
- * Загрузка файлов: drag&drop-область + клик для выбора. Состояния
- * default/hover/drag-over/error/disabled. Валидация размера через maxSize.
- */
 const meta: Meta<typeof Upload> = {
   title: "UI/Upload",
   component: Upload,

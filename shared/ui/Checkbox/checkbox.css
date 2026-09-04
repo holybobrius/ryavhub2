@@ -1,9 +1,3 @@
-/*
-  Checkbox: нативный <input type=checkbox> скрыт, визуал — .checkbox__box.
-  Состояния — псевдоклассы инпута через соседний селектор (~). Три значения:
-  unchecked / checked (:checked) / indeterminate (:indeterminate — нативный
-  псевдокласс, DOM-свойство ставим из React по ref).
-*/
 @layer components {
   .checkbox {
     position: relative;
@@ -59,7 +53,6 @@
     height: var(--ryav-checkbox-icon-size);
   }
 
-  /* unchecked, интерактив */
   .checkbox__input:not(:checked):not(:indeterminate):hover ~ .checkbox__box {
     --cb-bg: var(--color-checkbox-unchecked-bg-hover);
     --cb-border: var(--color-checkbox-unchecked-border-hover);
@@ -76,7 +69,6 @@
       var(--color-checkbox-focus-ring-color);
   }
 
-  /* checked / indeterminate */
   .checkbox__input:checked ~ .checkbox__box,
   .checkbox__input:indeterminate ~ .checkbox__box {
     --cb-bg: var(--color-checkbox-checked-bg-default);
@@ -96,7 +88,6 @@
       var(--color-checkbox-focus-ring-color);
   }
 
-  /* индикаторы */
   .checkbox__input:checked:not(:indeterminate)
     ~ .checkbox__box
     .checkbox__check {
@@ -106,7 +97,6 @@
     display: block;
   }
 
-  /* disabled — последним, побеждает */
   .checkbox__input:disabled ~ .checkbox__box {
     box-shadow: none;
     --cb-bg: var(--color-checkbox-unchecked-bg-disabled);

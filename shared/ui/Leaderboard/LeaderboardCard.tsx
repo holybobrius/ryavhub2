@@ -4,24 +4,15 @@ import { IconDiamond } from "../icons";
 import { LeaderboardItem } from "./LeaderboardItem";
 import type { LeaderboardItemProps } from "./LeaderboardItem";
 
-/** Строка лидерборда без служебных полей — их проставляет карточка. */
 export type LeaderboardEntry = Omit<LeaderboardItemProps, "position" | "zebra">;
 
 export interface LeaderboardCardProps {
   title: string;
-  /** Иконка слева от заголовка. По умолчанию — ромб. */
   icon?: ReactNode;
   entries: LeaderboardEntry[];
-  /** Чередование подложки строк. */
   zebra?: boolean;
 }
 
-/**
- * Карточка рейтинга: заголовок секции + строки лидерборда.
- *
- * Принимает данные (`entries`), а не готовые строки: позиции и зебру
- * карточка расставляет сама, иначе каждый вызов повторял бы эту логику.
- */
 export const LeaderboardCard = ({
   title,
   icon,

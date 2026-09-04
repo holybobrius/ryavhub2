@@ -10,11 +10,6 @@ interface NavbarProps {
   user: User | null;
 }
 
-/**
- * Верхний навбар приложения. Server-компонент: получает user из layout.
- * Гость: лого + кнопка «Войти». Авторизованный: лого + навигация +
- * пользовательское меню (UserMenu — клиентский Dropdown).
- */
 export const Navbar = ({ user }: NavbarProps) => {
   return (
     <header className="flex items-center justify-between bg-surface-bg-page px-page-margin py-inset-2xs">
@@ -24,7 +19,6 @@ export const Navbar = ({ user }: NavbarProps) => {
           aria-label="ryav.hub — на главную"
           className="inline-flex"
         >
-          {/* Логотип-wordmark (public/logo.svg). Нативный img — размер по высоте. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.svg"

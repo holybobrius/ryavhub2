@@ -85,7 +85,6 @@ const MarqueeRow = ({ phrases, reverse, durationSec }: MarqueeRowProps) => {
   );
 };
 
-/** Тасование Фишера–Йетса на копии массива — входной список не трогаем. */
 function shuffle<T>(items: T[]): T[] {
   const result = [...items];
 

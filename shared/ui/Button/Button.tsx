@@ -7,8 +7,6 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  /** Смысловой тип из дизайна («Type»). Назван tone, чтобы не занимать
-   *  нативный HTML-атрибут type (button/submit/reset). */
   tone?: ButtonTone;
   size?: ButtonSize;
   leftIcon?: ReactNode;
@@ -25,11 +23,10 @@ export const Button = ({
   avatar,
   children,
   className,
-  // По умолчанию type="button": иначе кнопка внутри <form> сабмитит форму.
   type = "button",
   ...rest
 }: ButtonProps) => {
-  // Без текстовой метки трактуем как icon-only (квадратная кнопка).
+  // type="button" по умолчанию: иначе кнопка внутри <form> сабмитит форму.
   const iconOnly = children == null || children === false;
 
   return (

@@ -6,14 +6,6 @@ interface YearDividerProps {
   year: number | string;
 }
 
-/**
- * Заголовок года в списке цитат: крупная цифра и линия на всю оставшуюся
- * ширину. Год и линия одного цвета — `--color-year-divider-color` темнее
- * обычного разделителя, поэтому блок читается как фон, а не как заголовок
- * поверх контента.
- *
- * Локальный компонент фичи: пока нужен только в списке цитат.
- */
 export const YearDivider = ({ year }: YearDividerProps) => {
   const color = "var(--color-year-divider-color)";
 

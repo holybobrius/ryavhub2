@@ -2,12 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Select } from "./Select";
 import type { SelectOption } from "./Select";
 
-/**
- * Выпадающий список на Ariakit (headless: a11y, клавиатура, позиционирование),
- * стилизованный нашими токенами. Режимы: обычный, с поиском (searchable),
- * мультивыбор чекбоксами (multiple) и мультивыбор тегами (multiple + tags).
- * Триггер — тот же визуал, что у Input.
- */
 const meta: Meta<typeof Select> = {
   title: "UI/Select",
   component: Select,

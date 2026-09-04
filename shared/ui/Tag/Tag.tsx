@@ -20,15 +20,10 @@ export interface TagProps {
   children: ReactNode;
   color?: TagColor;
   type?: TagType;
-  /** Левая иконка (наследует цвет текста). Игнорируется, если задан avatar. */
   icon?: ReactNode;
-  /** Аватар в лид-слоте (передавай <Avatar size={16} />). */
   avatar?: ReactNode;
-  /** Счётчик справа от текста. */
   count?: ReactNode;
-  /** Показывает крестик; вызывается по клику. */
   onClose?: () => void;
-  /** Подпись для крестика (a11y). */
   closeLabel?: string;
   disabled?: boolean;
   className?: string;

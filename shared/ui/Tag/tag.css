@@ -1,12 +1,6 @@
-/*
-  Стили тега, сгенерированы из токенов --color-tag-* / --ryav-tag-*.
-  Ссылки на токены по ИМЕНИ (var) — переживает ре-экспорт значений.
-  Регенерировать только при добавлении/удалении цвета или типа.
+/* Сгенерировано из токенов --color-tag-* / --ryav-tag-*: ссылки по ИМЕНИ,
+   регенерировать только при добавлении/удалении цвета или типа. */
 
-  Оси: data-type (soft/filled/tinted) × data-color (12 цветов).
-  Крестик (.tag__close) — состояния default/hover/pressed через псевдоклассы,
-  переключающие --tag-close-*. Размер только sm.
-*/
 @layer components {
   .tag {
     display: inline-flex;
@@ -25,7 +19,6 @@
     white-space: nowrap;
     user-select: none;
 
-    /* дефолт — soft secondary; data-атрибуты переопределяют ниже */
     --tag-bg: var(--color-tag-soft-secondary-bg);
     --tag-fg: var(--color-tag-soft-secondary-foreground);
     --tag-close: var(--color-tag-soft-secondary-close-default);
@@ -43,7 +36,6 @@
     display: inline-block;
   }
 
-  /* Левая иконка — наследует цвет текста (currentColor). */
   .tag__icon {
     display: inline-flex;
     flex-shrink: 0;
@@ -55,20 +47,17 @@
     height: 100%;
   }
 
-  /* Слот аватара (передаётся <Avatar size={16}>). */
   .tag__avatar {
     display: inline-flex;
     flex-shrink: 0;
   }
 
-  /* Счётчик — свой цвет, лёгкий сдвиг вниз (count-down). */
   .tag__count {
     position: relative;
     top: var(--ryav-tag-sm-count-down);
     color: var(--tag-count);
   }
 
-  /* Крестик — нативная кнопка, цвет по состояниям. */
   .tag__close {
     display: inline-flex;
     flex-shrink: 0;
@@ -95,7 +84,6 @@
     cursor: not-allowed;
   }
 
-  /* Filled: цветной фон + единый светлый текст (secondary — исключение) */
   .tag[data-type="filled"] {
     --tag-fg: var(--color-tag-filled-foreground);
     --tag-close: var(--color-tag-filled-close-default);
@@ -147,7 +135,6 @@
     --tag-count: var(--color-tag-filled-count-secondary);
   }
 
-  /* Soft: всё пер-цветно */
   .tag[data-type="soft"][data-color="secondary"] {
     --tag-bg: var(--color-tag-soft-secondary-bg);
     --tag-fg: var(--color-tag-soft-secondary-foreground);
@@ -245,7 +232,6 @@
     --tag-count: var(--color-tag-soft-purple-count);
   }
 
-  /* Tinted: единый серый фон + единый крестик/счётчик, fg пер-цветный */
   .tag[data-type="tinted"] {
     --tag-bg: var(--color-tag-tinted-bg);
     --tag-close: var(--color-tag-tinted-close-default);

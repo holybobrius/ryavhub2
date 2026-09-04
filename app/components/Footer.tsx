@@ -6,14 +6,8 @@ interface FooterProps {
   user: User | null;
 }
 
-// Год начала проекта; конец копирайта — текущий год (обновляется сам, т.к.
-// layout рендерится динамически на каждый запрос).
 const START_YEAR = 2021;
 
-/**
- * Футер приложения. Server-компонент. Навигация — только для авторизованных
- * (у гостя её нет). Копирайт и большой вотермарк-логотип показываем всегда.
- */
 export const Footer = ({ user }: FooterProps) => {
   const year = new Date().getFullYear();
   const copyright =
@@ -36,8 +30,6 @@ export const Footer = ({ user }: FooterProps) => {
         </span>
       </div>
 
-      {/* Вотермарк-логотип РЯВHUB — большой, приглушённый (свой цвет #0F0F0F). */}
-      {/* Декоративный, поэтому alt="" + aria-hidden. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/footer_logo.svg"

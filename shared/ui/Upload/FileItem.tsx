@@ -4,13 +4,9 @@ import "./upload.css";
 
 export interface FileItemProps {
   name: string;
-  /** Размер в байтах (показывается в мете, если нет ошибки). */
   size?: number;
-  /** Прогресс загрузки 0–100 (показывает полосу). */
   progress?: number;
-  /** Текст ошибки — красная рамка/мета вместо размера. */
   error?: string;
-  /** Успешная загрузка — зелёная мета, прогресс скрыт. `error` важнее. */
   success?: boolean;
   icon?: ReactNode;
   onRemove?: () => void;
@@ -44,7 +40,6 @@ export const FileItem = ({
   onRemove,
   className,
 }: FileItemProps) => {
-  // error важнее success; успех подсвечивает мету зелёным.
   const isSuccess = success && !error;
   const sizeText = size != null ? formatSize(size) : undefined;
   let meta: string | undefined;

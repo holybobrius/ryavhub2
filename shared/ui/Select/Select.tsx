@@ -21,11 +21,8 @@ export interface SelectProps {
   value?: SelectValue;
   defaultValue?: SelectValue;
   onChange?: (value: SelectValue) => void;
-  /** Мультивыбор (value становится массивом). */
   multiple?: boolean;
-  /** Поиск по опциям. Ввод прямо в триггер (только для одиночного выбора). */
   searchable?: boolean;
-  /** В мультивыборе показывать выбранное тегами в триггере. */
   tags?: boolean;
   size?: InputSize;
   label?: ReactNode;
@@ -141,7 +138,6 @@ const OptionInner = ({
   );
 };
 
-// ── Обычный путь: single, multiple (чекбоксы), multiple + tags ─────────
 const PlainSelect = (props: SelectProps) => {
   const {
     options,
@@ -256,9 +252,8 @@ const PlainSelect = (props: SelectProps) => {
   );
 };
 
-// ── Поиск в триггере (single): паттерн Combobox ────────────────────────
-// Комбобокс оперирует ЛЕЙБЛОМ как отображаемым значением; наружу отдаём
-// value опции через onChange (маппинг label -> value).
+// Комбобокс оперирует ЛЕЙБЛОМ как отображаемым значением; наружу через
+// onChange отдаём value опции (маппинг label → value).
 const ComboboxSelect = (props: SelectProps) => {
   const {
     options,
@@ -316,8 +311,9 @@ const ComboboxSelect = (props: SelectProps) => {
         gutter={4}
         sameWidth
         portal
-        // Привязываем выпадашку ко ВСЕМУ полю, а не к внутреннему input,
-        // иначе sameWidth берёт узкую ширину input и смещается вправо.
+
+        // Привязываем выпадашку ко ВСЕМУ полю: иначе sameWidth возьмёт
+        // ширину внутреннего input и меню съедет вправо.
         getAnchorRect={() => fieldRef.current?.getBoundingClientRect() ?? null}
         className="dropdown"
       >
@@ -345,7 +341,6 @@ const ComboboxSelect = (props: SelectProps) => {
 };
 
 export const Select = (props: SelectProps) => {
-  // Поиск-в-триггере поддерживаем для одиночного выбора (как на макетах).
   if (props.searchable && !props.multiple) return <ComboboxSelect {...props} />;
   return <PlainSelect {...props} />;
 };

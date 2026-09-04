@@ -4,11 +4,6 @@ import type { IconTileSize } from "./IconTile";
 import { IconSettings } from "../icons";
 import { Typography } from "../Typography";
 
-/**
- * IconTile — иконка в скруглённой квадратной плитке. Оси: size
- * (small 48 / default 60 / large 80), состояние inactive. Иконка — SVG
- * (`icon`) или картинкой (`src`, при inactive — чб). Server-компонент.
- */
 const meta: Meta<typeof IconTile> = {
   title: "UI/IconTile",
   component: IconTile,
@@ -34,7 +29,6 @@ export const Playground: Story = {
   },
 };
 
-// Три размера.
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-end gap-24">
@@ -50,7 +44,6 @@ export const Sizes: Story = {
   ),
 };
 
-// Активное и неактивное состояние.
 export const States: Story = {
   render: () => (
     <div className="flex items-center gap-24">
@@ -70,7 +63,6 @@ export const States: Story = {
   ),
 };
 
-// Иконка картинкой (растр). При inactive накладывается чб-фильтр.
 const sampleImg =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(

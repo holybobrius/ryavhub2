@@ -15,15 +15,12 @@ interface FieldCommon {
   size?: InputSize;
   label?: ReactNode;
   helperText?: ReactNode;
-  /** Состояние ошибки (проп, не выводится из DOM). */
   error?: boolean;
   required?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 }
 
-// Внутренняя оболочка: label + рамка поля + низ (helper + счётчик).
-// Обёртка — <label>, клик по любой части фокусирует контрол.
 interface ShellProps extends FieldCommon {
   disabled?: boolean;
   className?: string;
@@ -79,8 +76,8 @@ const InputShell = ({
   );
 };
 
-// Omit "size": у нативного <input> size — ширина в символах (number).
 export interface InputProps
+  // Omit "size": у нативного <input> size — это ширина в символах (number).
   extends FieldCommon, Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {}
 
 const InputBase = ({
@@ -122,7 +119,6 @@ export interface TextAreaProps
   extends
     FieldCommon,
     Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
-  /** Показывать счётчик символов (внизу справа). С maxLength — вида 12/280. */
   showCount?: boolean;
 }
 
@@ -144,7 +140,6 @@ const TextArea = ({
   onChange,
   ...rest
 }: TextAreaProps) => {
-  // Контролируемый режим читает длину из value; неконтролируемый — из стейта.
   const isControlled = value !== undefined;
   const [uncontrolledCount, setUncontrolledCount] = useState(
     () => String(defaultValue ?? "").length,
@@ -195,5 +190,4 @@ const TextArea = ({
 InputBase.displayName = "Input";
 TextArea.displayName = "Input.TextArea";
 
-// Compound: <Input /> и <Input.TextArea />.
 export const Input = Object.assign(InputBase, { TextArea });

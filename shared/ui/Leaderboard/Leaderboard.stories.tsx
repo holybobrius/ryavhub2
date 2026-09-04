@@ -2,13 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { LeaderboardCard } from "./LeaderboardCard";
 import { LeaderboardItem } from "./LeaderboardItem";
 
-/**
- * Карточка рейтинга: заголовок секции + строки `LeaderboardItem`.
- * Позиции и «зебру» карточка расставляет сама — на вход идут только данные.
- *
- * Цвет позиции берётся из токенов `--color-lb-position-1..3` (призовые
- * места) и `--color-lb-position-default` (остальные).
- */
 const meta: Meta<typeof LeaderboardCard> = {
   title: "UI/LeaderboardCard",
   component: LeaderboardCard,
@@ -40,13 +33,11 @@ export const Default: Story = {
   ),
 };
 
-/** Без чередования подложки — все строки на фоне карточки. */
 export const ZebraOff: Story = {
   ...Default,
   args: { ...Default.args, zebra: false },
 };
 
-/** Длинные ники обрезаются многоточием, колонки не разъезжаются. */
 export const LongNames: Story = {
   ...Default,
   args: {
@@ -65,7 +56,6 @@ export const LongNames: Story = {
   },
 };
 
-/** Значение можно окрасить: нейтральное / положительное / отрицательное. */
 export const ValueTones: Story = {
   ...Default,
   args: {
@@ -78,10 +68,6 @@ export const ValueTones: Story = {
   },
 };
 
-/**
- * Отдельная строка вне карточки: видно градацию цвета позиции —
- * места 1–3 подсвечены, с четвёртого идёт тусклый `default`.
- */
 export const Items: StoryObj<typeof LeaderboardItem> = {
   render: () => (
     <div className="flex max-w-[520px] flex-col">

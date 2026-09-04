@@ -1,9 +1,3 @@
-/*
-  Всплывающая подсказка на Ariakit Tooltip, стилизованная токенами
-  --color-tooltip-* / --ryav-tooltip-*. Инвертированный фон (светлый на
-  тёмной теме). Стрелку рисует Ariakit.TooltipArrow — цвет она берёт из
-  background-color подсказки автоматически, позицию — из placement.
-*/
 @layer components {
   .tooltip {
     z-index: 50;
@@ -16,21 +10,17 @@
     font-size: var(--text-label-md);
     font-weight: var(--font-weight-medium);
     line-height: 1.3;
+
     /* Тень провизорная — токенов теней в ДС пока нет. */
     box-shadow: 0 4px 16px rgb(0 0 0 / 0.24);
   }
 
-  /* Подстраховка цвета стрелки под фон подсказки. */
   .tooltip__arrow {
     fill: var(--color-tooltip-bg);
   }
 
-  /*
-    Статичный пузырь для витрины направлений (без Ariakit): тот же вид +
-    нотч-стрелка через data-direction. Нужен, чтобы показать все 12
-    направлений разом, не поднимая 12 живых тултипов (они делят глобальный
-    active-store Ariakit и мешают друг другу и соседним живым тултипам).
-  */
+  /* Статичный пузырь для витрины 12 направлений: живые тултипы Ariakit делят
+     глобальный active-store и мешали бы друг другу. */
   .tooltip-demo {
     position: relative;
   }
@@ -43,7 +33,6 @@
     rotate: 45deg;
   }
 
-  /* Верх: стрелка на нижней грани */
   .tooltip-demo[data-direction^="top"]::after {
     bottom: -4px;
   }
@@ -57,7 +46,6 @@
     right: 12px;
   }
 
-  /* Низ: стрелка на верхней грани */
   .tooltip-demo[data-direction^="bottom"]::after {
     top: -4px;
   }
@@ -71,7 +59,6 @@
     right: 12px;
   }
 
-  /* Лево: стрелка на правой грани */
   .tooltip-demo[data-direction^="left"]::after {
     right: -4px;
   }
@@ -85,7 +72,6 @@
     bottom: 10px;
   }
 
-  /* Право: стрелка на левой грани */
   .tooltip-demo[data-direction^="right"]::after {
     left: -4px;
   }

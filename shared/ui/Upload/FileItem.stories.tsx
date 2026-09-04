@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FileItem } from "./FileItem";
 
-/**
- * Карточка файла для списка загрузки: иконка, имя, мета (размер / успех /
- * ошибка), опциональный прогресс-бар и кнопка удаления.
- */
 const meta: Meta<typeof FileItem> = {
   title: "UI/Upload.FileItem",
   component: FileItem,

@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { QuoteChip } from "./QuoteChip";
 
-/**
- * Акцентная плашка с фразой из цитаты. Два тона: `default` (серая,
- * `--color-quote-chip-*`) и `primary` (фиолетовая, `*-primary`).
- */
 const meta: Meta<typeof QuoteChip> = {
   title: "Quotes/QuoteChip",
   component: QuoteChip,
@@ -27,7 +23,6 @@ export const Primary: Story = {
   args: { tone: "primary", children: "ты в муте" },
 };
 
-/** Оба тона рядом — так видно разницу фона и рамки. */
 export const Tones: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-20">

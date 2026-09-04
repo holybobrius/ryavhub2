@@ -23,9 +23,8 @@ type Variant =
   | `body-${BodySize}`
   | `label-${LabelSize}`;
 
-// Полные литеральные строки классов — JIT Tailwind сканирует исходники по
-// тексту, поэтому `text-${variant}` он бы не увидел. Ключ здесь собирается
-// динамически (это не CSS-класс, а просто индекс), а сами классы — литералы.
+// Классы — литералы: JIT Tailwind сканирует исходники по тексту и
+// `text-${variant}` не увидел бы.
 const VARIANT_CLASS: Record<Variant, string> = {
   "display-lg": "font-heading text-display-lg tracking-display-lg",
   "display-md": "font-heading text-display-md tracking-display-md",
@@ -59,9 +58,6 @@ const COLOR_CLASS: Record<TypographyColor, string> = {
   link: "text-surface-text-link",
 };
 
-// Общие пропы всех подкомпонентов + прокидывание native-атрибутов насквозь
-// (id, style, onClick, aria-*, …). Типизируем против <p>; для полной
-// полиморфности по `as` понадобился бы дженерик — сознательное упрощение.
 interface CommonProps {
   as?: ElementType;
   weight?: TypographyWeight;
@@ -77,7 +73,6 @@ interface BaseProps extends CommonProps, NativeProps {
   defaultAs: ElementType;
 }
 
-// Внутренняя «рабочая лошадка»: собирает классы и рендерит элемент.
 const Base = ({
   variant,
   defaultWeight,
@@ -105,10 +100,6 @@ const Base = ({
     </Element>
   );
 };
-
-// ── Публичные подкомпоненты ───────────────────────────────────────────
-// `as` по умолчанию — нейтральный тег; для настоящих заголовков передавайте
-// as="h1"…"h6", чтобы визуальный размер не диктовал семантику документа.
 
 interface DisplayProps extends CommonProps, NativeProps {
   size?: DisplaySize;

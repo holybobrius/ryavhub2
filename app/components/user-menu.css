@@ -1,13 +1,11 @@
 @layer components {
-  /* Аватар (leftIcon) должен быть 20px, хотя sm-кнопка форсит icon-слот до 16
-     (.btn__icon > * { …!important }). Таргетим ИМЕННО .avatar, а не любой
-     .btn__icon — иначе правило заденет и шеврон (rightIcon тоже в .btn__icon). */
+  /* Таргетим ИМЕННО .avatar: sm-кнопка форсит .btn__icon > * до 16px, а под
+     тот же селектор попадает и шеврон (rightIcon). */
   .user-menu .btn__icon > .avatar {
     width: var(--ryav-avatar-20-size) !important;
     height: var(--ryav-avatar-20-size) !important;
   }
-  /* Силуэт внутри аватара Button форсил до icon-size — возвращаем к 100% бокса.
-     Скоуп на .avatar svg, чтобы svg шеврона не пострадал. */
+
   .user-menu .btn__icon > .avatar svg {
     width: 100% !important;
     height: 100% !important;

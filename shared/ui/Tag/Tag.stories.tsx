@@ -4,11 +4,6 @@ import type { TagColor, TagType } from "./Tag";
 import { Avatar } from "../Avatar";
 import { Typography } from "../Typography";
 
-/**
- * Тег-метка. Оси: color (12 цветов), type (soft/filled/tinted). Слоты:
- * левая иконка (`icon`), аватар (`avatar`), счётчик (`count`), крестик
- * (`onClose`). Крестик — нативная кнопка с состояниями hover/pressed.
- */
 const meta: Meta<typeof Tag> = {
   title: "UI/Tag",
   component: Tag,
@@ -57,14 +52,12 @@ const COLORS: TagColor[] = [
 ];
 const TYPES: TagType[] = ["soft", "filled", "tinted"];
 
-// Демо-иконка (ромб, как в макете).
 const Diamond = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 2l4 4-4 4-4-4 4-4zm6 6l4 4-4 4-4-4 4-4zm-12 0l4 4-4 4-4-4 4-4zm6 6l4 4-4 4-4-4 4-4z" />
   </svg>
 );
 
-// Интерактивный тег со всеми слотами.
 export const Playground: Story = {
   args: {
     children: "tag",
@@ -75,7 +68,6 @@ export const Playground: Story = {
   },
 };
 
-// Слоты: иконка / аватар / счётчик / крестик.
 export const Slots: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-12">
@@ -99,7 +91,6 @@ export const Slots: Story = {
   ),
 };
 
-// Матрица: тип × цвет (с крестиком, как в макете).
 export const Colors: Story = {
   render: () => (
     <div className="flex flex-col gap-16">
@@ -127,7 +118,6 @@ export const Colors: Story = {
   ),
 };
 
-// Отключённое состояние.
 export const Disabled: Story = {
   render: () => (
     <div className="flex items-center gap-12">

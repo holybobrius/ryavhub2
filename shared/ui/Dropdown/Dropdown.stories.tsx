@@ -3,11 +3,6 @@ import { Dropdown } from "./Dropdown";
 import type { DropdownItem } from "./Dropdown";
 import { IconSettings, IconPencil, IconTrash } from "../icons";
 
-/**
- * Dropdown — кнопка-триггер (Button + шеврон), открывающая меню из массива
- * `menu`. Построен на Ariakit Menu; меню-попап и пункты используют те же
- * стили, что и Select (.dropdown / .menu-item).
- */
 const meta: Meta<typeof Dropdown> = {
   title: "UI/Dropdown",
   component: Dropdown,
@@ -26,7 +21,7 @@ const meta: Meta<typeof Dropdown> = {
     menu: { control: false },
     leftIcon: { control: false },
   },
-  // Место под раскрытое меню в доке.
+
   decorators: [
     (Story) => (
       <div style={{ minHeight: 220 }}>
@@ -56,7 +51,6 @@ export const Playground: Story = {
   },
 };
 
-// Раскрытое меню.
 export const Open: Story = {
   args: {
     children: "button",
@@ -66,7 +60,6 @@ export const Open: Story = {
   },
 };
 
-// Три размера.
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-16">

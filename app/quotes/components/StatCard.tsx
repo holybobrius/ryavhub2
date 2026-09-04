@@ -5,14 +5,6 @@ interface StatCardProps {
   value: string | number;
 }
 
-/**
- * Карточка со счётчиком в hero. Размер фиксирован по макету (283×146),
- * цвета/радиус/паддинги — из токенов `--*-stat-card-*`.
- *
- * Живёт в сегменте quotes: пока это единственное место использования.
- * Появится второе — переедет в shared/ui как компонент ДС (токены для
- * него у дизайнера уже есть, включая размер sm и secondary-значение).
- */
 export const StatCard = ({ label, value }: StatCardProps) => {
   return (
     <div className="flex h-[146px] w-[283px] flex-col justify-between rounded-stat-card bg-stat-card-bg p-stat-card">

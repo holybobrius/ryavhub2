@@ -1,7 +1,4 @@
 @layer components {
-  /* Строка автора: чекбокс ДС растянут на всю ширину, чтобы счётчик
-     прижался к правому краю. Своей вёрстки у .checkbox__label нет, поэтому
-     раздаём flex здесь, а не утилитами через экранированные селекторы. */
   .quotes-filters__author {
     width: 100%;
     gap: var(--spacing-12);
@@ -12,11 +9,11 @@
     min-width: 0;
   }
 
-  /* Список прокручивается внутри себя: панель не должна расти вслед за
-     числом авторов. 200px — ровно пять строк по 40. */
   .quotes-filters__scroll {
+    /* 200px — ровно пять строк по 40: панель не растёт вслед за числом авторов. */
     max-height: var(--spacing-200);
     overflow-y: auto;
+
     /* Firefox */
     scrollbar-width: thin;
     scrollbar-color: var(--color-scrollbar-color) transparent;
@@ -35,15 +32,13 @@
     border-radius: var(--ryav-scrollbar-radius);
   }
 
-  /* Год + счётчик. Токены --*-year-nav-* дизайнер завёл под этот элемент;
-     границы среди них нет — беру общий цвет рамки поверхности, флаг
-     дизайнеру. */
   .quotes-filters__year {
     display: inline-flex;
     align-items: flex-start;
     gap: var(--ryav-year-nav-item-gap);
     padding: var(--ryav-year-nav-item-padding-y)
       var(--ryav-year-nav-item-padding-x);
+    /* Среди токенов --*-year-nav-* границы нет — общий цвет рамки, флаг дизайнеру. */
     border: var(--border-width-1) solid var(--color-surface-border-default);
     border-radius: var(--ryav-year-nav-item-radius);
     background: var(--color-year-nav-item-bg-default);
@@ -60,7 +55,6 @@
     color: var(--color-year-nav-year-color-active);
   }
 
-  /* Счётчик приподнят как верхний индекс — так в макете. */
   .quotes-filters__year-count {
     align-self: flex-start;
     color: var(--color-year-nav-count-color);

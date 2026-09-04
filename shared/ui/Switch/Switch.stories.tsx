@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Switch } from "./Switch";
 
-/**
- * Переключатель on/off — для мгновенных действий без подтверждения.
- * Состояния hover/pressed/focused — нативные.
- */
 const meta: Meta<typeof Switch> = {
   title: "UI/Switch",
   component: Switch,

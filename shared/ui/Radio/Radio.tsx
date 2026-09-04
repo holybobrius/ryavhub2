@@ -8,7 +8,6 @@ export interface RadioProps extends Omit<
   label?: ReactNode;
 }
 
-// Единичный radio. Группируйте через общий `name` (нативная семантика).
 export const Radio = ({ label, className, disabled, ...rest }: RadioProps) => {
   return (
     <label

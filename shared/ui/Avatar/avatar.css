@@ -1,14 +1,7 @@
-/*
-  Стили аватара, сгенерированы из токенов --color-avatar-* / --ryav-avatar-*.
-  Файл ссылается на токены по ИМЕНИ (var), поэтому переживает ре-экспорт
-  значений из Figma. Регенерировать только если дизайнер добавит/уберёт
-  размер, цвет или тип заливки.
+/* Сгенерировано из токенов --color-avatar-* / --ryav-avatar-*: ссылки по ИМЕНИ,
+   регенерировать только если дизайнер добавит/уберёт ось.
+   Размер буквы (--av-font) токена не имеет — значения провизорные. */
 
-  Оси: data-size (16..64), data-shape (circle/square),
-  data-type (soft/filled/tinted) × data-color (12 цветов).
-  Размер буквы-текста (--av-font) токена не имеет — значения провизорные,
-  как line-height'ы; уточнить у дизайнера.
-*/
 @layer components {
   .avatar {
     display: inline-flex;
@@ -27,7 +20,6 @@
     line-height: 1;
     user-select: none;
 
-    /* дефолт — soft neutral; data-атрибуты переопределяют ниже */
     --av-bg: var(--color-avatar-soft-neutral-bg);
     --av-fg: var(--color-avatar-soft-neutral-foreground);
   }
@@ -48,13 +40,11 @@
     height: 100%;
   }
 
-  /* Кольцо-обводка (для стопок аватарок) */
   .avatar[data-ring] {
     box-shadow: 0 0 0 var(--ryav-avatar-ring-width)
       var(--color-avatar-ring-color);
   }
 
-  /* Форма */
   .avatar[data-shape="circle"] {
     --av-radius: var(--ryav-avatar-border-radius-circle);
   }
@@ -98,7 +88,6 @@
     --av-font: 28px;
   }
 
-  /* Filled: цветная заливка + светлый текст (neutral — исключение) */
   .avatar[data-type="filled"] {
     --av-fg: var(--color-avatar-filled-foreground);
   }
@@ -142,7 +131,6 @@
     --av-fg: var(--color-avatar-filled-neutral-foreground);
   }
 
-  /* Soft: мягкая полупрозрачная заливка + цветной текст */
   .avatar[data-type="soft"][data-color="neutral"] {
     --av-bg: var(--color-avatar-soft-neutral-bg);
     --av-fg: var(--color-avatar-soft-neutral-foreground);
@@ -192,7 +180,6 @@
     --av-fg: var(--color-avatar-soft-purple-foreground);
   }
 
-  /* Tinted: единый серый фон + цветной текст */
   .avatar[data-type="tinted"] {
     --av-bg: var(--color-avatar-tinted-bg);
   }

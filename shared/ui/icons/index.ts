@@ -1,26 +1,3 @@
-// Иконки дизайн-системы (Stratis UI).
-//
-// Подключаем НЕ весь пак (820 иконок), а только те, что реально нужны.
-// Данные берём из пакета `stratis-ui-icons` (объект `{ name, data }`)
-// и оборачиваем в компонент через `makeIcon`.
-//
-// Использование:
-//   import { IconChevronDown } from "@/shared/ui/icons";
-//   <IconChevronDown size={20} />
-//   <IconChevronDown className="text-surface-text-secondary" />  // цвет = currentColor
-//
-// ── Как добавить новую иконку ────────────────────────────────────────
-// 1. Найди её имя в Storybook (стори «UI/Icons») или в Figma-файле Stratis.
-//    Имя в пакете — camelCase с префиксом `su`, например `su-arrow-left`
-//    экспортируется как `suArrowLeft`.
-// 2. Добавь её в импорт из "stratis-ui-icons" ниже.
-// 3. Добавь строку `export const Icon<Name> = makeIcon(su<Name>.data);`
-// Всё — новых файлов заводить не нужно.
-//
-// Примечание про бандл: все перечисленные здесь иконки попадают в бандл
-// вместе (они в одном модуле), поэтому держим список = «то, что используем».
-// Их немного и каждая ~200 б gzip, так что вес незаметный.
-
 import {
   suChevronDown,
   suChevronUp,
@@ -57,14 +34,11 @@ export const IconMenu = makeIcon(suMenu01.data);
 export const IconFileAttach = makeIcon(suFileAttach01.data);
 export const IconArrowUpRight = makeIcon(suArrowUpRight.data);
 
-// ПЛЕЙСХОЛДЕР: в макете реакции — «палец вверх/вниз» (thumb-up / thumb-down),
-// но в stratis-ui-icons@1.5.2 (821 иконка, последняя версия) их нет.
-// Пока стрелка вверх; для дизлайка та же иконка поворачивается на 180°
-// (см. QuoteCard). Когда иконки приедут в пак — меняются эти две строки.
+// Плейсхолдер: thumb-up/down в stratis-ui-icons@1.5.2 нет, поэтому стрелка
+// (для дизлайка QuoteCard поворачивает её на 180°).
 export const IconThumbUp = makeIcon(suArrowUp.data);
 export const IconDiamond = makeIcon(suDiamond.data);
 export const IconMessageCircle = makeIcon(suMessageCircle.data);
 
-// Примитив и фабрика — на случай кастомных/внешних SVG.
 export { Icon, type IconProps } from "../Icon/Icon";
 export { makeIcon, type IconComponentProps } from "./makeIcon";

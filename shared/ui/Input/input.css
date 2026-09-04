@@ -1,13 +1,3 @@
-/*
-  Стили инпута из токенов --color-input-* / --ryav-input-*.
-  Состояния:
-    - hover / focused / disabled — нативные псевдоклассы (:hover,
-      :focus-within, :disabled/[data-disabled]);
-    - error — проп (data-error на обёртке), т.к. это не состояние DOM;
-    - filled — НЕ отдельное правило: типизированный текст красится в base
-      (--in-text), а плейсхолдер в placeholder-цвет через ::placeholder,
-      так что «заполнено» получается само собой.
-*/
 @layer components {
   .input {
     display: inline-flex;
@@ -15,7 +5,6 @@
     gap: var(--in-gap-y);
     width: 100%;
 
-    /* набор по умолчанию; правила ниже переопределяют переменные */
     --in-border: var(--color-input-border-default);
     --in-icon: var(--color-input-icon-default);
     --in-label: var(--color-input-label-default);
@@ -90,7 +79,6 @@
     gap: var(--in-gap);
   }
   .input__counter {
-    /* цвет совпадает с helper: токены --color-textarea-counter-* === helper */
     margin-left: auto;
     flex: none;
     color: var(--in-helper);
@@ -99,7 +87,6 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* размеры */
   .input[data-size="sm"] {
     --in-height: var(--ryav-input-sm-height);
     --in-padding-x: var(--ryav-input-sm-padding-x);
@@ -131,7 +118,6 @@
     --in-padding-y: var(--ryav-textarea-lg-padding-y);
   }
 
-  /* interactive, вне error/disabled */
   .input:not([data-error]):not([data-disabled])
     .input__field:hover:not(:focus-within) {
     --in-border: var(--color-input-border-hover);
@@ -142,7 +128,6 @@
       var(--color-input-focus-ring-color);
   }
 
-  /* error (проп) */
   .input[data-error]:not([data-disabled]) {
     --in-border: var(--color-input-border-error);
     --in-icon: var(--color-input-icon-error);
@@ -154,7 +139,6 @@
       var(--color-input-focus-ring-color);
   }
 
-  /* disabled */
   .input[data-disabled] {
     --in-border: var(--color-input-border-disabled);
     --in-icon: var(--color-input-icon-disabled);
@@ -167,8 +151,6 @@
     cursor: not-allowed;
   }
 
-  /* многострочный режим (Input.TextArea): та же рамка, но высота по контенту,
-     контент сверху, вертикальные отступы из --ryav-textarea-*-padding-y */
   .input[data-multiline] .input__field {
     height: auto;
     min-height: var(--in-height);

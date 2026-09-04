@@ -1,7 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { render } from "@testing-library/react";
-// Проверяем публичный вход: реальная иконка из сгенерированного бареля
-// импортируется, резолвится из пакета и рендерит SVG.
+
 import { IconChevronDown } from "./index";
 
 describe("generated icons barrel", () => {

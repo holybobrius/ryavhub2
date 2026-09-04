@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Radio } from "./Radio";
 
-/**
- * Радиокнопка для единичного выбора из группы. Группируется общим `name`.
- * Точка-индикатор. Состояния hover/pressed/focused — нативные.
- */
 const meta: Meta<typeof Radio> = {
   title: "UI/Radio",
   component: Radio,

@@ -1,9 +1,3 @@
-/*
-  Switch (toggle): нативный <input type=checkbox role=switch> скрыт, визуал —
-  .switch__track с бегунком .switch__thumb. On/off — :checked; интерактив —
-  псевдоклассы. Токены --color-toggle-{off|on}-{track-bg|track-border|thumb}.
-  Смещение бегунка = track-width - thumb - 2*padding.
-*/
 @layer components {
   .switch {
     position: relative;
@@ -63,7 +57,6 @@
       background-color 0.15s ease;
   }
 
-  /* off, интерактив */
   .switch__input:not(:checked):hover ~ .switch__track {
     --sw-track: var(--color-toggle-off-track-bg-hover);
     --sw-border: var(--color-toggle-off-track-border-hover);
@@ -81,12 +74,12 @@
       var(--color-toggle-focus-ring-color);
   }
 
-  /* on */
   .switch__input:checked ~ .switch__track {
     --sw-track: var(--color-toggle-on-track-bg-default);
     --sw-border: transparent;
     --sw-thumb: var(--color-toggle-on-thumb-default);
   }
+  /* Смещение бегунка = track-width − thumb − 2×padding. */
   .switch__input:checked ~ .switch__track .switch__thumb {
     transform: translateY(-50%)
       translateX(
@@ -109,7 +102,6 @@
       var(--color-toggle-focus-ring-color);
   }
 
-  /* disabled */
   .switch__input:disabled ~ .switch__track {
     box-shadow: none;
     --sw-track: var(--color-toggle-off-track-bg-disabled);

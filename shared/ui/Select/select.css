@@ -1,9 +1,6 @@
-/*
-  Select: триггер переиспользует визуал поля из input.css (.input / .input__field
-  / .input__label / .input__helper — те же рамка, состояния, кольцо фокуса).
-  Здесь — только специфика: сам триггер-кнопка, выпадашка (--*-dropdown-*) и
-  пункты меню (--color-menu-item-* / --ryav-menu-*).
-*/
+/* Триггер переиспользует визуал поля из input.css (.input / .input__field /
+   .input__label / .input__helper) — здесь только специфика селекта. */
+
 @layer components {
   .select__trigger {
     justify-content: space-between;
@@ -41,7 +38,6 @@
     transform: rotate(180deg);
   }
 
-  /* теги в триггере (мульти-теги) */
   .select__tags {
     display: flex;
     flex: 1 1 auto;
@@ -79,7 +75,6 @@
     height: 14px;
   }
 
-  /* выпадашка */
   .dropdown {
     display: flex;
     flex-direction: column;
@@ -119,7 +114,6 @@
     font-size: var(--text-body-sm);
   }
 
-  /* пункт меню */
   .menu-item {
     display: flex;
     align-items: center;
@@ -138,7 +132,7 @@
   .menu-item:hover {
     background: var(--color-menu-item-bg-hover);
   }
-  /* активный по клавиатуре пункт (Ariakit проставляет data-active-item) */
+
   .menu-item[data-active-item] {
     background: var(--color-menu-item-bg-focused);
     color: var(--color-menu-item-text-focused);
@@ -163,10 +157,11 @@
   .menu-item[aria-selected="true"] .menu-item__icon {
     color: var(--color-menu-item-icon-selected);
   }
-  /* Размер задаёт токен; Icon-примитив ставит size инлайном — перебиваем
-     через !important, иначе иконка из барреля рендерится крупнее и «плывёт». */
+
   .menu-item__icon svg,
   .menu-item__icon > * {
+    /* Icon-примитив ставит width/height инлайн-стилем, поэтому !important —
+     иначе иконка игнорировала бы размер, заданный тут. */
     width: var(--ryav-menu-item-icon-size) !important;
     height: var(--ryav-menu-item-icon-size) !important;
   }
@@ -178,7 +173,6 @@
     white-space: nowrap;
   }
 
-  /* чекбокс для мультивыбора */
   .menu-item__check {
     display: inline-flex;
     flex: none;
@@ -200,7 +194,6 @@
     height: 12px;
   }
 
-  /* поле поиска прямо в триггере (searchable single) */
   .select__search-input {
     flex: 1 1 auto;
     min-width: 0;
@@ -221,7 +214,6 @@
     color: var(--in-icon);
   }
 
-  /* мульти-теги: триггер растёт по высоте, теги переносятся */
   .select[data-tags] .select__trigger {
     height: auto;
     min-height: var(--in-height);

@@ -2,12 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Divider } from "./Divider";
 import { Typography } from "../Typography";
 
-/**
- * Разделительная линия. Оси: `orientation` (horizontal/vertical) и `tone`
- * (default/secondary — токены `--color-divider-color-*`).
- *
- * Своих отступов не имеет: интервалы задаёт раскладка вокруг.
- */
 const meta: Meta<typeof Divider> = {
   title: "UI/Divider",
   component: Divider,
@@ -36,7 +30,6 @@ export const Horizontal: Story = {
   ),
 };
 
-/** Оба тона рядом: `secondary` заметно тусклее. */
 export const Tones: Story = {
   render: () => (
     <div className="flex flex-col gap-24">
@@ -52,7 +45,6 @@ export const Tones: Story = {
   ),
 };
 
-/** Вертикальная линия растягивается по высоте флекс-строки. */
 export const Vertical: Story = {
   args: { orientation: "vertical" },
   render: (args) => (

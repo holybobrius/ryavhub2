@@ -1,7 +1,4 @@
 @layer components {
-  /* Окно, в котором едет лента. Края растворяем маской, чтобы карточки
-     не обрывались резким срезом: mask-image делает альфа-градиент, а не
-     накладывает поверх плашку цвета фона — работает на любом фоне. */
   .quote-marquee__viewport {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(
@@ -27,12 +24,10 @@
     width: max-content;
     gap: var(--marquee-gap);
     animation: quote-marquee-scroll var(--marquee-duration, 40s) linear infinite;
-    /* Отдельный слой у композитора: анимируем только transform, без
-       раскладки и перерисовки на каждом кадре. */
+
     will-change: transform;
   }
 
-  /* Вторая строка едет в обратную сторону — те же кадры, обратный ход. */
   .quote-marquee__track[data-reverse] {
     animation-direction: reverse;
   }
@@ -47,14 +42,13 @@
     flex: none;
   }
 
-  /* Внутри трека лежат ДВЕ одинаковые копии списка, поэтому -50% — это
-     ровно одна копия... плюс половина промежутка между копиями. Без этой
-     половины на стыке дёргается. */
   @keyframes quote-marquee-scroll {
     from {
       transform: translate3d(0, 0, 0);
     }
     to {
+      /* В треке ДВЕ копии списка: -50% = ровно одна копия, плюс половина
+         промежутка — без неё на стыке дёргается. */
       transform: translate3d(calc(-50% - var(--marquee-gap) / 2), 0, 0);
     }
   }

@@ -3,7 +3,6 @@ export interface NavItem {
   label: string;
 }
 
-// Пункты навигации — общие для навбара и футера.
 export const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Главная" },
   { href: "/quotes", label: "Цитаты" },

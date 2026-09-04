@@ -2,10 +2,8 @@ import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { getBestQuote } from "../getQuotesList";
 import { mockDb } from "./mockDb";
 
-// Mock the database to control getQuotesList behavior
 mock.module("@/lib/db", () => ({ db: mockDb }));
 
-// Mock getUserById to return users for quotes
 const mockGetUserById = mock(async (id: number) => {
   const users = [
     { id: 1, name: "User 1", avatarUrl: "" },
