@@ -14,7 +14,7 @@ const START_YEAR = 2021;
  * Футер приложения. Server-компонент. Навигация — только для авторизованных
  * (у гостя её нет). Копирайт и большой вотермарк-логотип показываем всегда.
  */
-export function Footer({ user }: FooterProps) {
+export const Footer = ({ user }: FooterProps) => {
   const year = new Date().getFullYear();
   const copyright =
     year > START_YEAR ? `© ${START_YEAR}–${year}` : `© ${START_YEAR}`;
@@ -47,4 +47,4 @@ export function Footer({ user }: FooterProps) {
       />
     </footer>
   );
-}
+};

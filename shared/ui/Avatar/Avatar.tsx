@@ -48,7 +48,7 @@ const PersonIcon = () => (
   </svg>
 );
 
-export function Avatar({
+export const Avatar = ({
   size = 32,
   color = "neutral",
   type = "soft",
@@ -59,7 +59,7 @@ export function Avatar({
   children,
   ring,
   className,
-}: AvatarProps) {
+}: AvatarProps) => {
   let content: ReactNode;
   if (src) {
     // eslint-disable-next-line @next/next/no-img-element
@@ -90,4 +90,4 @@ export function Avatar({
       {content}
     </span>
   );
-}
+};

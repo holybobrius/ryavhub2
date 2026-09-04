@@ -14,7 +14,7 @@ interface YearDividerProps {
  *
  * Локальный компонент фичи: пока нужен только в списке цитат.
  */
-export function YearDivider({ year }: YearDividerProps) {
+export const YearDivider = ({ year }: YearDividerProps) => {
   const color = "var(--color-year-divider-color)";
 
   return (
@@ -29,4 +29,4 @@ export function YearDivider({ year }: YearDividerProps) {
       />
     </div>
   );
-}
+};

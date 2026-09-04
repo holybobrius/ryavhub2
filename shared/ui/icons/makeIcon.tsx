@@ -10,8 +10,8 @@ export type IconComponentProps = Omit<IconProps, "data">;
  * Компонент без хуков → работает и в серверных компонентах.
  */
 export function makeIcon(data: string) {
-  function IconComponent(props: IconComponentProps) {
+  const IconComponent = (props: IconComponentProps) => {
     return <Icon data={data} {...props} />;
-  }
+  };
   return IconComponent;
 }

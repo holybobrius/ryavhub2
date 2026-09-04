@@ -13,7 +13,7 @@ interface QuoteCardProps {
 
 const TEXT_CLASS = "whitespace-pre-line text-quote-card-text-color";
 
-export function QuoteCard({ quote, isBest = false }: QuoteCardProps) {
+export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
   const upvotes = quote.upvotes?.length ?? 0;
   const downvotes = quote.downvotes?.length ?? 0;
 
@@ -72,7 +72,7 @@ export function QuoteCard({ quote, isBest = false }: QuoteCardProps) {
       </div>
     </article>
   );
-}
+};
 
 function formatQuoteDate(date: Date): string {
   const d = dayjs(date).locale("ru");
@@ -86,7 +86,7 @@ interface ReactionProps {
   count: number;
 }
 
-function Reaction({ kind, count }: ReactionProps) {
+const Reaction = ({ kind, count }: ReactionProps) => {
   const isLike = kind === "like";
 
   return (
@@ -100,4 +100,4 @@ function Reaction({ kind, count }: ReactionProps) {
       {count}
     </Button>
   );
-}
+};

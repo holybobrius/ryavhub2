@@ -13,13 +13,13 @@ export interface CheckboxProps extends Omit<
   indeterminate?: boolean;
 }
 
-export function Checkbox({
+export const Checkbox = ({
   label,
   indeterminate = false,
   className,
   disabled,
   ...rest
-}: CheckboxProps) {
+}: CheckboxProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
   // indeterminate — только DOM-свойство, атрибута нет: ставим через ref.
@@ -61,4 +61,4 @@ export function Checkbox({
       {label && <span className="checkbox__label">{label}</span>}
     </label>
   );
-}
+};

@@ -14,13 +14,13 @@ export interface AvatarStackProps {
   className?: string;
 }
 
-export function AvatarStack({
+export const AvatarStack = ({
   children,
   max = 5,
   size = 32,
   shape = "circle",
   className,
-}: AvatarStackProps) {
+}: AvatarStackProps) => {
   // Только валидные элементы (пропускаем null/false из условного рендера).
   const avatars = Children.toArray(children).filter(
     isValidElement,
@@ -60,4 +60,4 @@ export function AvatarStack({
       )}
     </div>
   );
-}
+};

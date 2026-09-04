@@ -139,6 +139,18 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
 - Prefer Ariakit for any future overlay/interactive primitive (Combobox, Menu, Dialog, Tooltip) so a11y/positioning stay consistent.
 - `searchable` (single only) makes the trigger an editable input you type into to filter (Ariakit Combobox path; combobox operates on the option label, mapped back to value in onChange). Multi/tags use the Select path (chevron, no search). Tag removal uses a `role="button"` span (avoids nested `<button>`); the tags trigger grows in height as tags wrap.
 
+### Component declarations
+
+Components are **arrow consts**: `export const Button = ({ ... }: ButtonProps) => { ... }`. Same for internal, non-exported ones inside a file (`Base` in Typography, `PlainSelect` in Select, `MarqueeRow` in QuoteMarquee).
+
+Exceptions, on purpose:
+
+- **Next file conventions** in `app/` stay function declarations — `export default async function QuotesPage()`, `export default function RootLayout()`, `export async function POST()` in `route.ts`. That is the form in the Next docs and in `create-next-app` output, so it stays greppable/recognisable.
+- **Plain helpers** (not components) stay `function` declarations: `formatQuoteDate`, `positionColor`, `formatSize`, `shuffle<T>`. Hoisting lets them sit _below_ the component that uses them (main thing first, plumbing after), and a generic arrow in a `.tsx` would need the `<T,>` comma hack.
+- **Never** `export default () => …` — an anonymous default export has no name for Fast Refresh to match between recompiles, so instead of preserving state it remounts (and shows as `Anonymous` in DevTools/stack traces). A named `const` is fine: the name is inferred from the variable.
+
+`displayName` and `Object.assign` compounding work the same on arrow consts (TS supports expando properties on un-annotated `const` functions) — see `Typography` and `Input.TextArea`.
+
 ### Styling Conventions
 
 - Use Tailwind v4 utility classes for layout and styling; no styled-components, no CSS modules

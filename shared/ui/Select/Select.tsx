@@ -110,22 +110,22 @@ function wrapperProps(
   };
 }
 
-function LabelMark({ required }: { required?: boolean }) {
+const LabelMark = ({ required }: { required?: boolean }) => {
   if (!required) return null;
   return (
     <span className="input__required" aria-hidden="true">
       *
     </span>
   );
-}
+};
 
-function OptionInner({
+const OptionInner = ({
   option,
   multiple,
 }: {
   option: SelectOption;
   multiple?: boolean;
-}) {
+}) => {
   return (
     <>
       {multiple && (
@@ -139,10 +139,10 @@ function OptionInner({
       <span className="menu-item__label">{option.label}</span>
     </>
   );
-}
+};
 
 // ── Обычный путь: single, multiple (чекбоксы), multiple + tags ─────────
-function PlainSelect(props: SelectProps) {
+const PlainSelect = (props: SelectProps) => {
   const {
     options,
     value,
@@ -254,12 +254,12 @@ function PlainSelect(props: SelectProps) {
       )}
     </div>
   );
-}
+};
 
 // ── Поиск в триггере (single): паттерн Combobox ────────────────────────
 // Комбобокс оперирует ЛЕЙБЛОМ как отображаемым значением; наружу отдаём
 // value опции через onChange (маппинг label -> value).
-function ComboboxSelect(props: SelectProps) {
+const ComboboxSelect = (props: SelectProps) => {
   const {
     options,
     value,
@@ -342,10 +342,10 @@ function ComboboxSelect(props: SelectProps) {
       )}
     </div>
   );
-}
+};
 
-export function Select(props: SelectProps) {
+export const Select = (props: SelectProps) => {
   // Поиск-в-триггере поддерживаем для одиночного выбора (как на макетах).
   if (props.searchable && !props.multiple) return <ComboboxSelect {...props} />;
   return <PlainSelect {...props} />;
-}
+};

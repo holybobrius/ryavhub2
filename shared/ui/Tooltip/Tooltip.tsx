@@ -52,14 +52,14 @@ export interface TooltipProps {
   defaultOpen?: boolean;
 }
 
-export function Tooltip({
+export const Tooltip = ({
   content,
   children,
   direction = "top-center",
   showDelay = 200,
   open,
   defaultOpen,
-}: TooltipProps) {
+}: TooltipProps) => {
   return (
     <Ariakit.TooltipProvider
       placement={PLACEMENT[direction]}
@@ -76,4 +76,4 @@ export function Tooltip({
       </Ariakit.Tooltip>
     </Ariakit.TooltipProvider>
   );
-}
+};

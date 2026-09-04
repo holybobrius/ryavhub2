@@ -9,7 +9,7 @@ export interface RadioProps extends Omit<
 }
 
 // Единичный radio. Группируйте через общий `name` (нативная семантика).
-export function Radio({ label, className, disabled, ...rest }: RadioProps) {
+export const Radio = ({ label, className, disabled, ...rest }: RadioProps) => {
   return (
     <label
       className={["radio", className].filter(Boolean).join(" ")}
@@ -27,4 +27,4 @@ export function Radio({ label, className, disabled, ...rest }: RadioProps) {
       {label && <span className="radio__label">{label}</span>}
     </label>
   );
-}
+};

@@ -22,14 +22,14 @@ export interface LeaderboardItemProps {
  * (`--ryav-lb-position-width`, `--ryav-rating-value-min-width`), поэтому
  * имена начинаются на одной вертикали независимо от числа знаков.
  */
-export function LeaderboardItem({
+export const LeaderboardItem = ({
   position,
   name,
   avatarSrc,
   value,
   tone = "neutral",
   zebra = false,
-}: LeaderboardItemProps) {
+}: LeaderboardItemProps) => {
   return (
     <div
       className="flex items-center gap-leaderboard-item rounded-leaderboard-item p-leaderboard-item"
@@ -86,7 +86,7 @@ export function LeaderboardItem({
       </Typography.Body>
     </div>
   );
-}
+};
 
 /**
  * Призовые места подсвечены по убыванию яркости, остальные — тусклым

@@ -22,12 +22,12 @@ export interface LeaderboardCardProps {
  * Принимает данные (`entries`), а не готовые строки: позиции и зебру
  * карточка расставляет сама, иначе каждый вызов повторял бы эту логику.
  */
-export function LeaderboardCard({
+export const LeaderboardCard = ({
   title,
   icon,
   entries,
   zebra = true,
-}: LeaderboardCardProps) {
+}: LeaderboardCardProps) => {
   return (
     <section className="flex flex-col gap-leaderboard-card rounded-leaderboard-card border-leaderboard-card border-leaderboard-card-border-color bg-leaderboard-card-bg p-leaderboard-card">
       <div className="flex items-center gap-space-2xs">
@@ -58,4 +58,4 @@ export function LeaderboardCard({
       </div>
     </section>
   );
-}
+};

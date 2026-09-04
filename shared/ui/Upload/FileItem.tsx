@@ -34,7 +34,7 @@ function formatSize(bytes: number) {
   return `${(bytes / 1024 / 1024).toFixed(1)} МБ`;
 }
 
-export function FileItem({
+export const FileItem = ({
   name,
   size,
   progress,
@@ -43,7 +43,7 @@ export function FileItem({
   icon,
   onRemove,
   className,
-}: FileItemProps) {
+}: FileItemProps) => {
   // error важнее success; успех подсвечивает мету зелёным.
   const isSuccess = success && !error;
   const sizeText = size != null ? formatSize(size) : undefined;
@@ -87,4 +87,4 @@ export function FileItem({
       )}
     </div>
   );
-}
+};

@@ -28,7 +28,7 @@ const CHEVRON_INSET =
  * Состояние — только индекс: сами цитаты приходят с сервера уже готовыми,
  * докачивать по клику нечего.
  */
-export function BestQuote({ quotes, className }: BestQuoteProps) {
+export const BestQuote = ({ quotes, className }: BestQuoteProps) => {
   const [index, setIndex] = useState(0);
 
   if (quotes.length === 0) return null;
@@ -75,4 +75,4 @@ export function BestQuote({ quotes, className }: BestQuoteProps) {
       )}
     </div>
   );
-}
+};

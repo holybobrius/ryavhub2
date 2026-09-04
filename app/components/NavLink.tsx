@@ -17,7 +17,7 @@ interface NavLinkProps {
  * страницу через usePathname(). Состояния (hover/pressed/focused) — в CSS.
  * Живёт только в навбаре, поэтому здесь, а не в shared/ui + Storybook.
  */
-export function NavLink({ href, children, active }: NavLinkProps) {
+export const NavLink = ({ href, children, active }: NavLinkProps) => {
   const pathname = usePathname();
   const isActive =
     active ??
@@ -35,4 +35,4 @@ export function NavLink({ href, children, active }: NavLinkProps) {
       {children}
     </Link>
   );
-}
+};

@@ -20,13 +20,13 @@ interface QuoteChipProps extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
  *
  * Локальный компонент фичи: за пределами страницы цитат не нужен.
  */
-export function QuoteChip({
+export const QuoteChip = ({
   tone = "default",
   className,
   style,
   children,
   ...rest
-}: QuoteChipProps) {
+}: QuoteChipProps) => {
   const suffix = tone === "primary" ? "-primary" : "";
 
   return (
@@ -60,4 +60,4 @@ export function QuoteChip({
       </Typography.Display>
     </div>
   );
-}
+};

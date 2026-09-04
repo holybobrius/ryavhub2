@@ -8,7 +8,12 @@ export interface SwitchProps extends Omit<
   label?: ReactNode;
 }
 
-export function Switch({ label, className, disabled, ...rest }: SwitchProps) {
+export const Switch = ({
+  label,
+  className,
+  disabled,
+  ...rest
+}: SwitchProps) => {
   return (
     <label
       className={["switch", className].filter(Boolean).join(" ")}
@@ -27,4 +32,4 @@ export function Switch({ label, className, disabled, ...rest }: SwitchProps) {
       {label && <span className="switch__label">{label}</span>}
     </label>
   );
-}
+};

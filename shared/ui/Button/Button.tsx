@@ -16,7 +16,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   avatar?: ReactNode;
 }
 
-export function Button({
+export const Button = ({
   variant = "filled",
   tone = "primary",
   size = "md",
@@ -28,7 +28,7 @@ export function Button({
   // По умолчанию type="button": иначе кнопка внутри <form> сабмитит форму.
   type = "button",
   ...rest
-}: ButtonProps) {
+}: ButtonProps) => {
   // Без текстовой метки трактуем как icon-only (квадратная кнопка).
   const iconOnly = children == null || children === false;
 
@@ -48,4 +48,4 @@ export function Button({
       {rightIcon && <span className="btn__icon">{rightIcon}</span>}
     </button>
   );
-}
+};

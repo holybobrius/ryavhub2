@@ -12,7 +12,7 @@ import "./user-menu.css";
  * квадратный Avatar (пока пустой) + имя. Клиентский компонент, потому что
  * пункты меню несут onClick-обработчики (их нельзя передать из server-навбара).
  */
-export function UserMenu({ user }: { user: User }) {
+export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();
 
   const menu: DropdownItem[] = [
@@ -34,4 +34,4 @@ export function UserMenu({ user }: { user: User }) {
       {user.name}
     </Dropdown>
   );
-}
+};

@@ -15,7 +15,7 @@ interface NavbarProps {
  * Гость: лого + кнопка «Войти». Авторизованный: лого + навигация +
  * пользовательское меню (UserMenu — клиентский Dropdown).
  */
-export function Navbar({ user }: NavbarProps) {
+export const Navbar = ({ user }: NavbarProps) => {
   return (
     <header className="flex items-center justify-between bg-surface-bg-page px-page-margin py-inset-2xs">
       <div className="flex items-center gap-space-2xl">
@@ -54,4 +54,4 @@ export function Navbar({ user }: NavbarProps) {
       )}
     </header>
   );
-}
+};

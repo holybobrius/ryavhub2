@@ -20,7 +20,7 @@ export interface IconTileProps {
   className?: string;
 }
 
-export function IconTile({
+export const IconTile = ({
   icon,
   src,
   alt = "",
@@ -28,7 +28,7 @@ export function IconTile({
   inactive,
   title,
   className,
-}: IconTileProps) {
+}: IconTileProps) => {
   const decorative = title == null;
 
   return (
@@ -50,4 +50,4 @@ export function IconTile({
       )}
     </span>
   );
-}
+};

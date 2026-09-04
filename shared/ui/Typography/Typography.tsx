@@ -78,7 +78,7 @@ interface BaseProps extends CommonProps, NativeProps {
 }
 
 // Внутренняя «рабочая лошадка»: собирает классы и рендерит элемент.
-function Base({
+const Base = ({
   variant,
   defaultWeight,
   defaultAs,
@@ -88,7 +88,7 @@ function Base({
   className,
   children,
   ...rest
-}: BaseProps) {
+}: BaseProps) => {
   const Element = as ?? defaultAs;
   const classes = [
     VARIANT_CLASS[variant],
@@ -104,7 +104,7 @@ function Base({
       {children}
     </Element>
   );
-}
+};
 
 // ── Публичные подкомпоненты ───────────────────────────────────────────
 // `as` по умолчанию — нейтральный тег; для настоящих заголовков передавайте
@@ -113,7 +113,7 @@ function Base({
 interface DisplayProps extends CommonProps, NativeProps {
   size?: DisplaySize;
 }
-function Display({ size = "md", ...rest }: DisplayProps) {
+const Display = ({ size = "md", ...rest }: DisplayProps) => {
   return (
     <Base
       variant={`display-${size}`}
@@ -122,12 +122,12 @@ function Display({ size = "md", ...rest }: DisplayProps) {
       {...rest}
     />
   );
-}
+};
 
 interface HeadingProps extends CommonProps, NativeProps {
   size?: HeadingSize;
 }
-function Heading({ size = "lg", ...rest }: HeadingProps) {
+const Heading = ({ size = "lg", ...rest }: HeadingProps) => {
   return (
     <Base
       variant={`heading-${size}`}
@@ -136,12 +136,12 @@ function Heading({ size = "lg", ...rest }: HeadingProps) {
       {...rest}
     />
   );
-}
+};
 
 interface BodyProps extends CommonProps, NativeProps {
   size?: BodySize;
 }
-function Body({ size = "md", ...rest }: BodyProps) {
+const Body = ({ size = "md", ...rest }: BodyProps) => {
   return (
     <Base
       variant={`body-${size}`}
@@ -150,12 +150,12 @@ function Body({ size = "md", ...rest }: BodyProps) {
       {...rest}
     />
   );
-}
+};
 
 interface LabelProps extends CommonProps, NativeProps {
   size?: LabelSize;
 }
-function Label({ size = "md", ...rest }: LabelProps) {
+const Label = ({ size = "md", ...rest }: LabelProps) => {
   return (
     <Base
       variant={`label-${size}`}
@@ -164,7 +164,7 @@ function Label({ size = "md", ...rest }: LabelProps) {
       {...rest}
     />
   );
-}
+};
 
 Display.displayName = "Typography.Display";
 Heading.displayName = "Typography.Heading";

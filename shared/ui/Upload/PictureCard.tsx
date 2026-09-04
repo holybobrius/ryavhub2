@@ -34,14 +34,14 @@ const ErrorIcon = () => (
   </svg>
 );
 
-export function PictureCard({
+export const PictureCard = ({
   src,
   alt,
   progress,
   error,
   onRemove,
   className,
-}: PictureCardProps) {
+}: PictureCardProps) => {
   return (
     <div
       className={["picture-card", className].filter(Boolean).join(" ")}
@@ -83,4 +83,4 @@ export function PictureCard({
       )}
     </div>
   );
-}
+};

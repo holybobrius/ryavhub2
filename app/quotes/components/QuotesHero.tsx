@@ -22,7 +22,7 @@ interface QuotesHeroProps {
   rankingsCount: number;
 }
 
-export function QuotesHero({ quotesCount, rankingsCount }: QuotesHeroProps) {
+export const QuotesHero = ({ quotesCount, rankingsCount }: QuotesHeroProps) => {
   return (
     <section className="relative aspect-[1800/562] overflow-hidden rounded-lg">
       <Image
@@ -88,4 +88,4 @@ export function QuotesHero({ quotesCount, rankingsCount }: QuotesHeroProps) {
       </div>
     </section>
   );
-}
+};

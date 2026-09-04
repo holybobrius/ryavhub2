@@ -56,7 +56,7 @@ const Chevron = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-export function Dropdown({
+export const Dropdown = ({
   menu,
   children,
   leftIcon,
@@ -66,7 +66,7 @@ export function Dropdown({
   disabled,
   defaultOpen,
   className,
-}: DropdownProps) {
+}: DropdownProps) => {
   // placement bottom-end — меню выровнено по правому краю кнопки.
   const store = Ariakit.useMenuStore({ defaultOpen, placement: "bottom-end" });
   const open = Ariakit.useStoreState(store, "open");
@@ -109,4 +109,4 @@ export function Dropdown({
       </Ariakit.Menu>
     </>
   );
-}
+};

@@ -13,7 +13,7 @@ interface StatCardProps {
  * Появится второе — переедет в shared/ui как компонент ДС (токены для
  * него у дизайнера уже есть, включая размер sm и secondary-значение).
  */
-export function StatCard({ label, value }: StatCardProps) {
+export const StatCard = ({ label, value }: StatCardProps) => {
   return (
     <div className="flex h-[146px] w-[283px] flex-col justify-between rounded-stat-card bg-stat-card-bg p-stat-card">
       <Typography.Body size="sm" className="text-stat-card-label-color">
@@ -25,4 +25,4 @@ export function StatCard({ label, value }: StatCardProps) {
       </Typography.Heading>
     </div>
   );
-}
+};

@@ -45,7 +45,7 @@ const CloseIcon = () => (
   </svg>
 );
 
-export function Tag({
+export const Tag = ({
   children,
   color = "secondary",
   type = "soft",
@@ -56,7 +56,7 @@ export function Tag({
   closeLabel = "Удалить",
   disabled,
   className,
-}: TagProps) {
+}: TagProps) => {
   return (
     <span
       className={["tag", className].filter(Boolean).join(" ")}
@@ -84,4 +84,4 @@ export function Tag({
       )}
     </span>
   );
-}
+};

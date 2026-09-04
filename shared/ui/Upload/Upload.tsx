@@ -54,7 +54,7 @@ function formatMb(bytes: number) {
   return `${Math.round(bytes / 1024 / 1024)} МБ`;
 }
 
-export function Upload({
+export const Upload = ({
   fileType = "files",
   heading = "Загрузите файлы",
   description = "Перетащите их в эту область или нажмите для выбора. Можно загружать несколько файлов сразу.",
@@ -65,7 +65,7 @@ export function Upload({
   error,
   onFilesChange,
   className,
-}: UploadProps) {
+}: UploadProps) => {
   const isImages = fileType === "images";
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -207,4 +207,4 @@ export function Upload({
         ))}
     </div>
   );
-}
+};

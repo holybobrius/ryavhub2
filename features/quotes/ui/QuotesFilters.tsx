@@ -22,11 +22,11 @@ interface QuotesFiltersProps {
   className?: string;
 }
 
-export function QuotesFilters({
+export const QuotesFilters = ({
   authors,
   years,
   className,
-}: QuotesFiltersProps) {
+}: QuotesFiltersProps) => {
   return (
     <aside
       className={["flex flex-col gap-space-md", className]
@@ -134,7 +134,7 @@ export function QuotesFilters({
       </Button>
     </aside>
   );
-}
+};
 
 interface SectionProps {
   title: string;
@@ -142,7 +142,7 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-function Section({ title, action, children }: SectionProps) {
+const Section = ({ title, action, children }: SectionProps) => {
   return (
     <section className="flex flex-col gap-space-sm">
       <div className="flex items-center justify-between gap-space-xs">
@@ -154,4 +154,4 @@ function Section({ title, action, children }: SectionProps) {
       {children}
     </section>
   );
-}
+};

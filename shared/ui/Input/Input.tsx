@@ -32,7 +32,7 @@ interface ShellProps extends FieldCommon {
   children: ReactNode;
 }
 
-function InputShell({
+const InputShell = ({
   size = "md",
   label,
   helperText,
@@ -45,7 +45,7 @@ function InputShell({
   multiline,
   counter,
   children,
-}: ShellProps) {
+}: ShellProps) => {
   return (
     <label
       className={["input", className].filter(Boolean).join(" ")}
@@ -77,13 +77,13 @@ function InputShell({
       )}
     </label>
   );
-}
+};
 
 // Omit "size": у нативного <input> size — ширина в символах (number).
 export interface InputProps
   extends FieldCommon, Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {}
 
-function InputBase({
+const InputBase = ({
   size = "md",
   label,
   helperText,
@@ -94,7 +94,7 @@ function InputBase({
   disabled,
   className,
   ...rest
-}: InputProps) {
+}: InputProps) => {
   return (
     <InputShell
       size={size}
@@ -116,7 +116,7 @@ function InputBase({
       />
     </InputShell>
   );
-}
+};
 
 export interface TextAreaProps
   extends
@@ -126,7 +126,7 @@ export interface TextAreaProps
   showCount?: boolean;
 }
 
-function TextArea({
+const TextArea = ({
   size = "md",
   label,
   helperText,
@@ -143,7 +143,7 @@ function TextArea({
   defaultValue,
   onChange,
   ...rest
-}: TextAreaProps) {
+}: TextAreaProps) => {
   // Контролируемый режим читает длину из value; неконтролируемый — из стейта.
   const isControlled = value !== undefined;
   const [uncontrolledCount, setUncontrolledCount] = useState(
@@ -190,7 +190,7 @@ function TextArea({
       />
     </InputShell>
   );
-}
+};
 
 InputBase.displayName = "Input";
 TextArea.displayName = "Input.TextArea";

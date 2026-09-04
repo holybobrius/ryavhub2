@@ -21,13 +21,13 @@ export interface DividerProps extends Omit<
  * так его можно переопределить снаружи (как делает YearDivider), не
  * заводя в дизайн-системе тон под каждый частный случай.
  */
-export function Divider({
+export const Divider = ({
   orientation = "horizontal",
   tone = "default",
   className,
   style,
   ...rest
-}: DividerProps) {
+}: DividerProps) => {
   const isVertical = orientation === "vertical";
 
   return (
@@ -49,4 +49,4 @@ export function Divider({
       {...rest}
     />
   );
-}
+};

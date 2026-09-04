@@ -29,11 +29,11 @@ interface QuoteMarqueeProps {
   className?: string;
 }
 
-export function QuoteMarquee({
+export const QuoteMarquee = ({
   phrases = PHRASES,
   durationSec = 110,
   className,
-}: QuoteMarqueeProps) {
+}: QuoteMarqueeProps) => {
   const shuffled = shuffle(phrases);
   const half = Math.ceil(shuffled.length / 2);
   const rows = [shuffled.slice(0, half), shuffled.slice(half)];
@@ -55,7 +55,7 @@ export function QuoteMarquee({
       ))}
     </section>
   );
-}
+};
 
 interface MarqueeRowProps {
   phrases: string[];
@@ -63,7 +63,7 @@ interface MarqueeRowProps {
   durationSec: number;
 }
 
-function MarqueeRow({ phrases, reverse, durationSec }: MarqueeRowProps) {
+const MarqueeRow = ({ phrases, reverse, durationSec }: MarqueeRowProps) => {
   return (
     <div className="quote-marquee__viewport">
       <div
@@ -83,7 +83,7 @@ function MarqueeRow({ phrases, reverse, durationSec }: MarqueeRowProps) {
       </div>
     </div>
   );
-}
+};
 
 /** Тасование Фишера–Йетса на копии массива — входной список не трогаем. */
 function shuffle<T>(items: T[]): T[] {
