@@ -9,6 +9,8 @@ import type { Quote } from "../models";
 interface BestQuoteProps {
   /** Все цитаты с максимальным рейтингом. */
   quotes: Quote[];
+  /** Внешние отступы задаёт вызывающая сторона. */
+  className?: string;
 }
 
 /**
@@ -26,7 +28,7 @@ const CHEVRON_INSET =
  * Состояние — только индекс: сами цитаты приходят с сервера уже готовыми,
  * докачивать по клику нечего.
  */
-export function BestQuote({ quotes }: BestQuoteProps) {
+export function BestQuote({ quotes, className }: BestQuoteProps) {
   const [index, setIndex] = useState(0);
 
   if (quotes.length === 0) return null;
@@ -37,7 +39,7 @@ export function BestQuote({ quotes }: BestQuoteProps) {
     setIndex((current) => (current + step + quotes.length) % quotes.length);
 
   return (
-    <div className="relative">
+    <div className={["relative", className].filter(Boolean).join(" ")}>
       {hasMultiple && (
         <div
           className="absolute top-1/2 -translate-y-1/2"

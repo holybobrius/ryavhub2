@@ -1,0 +1,68 @@
+@layer components {
+  /* Строка автора: чекбокс ДС растянут на всю ширину, чтобы счётчик
+     прижался к правому краю. Своей вёрстки у .checkbox__label нет, поэтому
+     раздаём flex здесь, а не утилитами через экранированные селекторы. */
+  .quotes-filters__author {
+    width: 100%;
+    gap: var(--spacing-12);
+  }
+
+  .quotes-filters__author .checkbox__label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Список прокручивается внутри себя: панель не должна расти вслед за
+     числом авторов. 200px — ровно пять строк по 40. */
+  .quotes-filters__scroll {
+    max-height: var(--spacing-200);
+    overflow-y: auto;
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-color) transparent;
+  }
+
+  .quotes-filters__scroll::-webkit-scrollbar {
+    width: var(--ryav-scrollbar-width);
+  }
+
+  .quotes-filters__scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .quotes-filters__scroll::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar-color);
+    border-radius: var(--ryav-scrollbar-radius);
+  }
+
+  /* Год + счётчик. Токены --*-year-nav-* дизайнер завёл под этот элемент;
+     границы среди них нет — беру общий цвет рамки поверхности, флаг
+     дизайнеру. */
+  .quotes-filters__year {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--ryav-year-nav-item-gap);
+    padding: var(--ryav-year-nav-item-padding-y)
+      var(--ryav-year-nav-item-padding-x);
+    border: var(--border-width-1) solid var(--color-surface-border-default);
+    border-radius: var(--ryav-year-nav-item-radius);
+    background: var(--color-year-nav-item-bg-default);
+    color: var(--color-year-nav-year-color-default);
+    cursor: pointer;
+  }
+
+  .quotes-filters__year:hover {
+    background: var(--color-year-nav-item-bg-hover);
+  }
+
+  .quotes-filters__year[data-active="true"] {
+    background: var(--color-year-nav-item-bg-active);
+    color: var(--color-year-nav-year-color-active);
+  }
+
+  /* Счётчик приподнят как верхний индекс — так в макете. */
+  .quotes-filters__year-count {
+    align-self: flex-start;
+    color: var(--color-year-nav-count-color);
+  }
+}
