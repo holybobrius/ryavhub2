@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach, mock } from "bun:test";
 import { getQuotesList } from "../getQuotesList";
 import { mockDb } from "./mockDb";
 
-// Mock the database module
 mock.module("@/lib/db", () => ({
   db: mockDb,
 }));

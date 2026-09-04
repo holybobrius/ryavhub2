@@ -4,12 +4,6 @@ import { Typography } from "../Typography";
 import { IconPencil } from "../icons";
 import type { ButtonTone, ButtonVariant } from "./Button";
 
-/**
- * Основной интерактивный элемент. Поддержка текста, иконок слева и справа,
- * аватара. Оси: variant (filled/outlined/ghost/soft), tone (primary/
- * secondary/tertiary/error), size (sm/md/lg). Состояния hover/pressed/
- * focused/disabled — нативные (наведи/нажми/таб). Всё на токенах кнопки.
- */
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
   component: Button,
@@ -43,7 +37,6 @@ const DemoAvatar = () => (
 const VARIANTS: ButtonVariant[] = ["filled", "outlined", "ghost", "soft"];
 const TONES: ButtonTone[] = ["primary", "secondary", "tertiary", "error"];
 
-// Интерактивная стори с контролами (наведи/нажми/таб для состояний).
 export const Playground: Story = {
   args: {
     children: "button",
@@ -55,7 +48,6 @@ export const Playground: Story = {
   },
 };
 
-// Матрица tone × variant — как во фрейме Figma.
 export const Overview: Story = {
   render: () => (
     <div className="flex flex-col gap-24">

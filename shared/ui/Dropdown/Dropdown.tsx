@@ -4,8 +4,8 @@ import * as Ariakit from "@ariakit/react";
 import type { CSSProperties, ReactNode } from "react";
 import { Button } from "../Button";
 import type { ButtonVariant, ButtonTone, ButtonSize } from "../Button";
-// Меню-попап и пункты берём теми же классами, что и Select
-// (.dropdown / .menu-item) — один источник стилей меню.
+
+// Попап и пункты — теми же классами, что у Select: один источник стилей меню.
 import "../Select/select.css";
 import "./dropdown.css";
 
@@ -17,23 +17,17 @@ export interface DropdownItem {
 }
 
 export interface DropdownProps {
-  /** Пункты меню. */
   menu: DropdownItem[];
-  /** Лейбл триггер-кнопки. */
   children?: ReactNode;
-  /** Иконка слева в триггере. */
   leftIcon?: ReactNode;
-  /** Проброс в Button. */
   variant?: ButtonVariant;
   tone?: ButtonTone;
   size?: ButtonSize;
   disabled?: boolean;
-  /** Открыть по умолчанию (для сторибука/демо). */
   defaultOpen?: boolean;
   className?: string;
 }
 
-// Шеврон вниз; при открытии разворачиваем на 180° (см. inline-transform).
 const chevronStyle = (open: boolean): CSSProperties => ({
   transform: open ? "rotate(180deg)" : undefined,
   transition: "transform 0.15s ease",
@@ -56,7 +50,7 @@ const Chevron = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-export function Dropdown({
+export const Dropdown = ({
   menu,
   children,
   leftIcon,
@@ -66,8 +60,7 @@ export function Dropdown({
   disabled,
   defaultOpen,
   className,
-}: DropdownProps) {
-  // placement bottom-end — меню выровнено по правому краю кнопки.
+}: DropdownProps) => {
   const store = Ariakit.useMenuStore({ defaultOpen, placement: "bottom-end" });
   const open = Ariakit.useStoreState(store, "open");
 
@@ -109,4 +102,4 @@ export function Dropdown({
       </Ariakit.Menu>
     </>
   );
-}
+};

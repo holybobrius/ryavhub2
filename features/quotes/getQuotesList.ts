@@ -2,14 +2,6 @@ import { db } from "@/lib/db";
 import { Quote } from "./models";
 import { selectBestQuotes } from "./getBestQuotes";
 
-/**
- * Все цитаты с автором и оценками.
- *
- * Один запрос с `include`: Prisma забирает автора и оценки вместе с
- * цитатами (JOIN на стороне БД). Раньше здесь был N+1 — отдельный
- * SELECT за пользователем на каждую цитату, то есть 160+ запросов
- * на текущем объёме.
- */
 export const getQuotesList = async (): Promise<Quote[]> => {
   const quotes = await db.quotes.findMany({
     include: {
@@ -39,12 +31,6 @@ export const getQuotesList = async (): Promise<Quote[]> => {
   });
 };
 
-/**
- * Цитата с наибольшим рейтингом; при ничьей — случайная из лидеров.
- * Полный список победителей отдаёт `selectBestQuotes`.
- *
- * `preloadedQuotes` избавляет от второй выгрузки, если список уже загружен.
- */
 export const getBestQuote = async (
   preloadedQuotes?: Quote[],
 ): Promise<Quote | null> => {

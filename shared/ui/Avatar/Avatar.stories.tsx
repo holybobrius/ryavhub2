@@ -3,11 +3,6 @@ import { Avatar } from "./Avatar";
 import type { AvatarColor, AvatarSize, AvatarType } from "./Avatar";
 import { Typography } from "../Typography";
 
-/**
- * Аватар пользователя. Контент: текст (инициалы), фото (`src`), иконка
- * (`icon`) или дефолтный силуэт. Оси: size (16–64), color (12 цветов),
- * type (soft/filled/tinted), shape (circle/square). Всё на токенах аватара.
- */
 const meta: Meta<typeof Avatar> = {
   title: "UI/Avatar",
   component: Avatar,
@@ -65,7 +60,6 @@ const COLORS: AvatarColor[] = [
 ];
 const TYPES: AvatarType[] = ["soft", "filled", "tinted"];
 
-// Пример фото (inline SVG data-URI, чтобы стори была самодостаточной).
 const PHOTO =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
@@ -78,7 +72,6 @@ const StarIcon = () => (
   </svg>
 );
 
-// Интерактивная стори с контролами.
 export const Playground: Story = {
   args: {
     children: "A",
@@ -89,7 +82,6 @@ export const Playground: Story = {
   },
 };
 
-// Контент: текст / фото / иконка / дефолтный силуэт.
 export const Content: Story = {
   render: () => (
     <div className="flex items-center gap-24">
@@ -123,7 +115,6 @@ export const Content: Story = {
   ),
 };
 
-// Все размеры в ряд.
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-16">
@@ -136,7 +127,6 @@ export const Sizes: Story = {
   ),
 };
 
-// Матрица: тип × цвет.
 export const Colors: Story = {
   render: () => (
     <div className="flex flex-col gap-16">
@@ -158,7 +148,6 @@ export const Colors: Story = {
   ),
 };
 
-// Квадратная форма.
 export const Square: Story = {
   render: () => (
     <div className="flex items-center gap-16">
@@ -171,7 +160,6 @@ export const Square: Story = {
   ),
 };
 
-// Стопка аватарок с кольцом-обводкой.
 export const Stack: Story = {
   render: () => (
     <div className="flex">

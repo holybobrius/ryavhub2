@@ -4,35 +4,25 @@ import { Typography } from "../Typography";
 export type LeaderboardValueTone = "neutral" | "positive" | "negative";
 
 export interface LeaderboardItemProps {
-  /** Место в рейтинге, начиная с 1. Первые три цвета — свои токены. */
   position: number;
   name: string;
   avatarSrc?: string;
   value: number | string;
-  /** Окраска значения: нейтральное / зелёное / красное. */
   tone?: LeaderboardValueTone;
-  /** Подложка «зебры». В карточке расставляется автоматически. */
   zebra?: boolean;
 }
 
-/**
- * Строка лидерборда: позиция + пользователь + значение.
- *
- * Позиция и значение — колонки фиксированной ширины
- * (`--ryav-lb-position-width`, `--ryav-rating-value-min-width`), поэтому
- * имена начинаются на одной вертикали независимо от числа знаков.
- */
-export function LeaderboardItem({
+export const LeaderboardItem = ({
   position,
   name,
   avatarSrc,
   value,
   tone = "neutral",
   zebra = false,
-}: LeaderboardItemProps) {
+}: LeaderboardItemProps) => {
   return (
     <div
-      className="flex items-center gap-[var(--ryav-leaderboard-item-gap)] rounded-[var(--ryav-leaderboard-item-border-radius)] px-[var(--ryav-leaderboard-item-padding-x)] py-[var(--ryav-leaderboard-item-padding-y)]"
+      className="flex items-center gap-leaderboard-item rounded-leaderboard-item p-leaderboard-item"
       style={{
         backgroundColor: zebra
           ? "var(--color-leaderboard-item-zebra-bg)"
@@ -51,8 +41,7 @@ export function LeaderboardItem({
         {position}
       </Typography.Body>
 
-      {/* user badge: аватар + ник. Токены --ryav-user-badge-* */}
-      <div className="flex min-w-0 items-center gap-[var(--ryav-user-badge-gap)]">
+      <div className="flex min-w-0 items-center gap-user-badge">
         <Avatar
           size={24}
           shape="square"
@@ -86,12 +75,8 @@ export function LeaderboardItem({
       </Typography.Body>
     </div>
   );
-}
+};
 
-/**
- * Призовые места подсвечены по убыванию яркости, остальные — тусклым
- * `default`. Значения приходят из токенов `--color-lb-position-*`.
- */
 function positionColor(position: number): string {
   if (position >= 1 && position <= 3) {
     return `var(--color-lb-position-${position})`;

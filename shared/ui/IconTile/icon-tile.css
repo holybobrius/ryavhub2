@@ -1,11 +1,5 @@
 @layer components {
-  /* IconTile — иконка в скруглённой квадратной плитке.
-     Токены дизайн-системы маппятся на локальные --it-* переменные;
-     data-атрибуты (size / inactive) переключают, какой токен куда идёт.
-     Тот же приём, что в button.css / avatar.css — CSS ссылается на токены
-     ПО ИМЕНИ, поэтому переживает ре-экспорт значений из Figma. */
   .icon-tile {
-    /* по умолчанию: size=default, активное состояние */
     --it-size: var(--ryav-icon-tile-size-default);
     --it-bg: var(--color-icon-tile-bg);
     --it-border: var(--color-icon-tile-border-color);
@@ -23,7 +17,6 @@
     background: var(--it-bg);
   }
 
-  /* Размеры */
   .icon-tile[data-size="small"] {
     --it-size: var(--ryav-icon-tile-size-small);
   }
@@ -31,33 +24,30 @@
     --it-size: var(--ryav-icon-tile-size-large);
   }
 
-  /* Неактивное состояние — тускнеют фон / рамка / иконка */
   .icon-tile[data-inactive] {
     --it-bg: var(--color-icon-tile-bg-inactive);
     --it-border: var(--color-icon-tile-border-color-inactive);
     --it-icon: var(--color-icon-tile-icon-color-inactive);
   }
 
-  /* Основная иконка (глиф). Размер задаёт плитка, не вызывающий код:
-     фиксируем на --ryav-icon-tile-glyph-size, а currentColor красит stroke. */
   .icon-tile__glyph {
     display: inline-flex;
     width: var(--ryav-icon-tile-glyph-size);
     height: var(--ryav-icon-tile-glyph-size);
     color: var(--it-icon);
   }
-  /* Приводим вложенную иконку к размеру глифа. `.icon` из нашего примитива
-     ставит width/height инлайн-стилем, поэтому перебиваем через !important. */
+
   .icon-tile__glyph > :where(.icon, svg, img) {
+    /* Icon-примитив ставит width/height инлайн-стилем, поэтому !important —
+     иначе иконка игнорировала бы размер, заданный тут. */
     width: 100% !important;
     height: 100% !important;
   }
 
-  /* Иконка картинкой (растр): вписываем в квадрат глифа. */
   .icon-tile__img {
     object-fit: contain;
   }
-  /* Растр не красится currentColor, поэтому inactive гасим чб-фильтром. */
+
   .icon-tile[data-inactive] .icon-tile__img {
     filter: grayscale(1);
   }

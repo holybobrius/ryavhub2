@@ -4,33 +4,24 @@ import { IconDiamond } from "../icons";
 import { LeaderboardItem } from "./LeaderboardItem";
 import type { LeaderboardItemProps } from "./LeaderboardItem";
 
-/** Строка лидерборда без служебных полей — их проставляет карточка. */
 export type LeaderboardEntry = Omit<LeaderboardItemProps, "position" | "zebra">;
 
 export interface LeaderboardCardProps {
   title: string;
-  /** Иконка слева от заголовка. По умолчанию — ромб. */
   icon?: ReactNode;
   entries: LeaderboardEntry[];
-  /** Чередование подложки строк. */
   zebra?: boolean;
 }
 
-/**
- * Карточка рейтинга: заголовок секции + строки лидерборда.
- *
- * Принимает данные (`entries`), а не готовые строки: позиции и зебру
- * карточка расставляет сама, иначе каждый вызов повторял бы эту логику.
- */
-export function LeaderboardCard({
+export const LeaderboardCard = ({
   title,
   icon,
   entries,
   zebra = true,
-}: LeaderboardCardProps) {
+}: LeaderboardCardProps) => {
   return (
-    <section className="flex flex-col gap-[var(--ryav-leaderboard-card-gap)] rounded-[var(--ryav-leaderboard-card-border-radius)] border-[length:var(--ryav-leaderboard-card-border-width)] border-[color:var(--color-leaderboard-card-border-color)] bg-[color:var(--color-leaderboard-card-bg)] p-[var(--ryav-leaderboard-card-padding)]">
-      <div className="flex items-center gap-8">
+    <section className="flex flex-col gap-leaderboard-card rounded-leaderboard-card border-leaderboard-card border-leaderboard-card-border-color bg-leaderboard-card-bg p-leaderboard-card">
+      <div className="flex items-center gap-space-2xs">
         <span
           className="flex shrink-0"
           style={{ color: "var(--color-leaderboard-card-icon-color)" }}
@@ -58,4 +49,4 @@ export function LeaderboardCard({
       </div>
     </section>
   );
-}
+};

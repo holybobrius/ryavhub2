@@ -1,8 +1,3 @@
-/*
-  Radio: нативный <input type=radio> скрыт, визуал — .radio__box (круг) с
-  точкой-индикатором .radio__dot. Состояния — псевдоклассы через соседний (~).
-  Токены зеркалят checkbox (--color-radio-* -> --color-checkbox-*).
-*/
 @layer components {
   .radio {
     position: relative;
@@ -58,7 +53,6 @@
     background: var(--rb-ind);
   }
 
-  /* unchecked, интерактив */
   .radio__input:not(:checked):hover ~ .radio__box {
     --rb-bg: var(--color-radio-unchecked-bg-hover);
     --rb-border: var(--color-radio-unchecked-border-hover);
@@ -74,7 +68,6 @@
       var(--color-radio-focus-ring-color);
   }
 
-  /* checked */
   .radio__input:checked ~ .radio__box {
     --rb-bg: var(--color-radio-checked-bg-default);
     --rb-border: transparent;
@@ -93,7 +86,6 @@
       var(--color-radio-focus-ring-color);
   }
 
-  /* disabled */
   .radio__input:disabled ~ .radio__box {
     box-shadow: none;
     --rb-bg: var(--color-radio-unchecked-bg-disabled);

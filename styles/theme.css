@@ -1,10 +1,7 @@
-/*
-  Переопределения поверх tokens.css (файл дизайнера не редактируем —
-  он заменяется целиком при следующем экспорте из Figma).
-*/
+/* Переопределения поверх tokens.css — файл дизайнера не редактируем,
+   он заменяется целиком при следующем экспорте из Figma. */
+
 @theme {
-  /* Шрифты: подключаются через next/font в app/layout.tsx, который кладёт
-     CSS-переменные на <html>. PT Root UI пока не подключён — системный фолбэк. */
   --font-heading: var(--font-geologica), system-ui, sans-serif;
   --font-body:
     var(--font-pt-root-ui, "PT Root UI"), system-ui, -apple-system, sans-serif;
@@ -24,8 +21,7 @@
   --tracking-label-sm: 0.06em;
   --tracking-label-xs: 0.06em;
 
-  /* Line-height: дизайнер не экспортировал — ВРЕМЕННЫЕ значения.
-     Парные --text-<x>--line-height подхватываются утилитой text-<x>. */
+  /* ВРЕМЕННЫЕ значения: дизайнер line-height не экспортировал. */
   --text-display-lg--line-height: 1;
   --text-display-md--line-height: 1.05;
   --text-display-sm--line-height: 1.05;
@@ -39,4 +35,88 @@
   --text-label-md--line-height: 1.3;
   --text-label-sm--line-height: 1.3;
   --text-label-xs--line-height: 1.3;
+}
+
+@theme inline {
+  /* Семантическая шкала отступов — НАША прослойка, у дизайнера её нет:
+     inset-* — padding внутри рамки, space-* — интервал между элементами.
+     Нужна, потому что gap-16 жёстко привязан к имени --spacing-16 из
+     экспорта: переименует ступень — класс молча перестанет генерироваться.
+     Спросить дизайнера про шкалу space/* в Figma Variables. */
+  --spacing-space-2xs: var(--spacing-8);
+  --spacing-space-xs: var(--spacing-12);
+  --spacing-space-sm: var(--spacing-16);
+  --spacing-space-md: var(--spacing-20);
+  --spacing-space-lg: var(--spacing-24);
+  --spacing-space-xl: var(--spacing-32);
+  --spacing-space-2xl: var(--spacing-40);
+
+  --spacing-inset-2xs: var(--spacing-8);
+  --spacing-inset-xs: var(--spacing-12);
+  --spacing-inset-sm: var(--spacing-16);
+  --spacing-inset-md: var(--spacing-20);
+  --spacing-inset-lg: var(--spacing-24);
+  --spacing-inset-xl: var(--spacing-32);
+  --spacing-inset-2xl: var(--spacing-40);
+
+  --spacing-page-margin: var(--ryav-grid-margin-desktop-xl);
+  --spacing-layout-block: var(--ryav-layout-block-gap);
+  --spacing-author-block: var(--ryav-author-block-gap);
+  --spacing-author-block-info: var(--ryav-author-block-info-gap);
+  --spacing-year-nav: var(--ryav-year-nav-gap);
+  --spacing-user-badge: var(--ryav-user-badge-gap);
+  --spacing-sidebar-card: var(--ryav-sidebar-card-padding);
+  --spacing-sidebar-card-section: var(--ryav-sidebar-card-section-gap);
+
+  --radius-stat-card: var(--ryav-stat-card-border-radius);
+  --radius-quote-chip: var(--ryav-quote-chip-border-radius);
+  --radius-quote-card: var(--ryav-quote-card-border-radius);
+  --radius-sidebar-card: var(--ryav-sidebar-card-border-radius);
+  --radius-leaderboard-card: var(--ryav-leaderboard-card-border-radius);
+  --radius-leaderboard-item: var(--ryav-leaderboard-item-border-radius);
+
+  --border-width-quote-chip: var(--ryav-quote-chip-border-width);
+  --border-width-quote-card: var(--ryav-quote-card-border-width);
+  --border-width-sidebar-card: var(--ryav-sidebar-card-border-width);
+  --border-width-leaderboard-card: var(--ryav-leaderboard-card-border-width);
+}
+
+/* Несколько размеров одного рода на элементе (padding X+Y, или gap и padding)
+   алиасом не задать: одно имя в --spacing-* даёт и p-, и gap-, и Tailwind
+   склеит обе декларации в одно правило. Поэтому — @utility.
+   Имя @utility не должно совпадать с тем, что уже даёт namespace. */
+@utility p-stat-card {
+  padding: var(--ryav-stat-card-lg-padding-y) var(--ryav-stat-card-lg-padding-x);
+}
+
+@utility p-quote-chip {
+  padding: var(--ryav-quote-chip-padding-y) var(--ryav-quote-chip-padding-x);
+}
+
+@utility p-quote-card-body {
+  padding: var(--ryav-quote-card-body-padding-top)
+    var(--ryav-quote-card-body-padding-x)
+    var(--ryav-quote-card-body-padding-bottom);
+}
+
+@utility p-quote-card-footer {
+  padding: var(--ryav-quote-card-footer-padding-y)
+    var(--ryav-quote-card-footer-padding-x);
+}
+
+@utility gap-leaderboard-card {
+  gap: var(--ryav-leaderboard-card-gap);
+}
+
+@utility p-leaderboard-card {
+  padding: var(--ryav-leaderboard-card-padding);
+}
+
+@utility gap-leaderboard-item {
+  gap: var(--ryav-leaderboard-item-gap);
+}
+
+@utility p-leaderboard-item {
+  padding: var(--ryav-leaderboard-item-padding-y)
+    var(--ryav-leaderboard-item-padding-x);
 }

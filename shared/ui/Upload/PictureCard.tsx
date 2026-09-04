@@ -3,9 +3,7 @@ import "./upload.css";
 export interface PictureCardProps {
   src: string;
   alt?: string;
-  /** Прогресс загрузки 0–100 — показывает оверлей с процентом и полосой. */
   progress?: number;
-  /** Ошибка — красная рамка + оверлей с иконкой. */
   error?: boolean;
   onRemove?: () => void;
   className?: string;
@@ -34,20 +32,19 @@ const ErrorIcon = () => (
   </svg>
 );
 
-export function PictureCard({
+export const PictureCard = ({
   src,
   alt,
   progress,
   error,
   onRemove,
   className,
-}: PictureCardProps) {
+}: PictureCardProps) => {
   return (
     <div
       className={["picture-card", className].filter(Boolean).join(" ")}
       data-error={error ? "true" : undefined}
     >
-      {/* object URL — next/image не подходит, используем нативный img */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="picture-card__img" src={src} alt={alt ?? ""} />
 
@@ -83,4 +80,4 @@ export function PictureCard({
       )}
     </div>
   );
-}
+};

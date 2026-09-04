@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { PictureCard } from "./PictureCard";
 
-/**
- * Превью-карточка для сетки картинок в Upload (fileType="images"): 128×128,
- * оверлей прогресса с процентом, состояние ошибки, кнопка удаления на ховере.
- */
 const meta: Meta<typeof PictureCard> = {
   title: "UI/Upload.PictureCard",
   component: PictureCard,
@@ -16,7 +12,6 @@ export default meta;
 
 type Story = StoryObj<typeof PictureCard>;
 
-// Инлайновый SVG как data-URI, чтобы стори не зависела от внешних картинок.
 const SAMPLE =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(

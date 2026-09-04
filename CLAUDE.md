@@ -139,6 +139,18 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
 - Prefer Ariakit for any future overlay/interactive primitive (Combobox, Menu, Dialog, Tooltip) so a11y/positioning stay consistent.
 - `searchable` (single only) makes the trigger an editable input you type into to filter (Ariakit Combobox path; combobox operates on the option label, mapped back to value in onChange). Multi/tags use the Select path (chevron, no search). Tag removal uses a `role="button"` span (avoids nested `<button>`); the tags trigger grows in height as tags wrap.
 
+### Component declarations
+
+Components are **arrow consts**: `export const Button = ({ ... }: ButtonProps) => { ... }`. Same for internal, non-exported ones inside a file (`Base` in Typography, `PlainSelect` in Select, `MarqueeRow` in QuoteMarquee).
+
+Exceptions, on purpose:
+
+- **Next file conventions** in `app/` stay function declarations — `export default async function QuotesPage()`, `export default function RootLayout()`, `export async function POST()` in `route.ts`. That is the form in the Next docs and in `create-next-app` output, so it stays greppable/recognisable.
+- **Plain helpers** (not components) stay `function` declarations: `formatQuoteDate`, `positionColor`, `formatSize`, `shuffle<T>`. Hoisting lets them sit _below_ the component that uses them (main thing first, plumbing after), and a generic arrow in a `.tsx` would need the `<T,>` comma hack.
+- **Never** `export default () => …` — an anonymous default export has no name for Fast Refresh to match between recompiles, so instead of preserving state it remounts (and shows as `Anonymous` in DevTools/stack traces). A named `const` is fine: the name is inferred from the variable.
+
+`displayName` and `Object.assign` compounding work the same on arrow consts (TS supports expando properties on un-annotated `const` functions) — see `Typography` and `Input.TextArea`.
+
 ### Styling Conventions
 
 - Use Tailwind v4 utility classes for layout and styling; no styled-components, no CSS modules
@@ -146,10 +158,19 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
   - `tokens.css` — exported from Figma by the designer, **never edit by hand** (replaced wholesale on re-export)
   - `reset-defaults.css` — disables Tailwind's built-in palette/spacing/text scales so only design-system tokens exist
   - `theme.css` — project overrides on top of tokens (font stacks via `next/font`, unit fixes)
-- Spacing tokens are in **pixels**: `p-16` = 16px, `gap-24` = 24px (not Tailwind's default `0.25rem` scale)
+- Spacing tokens are in **pixels**, not Tailwind's `0.25rem` scale. But **do not use the numeric scale in JSX** (`gap-16`, `p-32`) — those are primitives, and they are bound to the exported token names: if the designer renames or drops a step, the class silently stops being generated (no build error, the default scale is disabled in `reset-defaults.css`). Use the semantic scale from `styles/theme.css` instead:
+  - `gap-space-*` / `mt-space-*` — space BETWEEN elements; `p-inset-*` — padding INSIDE a frame. Steps are shared by both: `2xs`=8, `xs`=12, `sm`=16, `md`=20, `lg`=24, `xl`=32, `2xl`=40.
+  - Direction is not encoded (no `stack`/`inline`): the container already says it via `flex-col`, and our vertical and horizontal rhythms use the same values.
+  - This scale is **ours**, not the designer's — flag it, and replace it with `space/*` from Figma Variables if he has one.
+  - Page-level: `px-page-margin` (grid margin, aligns with `<main>`), `mt-layout-block` (184px rhythm between page zones, `--ryav-layout-block-gap`).
+  - Values outside the scale stay numeric with a comment (`mt-96`, `mt-56` in `app/quotes/page.tsx` — not in the tokens, pending the designer).
 - Prefer semantic tokens (`bg-surface-bg-page`, `text-surface-text-heading`, `bg-action-primary-bg-default`) over primitives (`bg-purple-500`)
 - Typography: `font-heading` (Geologica) / `font-body` (PT Root UI), sizes `text-display-*`, `text-heading-*`, `text-body-*`, `text-label-*`, tracking `tracking-<same-name>`
-- Component-specific dimensions are `--ryav-*` variables, used as arbitrary values: `p-[var(--ryav-button-padding-x)]`
+- Component-specific dimensions are `--ryav-*` variables. **Do not consume them as arbitrary values** (`gap-[var(--ryav-year-nav-gap)]`) — that syntax is unreadable and was removed from the codebase. Instead:
+  - Colors need nothing: `--color-*` tokens are already in a Tailwind namespace, so `bg-sidebar-card-bg`, `text-quote-card-text-color`, `border-t-quote-card-border-color` work out of the box. Never write `bg-[color:var(--color-…)]`.
+  - Single dimensions: add an alias in `styles/theme.css` under `@theme inline` — `--spacing-year-nav: var(--ryav-year-nav-gap)` gives `gap-year-nav`. Namespaces: `--spacing-*` → `p-`/`m-`/`gap-`/`w-`/`h-`, `--radius-*` → `rounded-`, `--border-width-*` → `border-` (incl. `border-t-`). `inline` is required so the token is substituted directly instead of through an extra Tailwind variable. Name the alias after the **element**, not the property (`--spacing-year-nav`, not `-year-nav-gap`, else you get `gap-year-nav-gap`).
+  - Several dimensions of one kind on the same element (padding X + Y, or both gap and padding): one `@utility` in `styles/theme.css` — `@utility p-quote-card-footer { padding: … }`. An alias would collide, since a single `--spacing-*` name feeds both `p-` and `gap-`; on a collision Tailwind merges both declarations into one rule and the namespace wins.
+  - Bare `--border-width-*` tokens are already usable as `border-1` / `border-t-2`.
 - Dark theme only
 - Shared UI components in `shared/ui/`
 - Fonts are wired in `app/fonts.ts` (single source for app + Storybook): Geologica via `next/font/google`, PT Root UI via `next/font/local` from `app/fonts/*.woff2`. **Caveat:** PT Root UI ships 300/400/500/700; the `--font-weight-semibold` token (600) has no exact face → browser falls back to 700. Flag to designer if that matters.
@@ -182,3 +203,13 @@ When doing any task, explain the reasoning alongside the work — including fund
 - Draw comparisons to what the owner already knows (styled-components → Tailwind, CRA/Vite SPA → Next.js, Jest → `bun test`).
 
 Keep explanations concise and attached to the actual change being made, not abstract lectures. Communicate in Russian.
+
+### Who writes the code
+
+The owner writes the code himself; Claude is a consultant and an occasional executor, not the default author.
+
+- **Do not touch the files unless explicitly asked.** Editing/creating/deleting code requires a direct request in the current message ("сделай", "напиши", "поправь", "внеси", "делегирую тебе X"). A question, a discussion of an approach, a shown snippet, a complaint about a bug, or an agreed plan are **not** permission to edit.
+- **Default response = an answer, not a diff.** Explain the approach, trade-offs and the exact steps; show code only as an illustration in the chat (a fenced block), so the owner types it in himself.
+- If a change looks obviously needed, describe it and ask — one line is enough ("хочешь, внесу?"). Then wait.
+- Explicit permission is **per-request**: it covers the task that was asked for, not the neighbouring files or the "while I'm here" cleanup, and it does not carry over to the next message.
+- Reading and searching the repo, running `lint`/`build`/`db:*` and other read-only commands are always fine — the restriction is about writing to the project's files.

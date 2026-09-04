@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Input } from "./Input";
 
-/**
- * Многострочное поле ввода — Input.TextArea. Тот же визуал, что у Input
- * (лейбл, состояния, хелпер, обязательная метка), плюс многострочность
- * с вертикальным ресайзом.
- */
 const meta: Meta<typeof Input.TextArea> = {
   title: "UI/Input.TextArea",
   component: Input.TextArea,

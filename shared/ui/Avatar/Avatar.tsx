@@ -23,19 +23,14 @@ export interface AvatarProps {
   color?: AvatarColor;
   type?: AvatarType;
   shape?: AvatarShape;
-  /** Фото пользователя. Приоритетнее icon и текста. */
   src?: string;
   alt?: string;
-  /** Кастомная иконка. Показывается, если нет src. */
   icon?: ReactNode;
-  /** Текст (обычно инициалы). Показывается, если нет src и icon. */
   children?: ReactNode;
-  /** Обводка-кольцо под цвет фона страницы (для стопок аватарок). */
   ring?: boolean;
   className?: string;
 }
 
-// Дефолтный контент, когда ничего не передано — силуэт пользователя.
 const PersonIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
@@ -48,7 +43,7 @@ const PersonIcon = () => (
   </svg>
 );
 
-export function Avatar({
+export const Avatar = ({
   size = 32,
   color = "neutral",
   type = "soft",
@@ -59,7 +54,7 @@ export function Avatar({
   children,
   ring,
   className,
-}: AvatarProps) {
+}: AvatarProps) => {
   let content: ReactNode;
   if (src) {
     // eslint-disable-next-line @next/next/no-img-element
@@ -90,4 +85,4 @@ export function Avatar({
       {content}
     </span>
   );
-}
+};

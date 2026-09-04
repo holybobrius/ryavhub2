@@ -15,15 +15,12 @@ interface FieldCommon {
   size?: InputSize;
   label?: ReactNode;
   helperText?: ReactNode;
-  /** Состояние ошибки (проп, не выводится из DOM). */
   error?: boolean;
   required?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 }
 
-// Внутренняя оболочка: label + рамка поля + низ (helper + счётчик).
-// Обёртка — <label>, клик по любой части фокусирует контрол.
 interface ShellProps extends FieldCommon {
   disabled?: boolean;
   className?: string;
@@ -32,7 +29,7 @@ interface ShellProps extends FieldCommon {
   children: ReactNode;
 }
 
-function InputShell({
+const InputShell = ({
   size = "md",
   label,
   helperText,
@@ -45,7 +42,7 @@ function InputShell({
   multiline,
   counter,
   children,
-}: ShellProps) {
+}: ShellProps) => {
   return (
     <label
       className={["input", className].filter(Boolean).join(" ")}
@@ -77,13 +74,13 @@ function InputShell({
       )}
     </label>
   );
-}
+};
 
-// Omit "size": у нативного <input> size — ширина в символах (number).
 export interface InputProps
+  // Omit "size": у нативного <input> size — это ширина в символах (number).
   extends FieldCommon, Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {}
 
-function InputBase({
+const InputBase = ({
   size = "md",
   label,
   helperText,
@@ -94,7 +91,7 @@ function InputBase({
   disabled,
   className,
   ...rest
-}: InputProps) {
+}: InputProps) => {
   return (
     <InputShell
       size={size}
@@ -116,17 +113,16 @@ function InputBase({
       />
     </InputShell>
   );
-}
+};
 
 export interface TextAreaProps
   extends
     FieldCommon,
     Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
-  /** Показывать счётчик символов (внизу справа). С maxLength — вида 12/280. */
   showCount?: boolean;
 }
 
-function TextArea({
+const TextArea = ({
   size = "md",
   label,
   helperText,
@@ -143,8 +139,7 @@ function TextArea({
   defaultValue,
   onChange,
   ...rest
-}: TextAreaProps) {
-  // Контролируемый режим читает длину из value; неконтролируемый — из стейта.
+}: TextAreaProps) => {
   const isControlled = value !== undefined;
   const [uncontrolledCount, setUncontrolledCount] = useState(
     () => String(defaultValue ?? "").length,
@@ -190,10 +185,9 @@ function TextArea({
       />
     </InputShell>
   );
-}
+};
 
 InputBase.displayName = "Input";
 TextArea.displayName = "Input.TextArea";
 
-// Compound: <Input /> и <Input.TextArea />.
 export const Input = Object.assign(InputBase, { TextArea });

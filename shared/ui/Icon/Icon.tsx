@@ -5,23 +5,19 @@ export interface IconProps extends Omit<
   HTMLAttributes<HTMLSpanElement>,
   "color" | "children"
 > {
-  /** SVG-разметка иконки — строка `.data` из stratis-ui-icons. */
   data: string;
-  /** Размер в пикселях (ширина = высота). По умолчанию 24. */
   size?: number;
-  /** Доступное имя. Если задано — иконка смысловая (role=img),
-   *  иначе декоративная (aria-hidden). */
   title?: string;
 }
 
-export function Icon({
+export const Icon = ({
   data,
   size = 24,
   title,
   className,
   style,
   ...rest
-}: IconProps) {
+}: IconProps) => {
   const decorative = title == null;
 
   return (
@@ -35,4 +31,4 @@ export function Icon({
       {...rest}
     />
   );
-}
+};

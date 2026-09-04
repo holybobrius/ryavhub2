@@ -7,18 +7,14 @@ import { Avatar } from "@/shared/ui/Avatar";
 import type { User } from "@/features/auth/models";
 import "./user-menu.css";
 
-/**
- * Правый блок навбара для авторизованного пользователя: Dropdown, в триггере —
- * квадратный Avatar (пока пустой) + имя. Клиентский компонент, потому что
- * пункты меню несут onClick-обработчики (их нельзя передать из server-навбара).
- */
-export function UserMenu({ user }: { user: User }) {
+export const UserMenu = ({ user }: { user: User }) => {
   const router = useRouter();
 
   const menu: DropdownItem[] = [
     // TODO: роут /profile ещё не создан.
     { label: "Профиль", onClick: () => router.push("/profile") },
-    // TODO: логаут не реализован — нет эндпоинта/экшена очистки сессии.
+
+    // TODO: логаут не реализован — нет эндпоинта очистки сессии.
     { label: "Выйти", onClick: () => {} },
   ];
 
@@ -34,4 +30,4 @@ export function UserMenu({ user }: { user: User }) {
       {user.name}
     </Dropdown>
   );
-}
+};

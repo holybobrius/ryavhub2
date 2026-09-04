@@ -2,16 +2,9 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { ReactNode } from "react";
 import { Typography } from "./Typography";
 
-/**
- * Compound-компонент типографики поверх дизайн-токенов.
- * `Typography.Display | Heading | Body | Label`, размер — проп `size`.
- * `as` отвязан от `size`: визуальный размер не диктует семантику (для
- * настоящих заголовков передавайте `as="h1"…"h6"`).
- */
 const meta: Meta<typeof Typography.Body> = {
   title: "UI/Typography",
   component: Typography.Body,
-  // tags: autodocs — включает вкладку Docs, где собираются все стори ниже.
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -49,7 +42,6 @@ export default meta;
 
 type Story = StoryObj<typeof Typography.Body>;
 
-// Строка-образец: слева подпись-метка, справа сам текст.
 const Row = ({ label, children }: { label: string; children: ReactNode }) => (
   <div className="flex items-baseline gap-24 border-b border-surface-border-default py-16 last:border-b-0">
     <Typography.Label
@@ -64,8 +56,6 @@ const Row = ({ label, children }: { label: string; children: ReactNode }) => (
 );
 
 const PANGRAM = "Съешь ещё этих мягких французских булок да выпей чаю";
-
-// ── Размеры по категориям ─────────────────────────────────────────────
 
 export const Display: Story = {
   render: () => (
@@ -134,8 +124,6 @@ export const Label: Story = {
   ),
 };
 
-// ── Сквозные аспекты ──────────────────────────────────────────────────
-
 export const Colors: Story = {
   name: "Цвета",
   render: () => (
@@ -189,7 +177,6 @@ export const Weights: Story = {
   },
 };
 
-// Интерактивная стори с панелью контролов (args).
 export const Playground: Story = {
   args: { size: "md", children: PANGRAM },
 };

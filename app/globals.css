@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 /* Порядок важен: сброс дефолтов → токены дизайнера → наши переопределения */
 @import "../styles/reset-defaults.css";
 @import "../styles/tokens.css";

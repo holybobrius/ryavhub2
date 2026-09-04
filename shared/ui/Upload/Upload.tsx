@@ -9,23 +9,18 @@ import "./upload.css";
 export type UploadFileType = "files" | "images";
 
 export interface UploadProps {
-  /** Как показывать выбранное: строки-файлы или сетка превью-картинок. */
   fileType?: UploadFileType;
   heading?: ReactNode;
   description?: ReactNode;
   multiple?: boolean;
   accept?: string;
   disabled?: boolean;
-  /** Максимальный размер одного файла в байтах. При превышении — ошибка. */
   maxSize?: number;
-  /** Внешняя ошибка (переопределяет встроенную валидацию размера). */
   error?: string;
-  /** Принятые (прошедшие валидацию) файлы. */
   onFilesChange?: (files: File[]) => void;
   className?: string;
 }
 
-// Внутренний элемент: файл + (для картинок) object URL превью.
 interface UploadItem {
   file: File;
   url?: string;
@@ -54,7 +49,7 @@ function formatMb(bytes: number) {
   return `${Math.round(bytes / 1024 / 1024)} МБ`;
 }
 
-export function Upload({
+export const Upload = ({
   fileType = "files",
   heading = "Загрузите файлы",
   description = "Перетащите их в эту область или нажмите для выбора. Можно загружать несколько файлов сразу.",
@@ -65,7 +60,7 @@ export function Upload({
   error,
   onFilesChange,
   className,
-}: UploadProps) {
+}: UploadProps) => {
   const isImages = fileType === "images";
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -74,13 +69,13 @@ export function Upload({
 
   const displayError = error ?? internalError;
 
-  // Ревокаем все object URL при размонтировании (ref обновляем в эффекте,
-  // писать в ref во время рендера нельзя).
   const itemsRef = useRef(items);
   useEffect(() => {
     itemsRef.current = items;
   }, [items]);
   useEffect(() => {
+    // Ревокаем object URL при размонтировании; ref обновляем в эффекте —
+    // писать в ref во время рендера нельзя.
     return () => {
       itemsRef.current.forEach((it) => it.url && URL.revokeObjectURL(it.url));
     };
@@ -207,4 +202,4 @@ export function Upload({
         ))}
     </div>
   );
-}
+};

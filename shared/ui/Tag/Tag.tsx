@@ -20,15 +20,10 @@ export interface TagProps {
   children: ReactNode;
   color?: TagColor;
   type?: TagType;
-  /** Левая иконка (наследует цвет текста). Игнорируется, если задан avatar. */
   icon?: ReactNode;
-  /** Аватар в лид-слоте (передавай <Avatar size={16} />). */
   avatar?: ReactNode;
-  /** Счётчик справа от текста. */
   count?: ReactNode;
-  /** Показывает крестик; вызывается по клику. */
   onClose?: () => void;
-  /** Подпись для крестика (a11y). */
   closeLabel?: string;
   disabled?: boolean;
   className?: string;
@@ -45,7 +40,7 @@ const CloseIcon = () => (
   </svg>
 );
 
-export function Tag({
+export const Tag = ({
   children,
   color = "secondary",
   type = "soft",
@@ -56,7 +51,7 @@ export function Tag({
   closeLabel = "Удалить",
   disabled,
   className,
-}: TagProps) {
+}: TagProps) => {
   return (
     <span
       className={["tag", className].filter(Boolean).join(" ")}
@@ -84,4 +79,4 @@ export function Tag({
       )}
     </span>
   );
-}
+};

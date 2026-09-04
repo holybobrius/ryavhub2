@@ -3,11 +3,6 @@ import { AvatarStack } from "./AvatarStack";
 import { Avatar } from "./Avatar";
 import { Typography } from "../Typography";
 
-/**
- * Стопка аватарок с перекрытием и чипом «+N» для скрытых. Наведи на
- * конкретный аватар — он выйдет вперёд стопки. Размер/форма/кольцо
- * навязываются стопкой всем детям. Overlap токена не имеет (~1/3 размера).
- */
 const meta: Meta<typeof AvatarStack> = {
   title: "UI/AvatarStack",
   component: AvatarStack,
@@ -38,7 +33,6 @@ const PHOTOS = [
   gradient("%233CC98A", "%233C9CE5"),
 ];
 
-// Интерактивная стопка (наведи на аватар — выйдет вперёд).
 export const Playground: Story = {
   args: { max: 5, size: 40, shape: "circle" },
   render: (args) => (
@@ -50,7 +44,6 @@ export const Playground: Story = {
   ),
 };
 
-// Квадратная форма — как на макете.
 export const Square: Story = {
   render: () => (
     <AvatarStack max={5} size={40} shape="square">
@@ -61,7 +54,6 @@ export const Square: Story = {
   ),
 };
 
-// Инициалы вместо фото.
 export const Initials: Story = {
   render: () => (
     <AvatarStack max={4} size={40}>
@@ -87,7 +79,6 @@ export const Initials: Story = {
   ),
 };
 
-// Разные размеры.
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-16">

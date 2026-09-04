@@ -1,0 +1,61 @@
+@layer components {
+  .quote-marquee__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+  }
+
+  .quote-marquee__track {
+    --marquee-gap: var(--spacing-20);
+
+    display: flex;
+    width: max-content;
+    gap: var(--marquee-gap);
+    animation: quote-marquee-scroll var(--marquee-duration, 40s) linear infinite;
+
+    will-change: transform;
+  }
+
+  .quote-marquee__track[data-reverse] {
+    animation-direction: reverse;
+  }
+
+  .quote-marquee__group {
+    display: flex;
+    flex: none;
+    gap: var(--marquee-gap);
+  }
+
+  .quote-marquee__group > * {
+    flex: none;
+  }
+
+  @keyframes quote-marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      /* В треке ДВЕ копии списка: -50% = ровно одна копия, плюс половина
+         промежутка — без неё на стыке дёргается. */
+      transform: translate3d(calc(-50% - var(--marquee-gap) / 2), 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quote-marquee__track {
+      animation: none;
+    }
+  }
+}

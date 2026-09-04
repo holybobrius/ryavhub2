@@ -10,21 +10,15 @@ interface NavbarProps {
   user: User | null;
 }
 
-/**
- * Верхний навбар приложения. Server-компонент: получает user из layout.
- * Гость: лого + кнопка «Войти». Авторизованный: лого + навигация +
- * пользовательское меню (UserMenu — клиентский Dropdown).
- */
-export function Navbar({ user }: NavbarProps) {
+export const Navbar = ({ user }: NavbarProps) => {
   return (
-    <header className="flex items-center justify-between bg-surface-bg-page px-60 py-8">
-      <div className="flex items-center gap-40">
+    <header className="flex items-center justify-between bg-surface-bg-page px-page-margin py-inset-2xs">
+      <div className="flex items-center gap-space-2xl">
         <Link
           href="/"
           aria-label="ryav.hub — на главную"
           className="inline-flex"
         >
-          {/* Логотип-wordmark (public/logo.svg). Нативный img — размер по высоте. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.svg"
@@ -34,7 +28,7 @@ export function Navbar({ user }: NavbarProps) {
         </Link>
 
         {user && (
-          <nav className="flex items-center gap-32">
+          <nav className="flex items-center gap-space-xl">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.href} href={item.href}>
                 {item.label}
@@ -54,4 +48,4 @@ export function Navbar({ user }: NavbarProps) {
       )}
     </header>
   );
-}
+};

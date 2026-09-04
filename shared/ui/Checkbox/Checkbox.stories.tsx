@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Checkbox } from "./Checkbox";
 
-/**
- * Чекбокс для множественного выбора. Три состояния значения: unchecked,
- * checked, indeterminate. Состояния hover/pressed/focused — нативные.
- */
 const meta: Meta<typeof Checkbox> = {
   title: "UI/Checkbox",
   component: Checkbox,

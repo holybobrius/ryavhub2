@@ -2,8 +2,6 @@ import { describe, it, expect } from "bun:test";
 import { render } from "@testing-library/react";
 import { Icon } from "./Icon";
 
-// Минимальная валидная SVG-разметка в формате stratis-ui-icons (.data):
-// один <svg> с viewBox и currentColor.
 const SAMPLE = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 12h16"/></svg>`;
 
 describe("Icon", () => {

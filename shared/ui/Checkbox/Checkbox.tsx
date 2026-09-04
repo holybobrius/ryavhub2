@@ -9,20 +9,19 @@ export interface CheckboxProps extends Omit<
   "type"
 > {
   label?: ReactNode;
-  /** Промежуточное состояние (DOM-свойство :indeterminate). */
   indeterminate?: boolean;
 }
 
-export function Checkbox({
+export const Checkbox = ({
   label,
   indeterminate = false,
   className,
   disabled,
   ...rest
-}: CheckboxProps) {
+}: CheckboxProps) => {
+  // indeterminate — только DOM-свойство, атрибута нет: ставим через ref.
   const ref = useRef<HTMLInputElement>(null);
 
-  // indeterminate — только DOM-свойство, атрибута нет: ставим через ref.
   useEffect(() => {
     if (ref.current) ref.current.indeterminate = indeterminate;
   }, [indeterminate]);
@@ -61,4 +60,4 @@ export function Checkbox({
       {label && <span className="checkbox__label">{label}</span>}
     </label>
   );
-}
+};

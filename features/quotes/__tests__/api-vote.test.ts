@@ -51,17 +51,17 @@ describe("POST /api/quotes/[id]/vote", () => {
   });
 
   it("should create new upvote when no existing vote", async () => {
-    mockDb.quote_rankings.findFirst.mockResolvedValueOnce(null); // no existing vote
+    mockDb.quote_rankings.findFirst.mockResolvedValueOnce(null);
     mockDb.quote_rankings.create.mockResolvedValueOnce({ id: 1n });
     mockDb.quote_rankings.count
-      .mockResolvedValueOnce(1) // upvotes
-      .mockResolvedValueOnce(0); // downvotes
+      .mockResolvedValueOnce(1)
+      .mockResolvedValueOnce(0);
     mockDb.quote_rankings.findFirst.mockResolvedValueOnce({
       id: 1n,
       quote_id: 1n,
       created_by: 1n,
       type: "Upvote",
-    }); // userVote after create
+    });
 
     const request = new NextRequest("http://localhost/api/quotes/1/vote", {
       method: "POST",
@@ -89,8 +89,8 @@ describe("POST /api/quotes/[id]/vote", () => {
     });
     mockDb.quote_rankings.delete.mockResolvedValueOnce(undefined);
     mockDb.quote_rankings.count
-      .mockResolvedValueOnce(0) // upvotes
-      .mockResolvedValueOnce(0); // downvotes
+      .mockResolvedValueOnce(0)
+      .mockResolvedValueOnce(0);
 
     const request = new NextRequest("http://localhost/api/quotes/1/vote", {
       method: "POST",

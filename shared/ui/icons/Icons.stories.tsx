@@ -3,14 +3,6 @@ import * as Icons from "./index";
 import { Icon } from "./index";
 import { Typography } from "../Typography";
 
-/**
- * Иконки Stratis UI. Подключаем только нужные (см. `shared/ui/icons/index.ts`),
- * а не весь пак. Иконки монохромные: цвет наследуется от текста (currentColor),
- * размер задаёт проп `size` (px).
- *
- *   import { IconChevronDown } from "@/shared/ui/icons";
- *   <IconChevronDown size={20} />
- */
 const meta: Meta = {
   title: "UI/Icons",
   parameters: { layout: "padded" },
@@ -21,7 +13,6 @@ type Story = StoryObj;
 
 type IconCmp = (props: { size?: number; title?: string }) => React.ReactElement;
 
-// Подключённые иконки (IconXxx), кроме примитива Icon.
 const CURATED = Object.entries(Icons)
   .filter(
     ([name, value]) =>
@@ -29,7 +20,6 @@ const CURATED = Object.entries(Icons)
   )
   .sort(([a], [b]) => a.localeCompare(b)) as [string, IconCmp][];
 
-/** Все подключённые иконки. */
 export const Gallery: Story = {
   render: () => (
     <div
@@ -56,7 +46,6 @@ export const Gallery: Story = {
   ),
 };
 
-/** Размеры и наследование цвета от текста. */
 export const SizesAndColor: Story = {
   render: () => (
     <div className="flex flex-col gap-24">
@@ -81,7 +70,6 @@ export const SizesAndColor: Story = {
   ),
 };
 
-/** Примитив Icon с произвольной SVG-строкой (для кастомных иконок). */
 export const CustomSvg: Story = {
   render: () => {
     const sample = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;

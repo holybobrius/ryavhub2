@@ -1,10 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-/**
- * Витрина дизайн-токенов. Компонентов пока нет — эти стори просто
- * рендерят токены классами Tailwind, чтобы проверить, что вся цепочка
- * (tokens.css → @theme → утилиты) работает в Storybook.
- */
 const meta: Meta = {
   title: "Foundations/Обзор",
   parameters: { layout: "fullscreen" },

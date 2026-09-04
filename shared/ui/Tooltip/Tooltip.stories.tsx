@@ -3,11 +3,6 @@ import { Tooltip } from "./Tooltip";
 import type { TooltipDirection } from "./Tooltip";
 import { Button } from "../Button";
 
-/**
- * Всплывающая подсказка на Ariakit (позиционирование/hover/focus/a11y).
- * Инвертированный фон. 12 направлений стрелки маплю на placement Ariakit.
- * Наведи или сфокусируй триггер (таб) — покажется подсказка.
- */
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",
   component: Tooltip,
@@ -38,7 +33,6 @@ export default meta;
 
 type Story = StoryObj<typeof Tooltip>;
 
-// Интерактивная подсказка (наведи/сфокусируй кнопку).
 export const Playground: Story = {
   args: {
     content: "Tooltip",
@@ -47,7 +41,6 @@ export const Playground: Story = {
   },
 };
 
-// Длинный текст — переносится по max-width (280px).
 export const LongText: Story = {
   args: {
     content:
@@ -72,11 +65,6 @@ const ALL: TooltipDirection[] = [
   "left-top",
 ];
 
-// Витрина всех 12 направлений. Здесь это СТАТИЧНЫЕ пузыри (класс
-// .tooltip .tooltip-demo, стрелка через data-direction), а не живые
-// Ariakit-тултипы: показать все 12 разом живыми нельзя — Ariakit держит
-// один активный тултип на страницу (глобальный active-store), и десяток
-// принудительно открытых дёргают друг друга и соседние живые тултипы.
 export const Directions: Story = {
   parameters: { layout: "padded" },
   render: () => (
