@@ -20,10 +20,10 @@ export function Footer({ user }: FooterProps) {
     year > START_YEAR ? `© ${START_YEAR}–${year}` : `© ${START_YEAR}`;
 
   return (
-    <footer className="bg-surface-bg-page px-60 py-40">
+    <footer className="bg-surface-bg-page px-page-margin py-inset-2xl">
       <div className="flex items-center">
         {user && (
-          <nav className="flex items-center gap-32">
+          <nav className="flex items-center gap-space-xl">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.href} href={item.href}>
                 {item.label}
@@ -43,7 +43,7 @@ export function Footer({ user }: FooterProps) {
         src="/footer_logo.svg"
         alt=""
         aria-hidden="true"
-        className="mt-40 w-full"
+        className="mt-space-2xl w-full"
       />
     </footer>
   );

@@ -146,10 +146,19 @@ After modifying `prisma/schema.prisma`, run `bun run db:generate` to regenerate 
   - `tokens.css` — exported from Figma by the designer, **never edit by hand** (replaced wholesale on re-export)
   - `reset-defaults.css` — disables Tailwind's built-in palette/spacing/text scales so only design-system tokens exist
   - `theme.css` — project overrides on top of tokens (font stacks via `next/font`, unit fixes)
-- Spacing tokens are in **pixels**: `p-16` = 16px, `gap-24` = 24px (not Tailwind's default `0.25rem` scale)
+- Spacing tokens are in **pixels**, not Tailwind's `0.25rem` scale. But **do not use the numeric scale in JSX** (`gap-16`, `p-32`) — those are primitives, and they are bound to the exported token names: if the designer renames or drops a step, the class silently stops being generated (no build error, the default scale is disabled in `reset-defaults.css`). Use the semantic scale from `styles/theme.css` instead:
+  - `gap-space-*` / `mt-space-*` — space BETWEEN elements; `p-inset-*` — padding INSIDE a frame. Steps are shared by both: `2xs`=8, `xs`=12, `sm`=16, `md`=20, `lg`=24, `xl`=32, `2xl`=40.
+  - Direction is not encoded (no `stack`/`inline`): the container already says it via `flex-col`, and our vertical and horizontal rhythms use the same values.
+  - This scale is **ours**, not the designer's — flag it, and replace it with `space/*` from Figma Variables if he has one.
+  - Page-level: `px-page-margin` (grid margin, aligns with `<main>`), `mt-layout-block` (184px rhythm between page zones, `--ryav-layout-block-gap`).
+  - Values outside the scale stay numeric with a comment (`mt-96`, `mt-56` in `app/quotes/page.tsx` — not in the tokens, pending the designer).
 - Prefer semantic tokens (`bg-surface-bg-page`, `text-surface-text-heading`, `bg-action-primary-bg-default`) over primitives (`bg-purple-500`)
 - Typography: `font-heading` (Geologica) / `font-body` (PT Root UI), sizes `text-display-*`, `text-heading-*`, `text-body-*`, `text-label-*`, tracking `tracking-<same-name>`
-- Component-specific dimensions are `--ryav-*` variables, used as arbitrary values: `p-[var(--ryav-button-padding-x)]`
+- Component-specific dimensions are `--ryav-*` variables. **Do not consume them as arbitrary values** (`gap-[var(--ryav-year-nav-gap)]`) — that syntax is unreadable and was removed from the codebase. Instead:
+  - Colors need nothing: `--color-*` tokens are already in a Tailwind namespace, so `bg-sidebar-card-bg`, `text-quote-card-text-color`, `border-t-quote-card-border-color` work out of the box. Never write `bg-[color:var(--color-…)]`.
+  - Single dimensions: add an alias in `styles/theme.css` under `@theme inline` — `--spacing-year-nav: var(--ryav-year-nav-gap)` gives `gap-year-nav`. Namespaces: `--spacing-*` → `p-`/`m-`/`gap-`/`w-`/`h-`, `--radius-*` → `rounded-`, `--border-width-*` → `border-` (incl. `border-t-`). `inline` is required so the token is substituted directly instead of through an extra Tailwind variable. Name the alias after the **element**, not the property (`--spacing-year-nav`, not `-year-nav-gap`, else you get `gap-year-nav-gap`).
+  - Several dimensions of one kind on the same element (padding X + Y, or both gap and padding): one `@utility` in `styles/theme.css` — `@utility p-quote-card-footer { padding: … }`. An alias would collide, since a single `--spacing-*` name feeds both `p-` and `gap-`; on a collision Tailwind merges both declarations into one rule and the namespace wins.
+  - Bare `--border-width-*` tokens are already usable as `border-1` / `border-t-2`.
 - Dark theme only
 - Shared UI components in `shared/ui/`
 - Fonts are wired in `app/fonts.ts` (single source for app + Storybook): Geologica via `next/font/google`, PT Root UI via `next/font/local` from `app/fonts/*.woff2`. **Caveat:** PT Root UI ships 300/400/500/700; the `--font-weight-semibold` token (600) has no exact face → browser falls back to 700. Flag to designer if that matters.

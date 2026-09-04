@@ -18,7 +18,7 @@ export function YearDivider({ year }: YearDividerProps) {
   const color = "var(--color-year-divider-color)";
 
   return (
-    <div className="flex items-center gap-24">
+    <div className="flex items-center gap-space-lg">
       <Typography.Display size="sm" as="h2" style={{ color }}>
         {year}
       </Typography.Display>

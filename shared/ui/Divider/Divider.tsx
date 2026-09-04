@@ -34,10 +34,8 @@ export function Divider({
     <hr
       aria-orientation={isVertical ? "vertical" : undefined}
       className={[
-        "shrink-0 border-0 border-[color:var(--divider-color)]",
-        isVertical
-          ? "self-stretch border-l-[length:var(--border-width-1)]"
-          : "w-full border-t-[length:var(--border-width-1)]",
+        "shrink-0 border-0 border-(color:--divider-color)",
+        isVertical ? "self-stretch border-l-1" : "w-full border-t-1",
         className,
       ]
         .filter(Boolean)

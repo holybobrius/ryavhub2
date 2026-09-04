@@ -32,7 +32,7 @@ export function LeaderboardItem({
 }: LeaderboardItemProps) {
   return (
     <div
-      className="flex items-center gap-[var(--ryav-leaderboard-item-gap)] rounded-[var(--ryav-leaderboard-item-border-radius)] px-[var(--ryav-leaderboard-item-padding-x)] py-[var(--ryav-leaderboard-item-padding-y)]"
+      className="flex items-center gap-leaderboard-item rounded-leaderboard-item p-leaderboard-item"
       style={{
         backgroundColor: zebra
           ? "var(--color-leaderboard-item-zebra-bg)"
@@ -52,7 +52,7 @@ export function LeaderboardItem({
       </Typography.Body>
 
       {/* user badge: аватар + ник. Токены --ryav-user-badge-* */}
-      <div className="flex min-w-0 items-center gap-[var(--ryav-user-badge-gap)]">
+      <div className="flex min-w-0 items-center gap-user-badge">
         <Avatar
           size={24}
           shape="square"

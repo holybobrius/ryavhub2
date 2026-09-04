@@ -17,8 +17,8 @@ interface NavbarProps {
  */
 export function Navbar({ user }: NavbarProps) {
   return (
-    <header className="flex items-center justify-between bg-surface-bg-page px-60 py-8">
-      <div className="flex items-center gap-40">
+    <header className="flex items-center justify-between bg-surface-bg-page px-page-margin py-inset-2xs">
+      <div className="flex items-center gap-space-2xl">
         <Link
           href="/"
           aria-label="ryav.hub — на главную"
@@ -34,7 +34,7 @@ export function Navbar({ user }: NavbarProps) {
         </Link>
 
         {user && (
-          <nav className="flex items-center gap-32">
+          <nav className="flex items-center gap-space-xl">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.href} href={item.href}>
                 {item.label}

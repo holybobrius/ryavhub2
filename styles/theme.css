@@ -40,3 +40,126 @@
   --text-label-sm--line-height: 1.3;
   --text-label-xs--line-height: 1.3;
 }
+
+/*
+  Мост от компонентных токенов дизайнера к именованным утилитам Tailwind.
+
+  Tailwind v4 генерирует утилиты из имён переменных: --spacing-* даёт
+  p-/m-/gap-/w-/h-, --radius-* даёт rounded-*, --border-width-* даёт
+  border-*, --color-* даёт bg-/text-/border-*. Токены --ryav-* в эти
+  namespace не попадают, поэтому раньше их приходилось звать через
+  arbitrary value: gap-[var(--ryav-year-nav-gap)].
+
+  Алиас ниже кладёт тот же токен в нужный namespace, и в JSX остаётся
+  gap-year-nav. `inline` означает «подставить значение прямо в утилиту»:
+  без него Tailwind завёл бы ещё одну свою переменную-прослойку.
+
+  Имя алиаса — по элементу, без суффикса свойства (--spacing-year-nav,
+  а не -year-nav-gap), иначе получается gap-year-nav-gap. Цвета алиасов
+  не требуют: --color-* токены уже в namespace, т.е. bg-stat-card-bg
+  работает из коробки.
+*/
+@theme inline {
+  /*
+     Семантическая шкала отступов — НАША прослойка, у дизайнера её нет
+     (в Figma заведены только числовые --spacing-N и компонентные --ryav-*).
+     Смысл: в JSX не должно быть примитивов. `gap-16` жёстко привязан к имени
+     --spacing-16 из экспорта: если дизайнер переименует или уберёт ступень,
+     класс просто не сгенерируется — молча, без ошибки сборки. Через алиас
+     это одна правка здесь вместо N правок в разметке.
+
+     Две роли по словарю Nathan Curtis «Space in Design Systems»:
+       inset — внутри рамки (padding),  space — между элементами (gap/margin).
+     Направление у space не различаем: его задаёт контейнер (flex-col рядом),
+     а значения вертикального и горизонтального ритма у нас совпадают.
+     Ступени одинаковые у обеих шкал, чтобы inset-sm и space-sm были
+     предсказуемо равны; часть inset-* пока не используется — это норма
+     для шкалы, пропуски в именах путали бы сильнее.
+
+     ВРЕМЕННОЕ: имена наши. Спросить дизайнера, есть ли шкала space/* в
+     Figma Variables — тогда забрать его имена и удалить этот блок.
+  */
+  --spacing-space-2xs: var(--spacing-8);
+  --spacing-space-xs: var(--spacing-12);
+  --spacing-space-sm: var(--spacing-16);
+  --spacing-space-md: var(--spacing-20);
+  --spacing-space-lg: var(--spacing-24);
+  --spacing-space-xl: var(--spacing-32);
+  --spacing-space-2xl: var(--spacing-40);
+
+  --spacing-inset-2xs: var(--spacing-8);
+  --spacing-inset-xs: var(--spacing-12);
+  --spacing-inset-sm: var(--spacing-16);
+  --spacing-inset-md: var(--spacing-20);
+  --spacing-inset-lg: var(--spacing-24);
+  --spacing-inset-xl: var(--spacing-32);
+  --spacing-inset-2xl: var(--spacing-40);
+
+  --spacing-page-margin: var(--ryav-grid-margin-desktop-xl);
+  --spacing-layout-block: var(--ryav-layout-block-gap);
+  --spacing-author-block: var(--ryav-author-block-gap);
+  --spacing-author-block-info: var(--ryav-author-block-info-gap);
+  --spacing-year-nav: var(--ryav-year-nav-gap);
+  --spacing-user-badge: var(--ryav-user-badge-gap);
+  --spacing-sidebar-card: var(--ryav-sidebar-card-padding);
+  --spacing-sidebar-card-section: var(--ryav-sidebar-card-section-gap);
+
+  --radius-stat-card: var(--ryav-stat-card-border-radius);
+  --radius-quote-chip: var(--ryav-quote-chip-border-radius);
+  --radius-quote-card: var(--ryav-quote-card-border-radius);
+  --radius-sidebar-card: var(--ryav-sidebar-card-border-radius);
+  --radius-leaderboard-card: var(--ryav-leaderboard-card-border-radius);
+  --radius-leaderboard-item: var(--ryav-leaderboard-item-border-radius);
+
+  --border-width-quote-chip: var(--ryav-quote-chip-border-width);
+  --border-width-quote-card: var(--ryav-quote-card-border-width);
+  --border-width-sidebar-card: var(--ryav-sidebar-card-border-width);
+  --border-width-leaderboard-card: var(--ryav-leaderboard-card-border-width);
+}
+
+/*
+  Там где у элемента несколько размеров одного рода (padding по X и по Y,
+  или сразу gap и padding), алиас не годится: одно имя в --spacing-* даёт
+  и p-, и gap-, и они бы затёрли друг друга. Такие случаи — своя утилита
+  через @utility: один класс на элемент вместо двух-трёх.
+
+  ВАЖНО: имя @utility не должно совпадать с тем, что уже даёт namespace,
+  иначе Tailwind склеит обе декларации в одно правило и победит последняя.
+  Поэтому у leaderboard-card/-item оба размера объявлены здесь, а не
+  наполовину алиасом.
+*/
+@utility p-stat-card {
+  padding: var(--ryav-stat-card-lg-padding-y) var(--ryav-stat-card-lg-padding-x);
+}
+
+@utility p-quote-chip {
+  padding: var(--ryav-quote-chip-padding-y) var(--ryav-quote-chip-padding-x);
+}
+
+@utility p-quote-card-body {
+  padding: var(--ryav-quote-card-body-padding-top)
+    var(--ryav-quote-card-body-padding-x)
+    var(--ryav-quote-card-body-padding-bottom);
+}
+
+@utility p-quote-card-footer {
+  padding: var(--ryav-quote-card-footer-padding-y)
+    var(--ryav-quote-card-footer-padding-x);
+}
+
+@utility gap-leaderboard-card {
+  gap: var(--ryav-leaderboard-card-gap);
+}
+
+@utility p-leaderboard-card {
+  padding: var(--ryav-leaderboard-card-padding);
+}
+
+@utility gap-leaderboard-item {
+  gap: var(--ryav-leaderboard-item-gap);
+}
+
+@utility p-leaderboard-item {
+  padding: var(--ryav-leaderboard-item-padding-y)
+    var(--ryav-leaderboard-item-padding-x);
+}

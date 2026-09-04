@@ -24,7 +24,7 @@ interface QuotesHeroProps {
 
 export function QuotesHero({ quotesCount, rankingsCount }: QuotesHeroProps) {
   return (
-    <section className="relative aspect-[1800/562] overflow-hidden rounded-[var(--radius-lg)]">
+    <section className="relative aspect-[1800/562] overflow-hidden rounded-lg">
       <Image
         src="/quotes_bg.webp"
         alt=""
@@ -59,7 +59,7 @@ export function QuotesHero({ quotesCount, rankingsCount }: QuotesHeroProps) {
           <Typography.Body
             size="lg"
             color="tertiary"
-            className="ml-32 inline-block pb-16 align-bottom"
+            className="ml-space-xl inline-block pb-inset-sm align-bottom"
           >
             Годы разговоров в одном месте.
             <br />
@@ -69,8 +69,8 @@ export function QuotesHero({ quotesCount, rankingsCount }: QuotesHeroProps) {
 
         {/* Правая колонка: ряд счётчиков + кнопка под ними, обе прижаты
             к правому краю (items-end). */}
-        <div className="flex flex-col items-end gap-32">
-          <div className="flex gap-20">
+        <div className="flex flex-col items-end gap-space-xl">
+          <div className="flex gap-space-md">
             <StatCard label="Всего цитат" value={formatCount(quotesCount)} />
             <StatCard label="Всего оценок" value={formatCount(rankingsCount)} />
           </div>

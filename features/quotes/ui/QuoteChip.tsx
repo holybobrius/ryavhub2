@@ -33,10 +33,10 @@ export function QuoteChip({
     <div
       className={[
         "inline-flex items-center justify-center",
-        "rounded-[var(--ryav-quote-chip-border-radius)]",
-        "border-[length:var(--ryav-quote-chip-border-width)] border-[color:var(--quote-chip-border-color)]",
-        "bg-[color:var(--quote-chip-bg)]",
-        "px-[var(--ryav-quote-chip-padding-x)] py-[var(--ryav-quote-chip-padding-y)]",
+        "rounded-quote-chip",
+        "border-quote-chip border-(color:--quote-chip-border-color)",
+        "bg-(--quote-chip-bg)",
+        "p-quote-chip",
         className,
       ]
         .filter(Boolean)
@@ -54,7 +54,7 @@ export function QuoteChip({
       <Typography.Display
         size="sm"
         as="span"
-        className="text-[color:var(--quote-chip-text-color)]"
+        className="text-(--quote-chip-text-color)"
       >
         {children}
       </Typography.Display>

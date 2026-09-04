@@ -40,7 +40,9 @@ export function QuoteMarquee({
 
   return (
     <section
-      className={["flex flex-col gap-20", className].filter(Boolean).join(" ")}
+      className={["flex flex-col gap-space-md", className]
+        .filter(Boolean)
+        .join(" ")}
       aria-hidden
     >
       {rows.map((row, index) => (
