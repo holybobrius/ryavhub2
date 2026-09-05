@@ -2,7 +2,7 @@ import { quoteScore } from "./getBestQuotes";
 import { Quote, QuotesSortType } from "../model/models";
 
 export const sortQuotes = (quotes: Quote[], sort: QuotesSortType) => {
-  return quotes.sort((a, b) => {
+  return [...quotes].sort((a, b) => {
     if (sort === "newest") {
       return b.date.getTime() - a.date.getTime();
     }

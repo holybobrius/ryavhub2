@@ -37,6 +37,6 @@ export interface QuotesFilters {
 }
 
 export interface QuotesByYear {
-  year: number;
+  year?: number;
   quotes: Quote[];
 }

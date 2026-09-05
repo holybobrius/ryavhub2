@@ -3,7 +3,7 @@ import "dayjs/locale/ru";
 import { Avatar } from "@/shared/ui/Avatar";
 import { Typography } from "@/shared/ui/Typography";
 import { Button } from "@/shared/ui/Button";
-import { IconArrowUpRight, IconThumbUp } from "@/shared/ui/icons";
+import { IconArrowUpRight, IconEdit02, IconThumbUp } from "@/shared/ui/icons";
 import type { Quote } from "../model/models";
 
 interface QuoteCardProps {
@@ -65,9 +65,12 @@ export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-space-2xs">
-          <Reaction kind="like" count={upvotes} />
-          <Reaction kind="dislike" count={downvotes} />
+        <div className="flex items-center gap-space-2xl">
+          <div className="flex items-center gap-space-2xs">
+            <Reaction kind="like" count={upvotes} />
+            <Reaction kind="dislike" count={downvotes} />
+          </div>
+          <Button variant="soft" tone="tertiary" rightIcon={<IconEdit02 />} />
         </div>
       </div>
     </article>

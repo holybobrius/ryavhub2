@@ -27,7 +27,7 @@ export const getAllQuotesList = ({
   const filteredQuotes = filterQuotes(sortedQuotes, filters, search);
 
   if (sort === "best" || sort === "worst") {
-    return [{ year: 0, quotes: filteredQuotes }];
+    return [{ quotes: filteredQuotes }];
   }
 
   for (const quote of filteredQuotes) {

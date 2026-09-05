@@ -64,8 +64,8 @@ export const QuotesBrowser = ({
           </Button>
         </div>
         {quotesByYear.map(({ year, quotes }) => (
-          <div key={year} className="flex flex-col gap-space-xl">
-            {sort !== "best" && sort !== "worst" && <YearDivider year={year} />}
+          <div key={`quotes-${year}`} className="flex flex-col gap-space-xl">
+            {year && <YearDivider year={year} />}
             <div className="flex flex-col gap-space-md">
               {quotes.map((quote) => (
                 <QuoteCard key={quote.id} quote={quote} />
