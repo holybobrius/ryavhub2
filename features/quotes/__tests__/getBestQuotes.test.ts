@@ -7,14 +7,8 @@ const quote = (id: number, upvotes: number, downvotes: number): Quote => ({
   quote: `Quote ${id}`,
   quoteAuthor: { id: 1, name: "Автор" },
   date: new Date("2024-01-01"),
-  upvotes: Array.from({ length: upvotes }, (_, i) => ({
-    id: id * 100 + i,
-    created_by: 999,
-  })),
-  downvotes: Array.from({ length: downvotes }, (_, i) => ({
-    id: id * 200 + i,
-    created_by: 999,
-  })),
+  upvotes,
+  downvotes,
 });
 
 describe("selectBestQuotes", () => {

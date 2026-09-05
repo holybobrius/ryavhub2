@@ -3,7 +3,7 @@ import { Quote } from "../model/models";
 import { selectBestQuotes } from "./getBestQuotes";
 import { getMCAvatarUrl } from "@/shared/lib/avatars";
 
-export const getQuotesList = async (): Promise<Quote[]> => {
+export const getQuotesList = async (userId?: number): Promise<Quote[]> => {
   const quotes = await db.quotes.findMany({
     include: {
       users_quotes_quote_byTousers: true,
@@ -14,9 +14,7 @@ export const getQuotesList = async (): Promise<Quote[]> => {
   return quotes.map((n) => {
     const rankings = n.quote_rankings ?? [];
     const byType = (type: "Upvote" | "Downvote") =>
-      rankings
-        .filter((r) => r.type === type)
-        .map((r) => ({ id: Number(r.id), created_by: Number(r.created_by) }));
+      rankings.filter((r) => r.type === type).length;
 
     return {
       id: Number(n.id),
@@ -29,6 +27,9 @@ export const getQuotesList = async (): Promise<Quote[]> => {
       date: n.date || new Date(),
       upvotes: byType("Upvote"),
       downvotes: byType("Downvote"),
+      userVote: userId
+        ? rankings.find((r) => Number(r.created_by) === userId)?.type
+        : undefined,
     };
   });
 };

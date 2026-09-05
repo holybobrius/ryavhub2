@@ -3,10 +3,9 @@ import "dayjs/locale/ru";
 import { Avatar } from "@/shared/ui/Avatar";
 import { Typography } from "@/shared/ui/Typography";
 import { Button } from "@/shared/ui/Button";
-import { IconArrowUpRight, IconEdit02, IconThumbUp } from "@/shared/ui/icons";
+import { IconArrowUpRight, IconEdit02 } from "@/shared/ui/icons";
 import type { Quote } from "../model/models";
-import { useAuth } from "@/features/auth/useAuth";
-import { QuoteReaction } from "./QuoteReaction/QuoteReaction";
+import { QuoteReactions } from "./QuoteReactions/QuoteReactions";
 
 interface QuoteCardProps {
   quote: Quote;
@@ -16,12 +15,8 @@ interface QuoteCardProps {
 const TEXT_CLASS = "whitespace-pre-line text-quote-card-text-color";
 
 export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
-  const { user } = useAuth();
-
-  const isLiked = quote.upvotes?.some((v) => v.created_by === user?.id);
-  const isDisliked = quote.downvotes?.some((v) => v.created_by === user?.id);
-  const upvotes = quote.upvotes?.length ?? 0;
-  const downvotes = quote.downvotes?.length ?? 0;
+  const upvotes = quote.upvotes ?? 0;
+  const downvotes = quote.downvotes ?? 0;
 
   return (
     <article className="overflow-hidden rounded-quote-card border-quote-card border-quote-card-border-color bg-quote-card-bg">
@@ -72,14 +67,12 @@ export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
         </div>
 
         <div className="flex items-center gap-space-xl">
-          <div className="flex items-center gap-space-2xs">
-            <QuoteReaction kind="like" count={upvotes} isActive={!!isLiked} />
-            <QuoteReaction
-              kind="dislike"
-              count={downvotes}
-              isActive={!!isDisliked}
-            />
-          </div>
+          <QuoteReactions
+            quoteId={quote.id}
+            upvotes={upvotes}
+            downvotes={downvotes}
+            userVote={quote.userVote}
+          />
           <Button variant="soft" tone="tertiary" rightIcon={<IconEdit02 />} />
         </div>
       </div>

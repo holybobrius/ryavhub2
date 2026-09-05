@@ -26,14 +26,14 @@ describe("getQuotesList", () => {
     expect(result[0]).toMatchObject({
       id: 1,
       quote: "Test quote",
-      upvotes: [],
-      downvotes: [],
+      upvotes: 0,
+      downvotes: 0,
     });
     expect(result[1]).toMatchObject({
       id: 2,
       quote: "Another quote",
-      upvotes: [{ id: 1, created_by: 1 }],
-      downvotes: [],
+      upvotes: 1,
+      downvotes: 0,
     });
   });
 
@@ -42,6 +42,26 @@ describe("getQuotesList", () => {
 
     expect(result[0].quoteAuthor.name).toBe("User 1");
     expect(result[1].quoteAuthor.name).toBe("User 2");
+  });
+
+  it("should leave userVote undefined for an anonymous visitor", async () => {
+    const result = await getQuotesList();
+
+    expect(result[0].userVote).toBeUndefined();
+    expect(result[1].userVote).toBeUndefined();
+  });
+
+  it("should mark the vote of the current user", async () => {
+    const result = await getQuotesList(1);
+
+    expect(result[0].userVote).toBeUndefined();
+    expect(result[1].userVote).toBe("Upvote");
+  });
+
+  it("should not mark votes cast by other users", async () => {
+    const result = await getQuotesList(2);
+
+    expect(result[1].userVote).toBeUndefined();
   });
 
   it("should hit the database once, without a query per quote", async () => {

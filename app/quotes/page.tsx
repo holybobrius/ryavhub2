@@ -10,11 +10,13 @@ import { Typography } from "@/shared/ui/Typography";
 import { IconMessageCircle, IconThumbUp } from "@/shared/ui/icons";
 import { QuotesHero } from "./components/QuotesHero";
 import { QuotesBrowser } from "@/features/quotes/ui/QuotesBrowser";
+import { getCurrentUser } from "@/features/auth/getCurrentUser";
 
 export default async function QuotesPage() {
+  const user = await getCurrentUser();
   const [{ quotesCount, rankingsCount }, quotes] = await Promise.all([
     getQuotesStats(),
-    getQuotesList(),
+    getQuotesList(user?.id),
   ]);
 
   const bestQuotes = selectBestQuotes(quotes);
