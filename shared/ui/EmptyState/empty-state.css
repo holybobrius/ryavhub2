@@ -1,0 +1,5 @@
+@layer components {
+    .empty-state-description {
+        color: var(--color-empty-state-text-color);
+    }
+}
