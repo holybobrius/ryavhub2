@@ -18,7 +18,6 @@ export const getQuotesList = async (): Promise<Quote[]> => {
         .filter((r) => r.type === type)
         .map((r) => ({ id: Number(r.id), created_by: Number(r.created_by) }));
 
-    console.log(n.users_quotes_quote_byTousers);
     return {
       id: Number(n.id),
       quote: n.quote,
