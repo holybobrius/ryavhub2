@@ -16,9 +16,9 @@ export const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-24">
+    <div className="flex flex-col items-center justify-center gap-space-lg">
       <IconTile size="large" icon={icon} secondary />
-      <div className="flex flex-col items-center justify-center gap-12">
+      <div className="flex flex-col items-center justify-center gap-space-xs">
         <Typography.Body size="lg">{title}</Typography.Body>
         <Typography.Body className="empty-state-description" size="sm">
           {description}
