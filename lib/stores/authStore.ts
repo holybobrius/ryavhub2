@@ -1,12 +1,15 @@
 import { User } from "@/features/auth/models";
-import { create } from "zustand";
+import { create, createStore } from "zustand";
 
-type AuthState = {
+export type AuthState = {
   user: User | null;
   setUser: (user: User | null) => void;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-}));
+export type AuthStore = ReturnType<typeof createAuthStore>;
+
+export const createAuthStore = () =>
+  createStore<AuthState>((set) => ({
+    user: null,
+    setUser: (user) => set({ user }),
+  }));

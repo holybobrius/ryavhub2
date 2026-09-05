@@ -7,8 +7,8 @@ import { useQuotesBrowser } from "../model/useQuotesBrowser";
 import { IconPlus, IconSearch } from "@/shared/ui/icons";
 import { Button } from "@/shared/ui/Button";
 import { QuoteCard } from "./QuoteCard";
-import { YearDivider } from "./YearDivider";
-import { QuotesFilters } from "./QuotesFilters";
+import { YearDivider } from "./YearDivider/YearDivider";
+import { QuotesFilters } from "./QuoteFilters/QuotesFilters";
 
 interface QuotesBrowserProps {
   quotes: Quote[];

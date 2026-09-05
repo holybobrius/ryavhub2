@@ -4,7 +4,7 @@ import { getQuotesList } from "@/features/quotes/lib/getQuotesList";
 import { selectBestQuotes } from "@/features/quotes/lib/getBestQuotes";
 import { buildQuotesFilters } from "@/features/quotes/lib/getQuotesFilters";
 import { BestQuote } from "@/features/quotes/ui/BestQuote";
-import { QuoteMarquee } from "@/features/quotes/ui/QuoteMarquee";
+import { QuoteMarquee } from "@/features/quotes/ui/QuoteMarquee/QuoteMarquee";
 import { LeaderboardCard } from "@/shared/ui/Leaderboard";
 import { Typography } from "@/shared/ui/Typography";
 import { IconMessageCircle, IconThumbUp } from "@/shared/ui/icons";

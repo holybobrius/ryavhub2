@@ -11,9 +11,9 @@ import type {
   QuotesFilters as QuotesFiltersModel,
   QuotesSortType,
   YearFilter,
-} from "../model/models";
+} from "../../model/models";
 import "./quotes-filters.css";
-import { YearFilterTag } from "./YearFilterTag";
+import { YearFilterTag } from "../YearFilterTag";
 import { useState } from "react";
 
 const SORT_OPTIONS = [
