@@ -21,20 +21,19 @@
   --tracking-label-sm: 0.06em;
   --tracking-label-xs: 0.06em;
 
-  /* ВРЕМЕННЫЕ значения: дизайнер line-height не экспортировал. */
-  --text-display-lg--line-height: 1;
-  --text-display-md--line-height: 1.05;
-  --text-display-sm--line-height: 1.05;
-  --text-heading-xl--line-height: 1.1;
-  --text-heading-lg--line-height: 1.15;
-  --text-heading-md--line-height: 1.2;
-  --text-heading-sm--line-height: 1.2;
-  --text-body-lg--line-height: 1.5;
-  --text-body-md--line-height: 1.5;
-  --text-body-sm--line-height: 1.5;
+  --text-display-lg--line-height: 1.1;
+  --text-display-md--line-height: 1.1;
+  --text-display-sm--line-height: 1.1;
+  --text-heading-xl--line-height: 1.2;
+  --text-heading-lg--line-height: 1.2;
+  --text-heading-md--line-height: 1.3;
+  --text-heading-sm--line-height: 1.3;
+  --text-body-lg--line-height: 1.3;
+  --text-body-md--line-height: 1.3;
+  --text-body-sm--line-height: 1.3;
   --text-label-md--line-height: 1.3;
-  --text-label-sm--line-height: 1.3;
-  --text-label-xs--line-height: 1.3;
+  --text-label-sm--line-height: 1.2;
+  --text-label-xs--line-height: 1.2;
 }
 
 @theme inline {
@@ -50,6 +49,7 @@
   --spacing-space-lg: var(--spacing-24);
   --spacing-space-xl: var(--spacing-32);
   --spacing-space-2xl: var(--spacing-40);
+  --spacing-space-3xl: var(--spacing-48);
 
   --spacing-inset-2xs: var(--spacing-8);
   --spacing-inset-xs: var(--spacing-12);
@@ -58,6 +58,7 @@
   --spacing-inset-lg: var(--spacing-24);
   --spacing-inset-xl: var(--spacing-32);
   --spacing-inset-2xl: var(--spacing-40);
+  --spacing-inset-3xl: var(--spacing-48);
 
   --spacing-page-margin: var(--ryav-grid-margin-desktop-xl);
   --spacing-layout-block: var(--ryav-layout-block-gap);

@@ -40,19 +40,23 @@
       var(--ryav-year-nav-item-padding-x);
     /* Среди токенов --*-year-nav-* границы нет — общий цвет рамки, флаг дизайнеру. */
     border: var(--border-width-1) solid var(--color-surface-border-default);
-    border-radius: var(--ryav-year-nav-item-radius);
-    background: var(--color-year-nav-item-bg-default);
-    color: var(--color-year-nav-year-color-default);
+    border-radius: var(--ryav-tag-sm-border-radius);
+    background: var(--color-tag-soft-tertiary-bg);
+    color: var(--color-tag-soft-tertiary-foreground);
     cursor: pointer;
   }
 
   .quotes-filters__year:hover {
-    background: var(--color-year-nav-item-bg-hover);
+    background: var(--color-tag-soft-secondary-bg);
+  }
+
+  .quotes-filters__year:active {
+    background: var(--color-tag-filled-bg-tertiary);
   }
 
   .quotes-filters__year[data-active="true"] {
-    background: var(--color-year-nav-item-bg-active);
-    color: var(--color-year-nav-year-color-active);
+    background: var(--color-tag-filled-bg-secondary);
+    color: var(--color-tag-filled-foreground-secondary);
   }
 
   .quotes-filters__year-count {

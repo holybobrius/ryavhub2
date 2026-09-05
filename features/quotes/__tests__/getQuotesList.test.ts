@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, mock } from "bun:test";
-import { getQuotesList } from "../getQuotesList";
+import { getQuotesList } from "../lib/getQuotesList";
 import { mockDb } from "./mockDb";
 
 mock.module("@/lib/db", () => ({

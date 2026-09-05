@@ -1,4 +1,4 @@
-import type { Quote } from "./models";
+import type { Quote } from "../model/models";
 
 export const quoteScore = (quote: Quote): number =>
   (quote.upvotes?.length ?? 0) - (quote.downvotes?.length ?? 0);

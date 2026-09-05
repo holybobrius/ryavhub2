@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
-import { buildQuotesLeaderboards } from "../getLeaderboards";
-import type { Quote } from "../models";
+import { buildQuotesLeaderboards } from "../lib/getLeaderboards";
+import type { Quote } from "../model/models";
 
 const quote = (
   id: number,
