@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { render } from "@testing-library/react";
+import { renderWithProviders as render } from "@/test-utils";
 import userEvent from "@testing-library/user-event";
 import { BestQuote } from "../ui/BestQuote";
 import type { Quote } from "../model/models";

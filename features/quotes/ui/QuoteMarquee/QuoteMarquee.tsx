@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { QuoteChip } from "./QuoteChip";
+import { QuoteChip } from "../QuoteChip/QuoteChip";
 import "./quote-marquee.css";
 
 const PHRASES = [

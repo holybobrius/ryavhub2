@@ -5,6 +5,8 @@ import { Typography } from "@/shared/ui/Typography";
 import { Button } from "@/shared/ui/Button";
 import { IconArrowUpRight, IconEdit02, IconThumbUp } from "@/shared/ui/icons";
 import type { Quote } from "../model/models";
+import { useAuth } from "@/features/auth/useAuth";
+import { QuoteReaction } from "./QuoteReaction/QuoteReaction";
 
 interface QuoteCardProps {
   quote: Quote;
@@ -14,6 +16,10 @@ interface QuoteCardProps {
 const TEXT_CLASS = "whitespace-pre-line text-quote-card-text-color";
 
 export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
+  const { user } = useAuth();
+
+  const isLiked = quote.upvotes?.some((v) => v.created_by === user?.id);
+  const isDisliked = quote.downvotes?.some((v) => v.created_by === user?.id);
   const upvotes = quote.upvotes?.length ?? 0;
   const downvotes = quote.downvotes?.length ?? 0;
 
@@ -67,8 +73,12 @@ export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
 
         <div className="flex items-center gap-space-xl">
           <div className="flex items-center gap-space-2xs">
-            <Reaction kind="like" count={upvotes} />
-            <Reaction kind="dislike" count={downvotes} />
+            <QuoteReaction kind="like" count={upvotes} isActive={!!isLiked} />
+            <QuoteReaction
+              kind="dislike"
+              count={downvotes}
+              isActive={!!isDisliked}
+            />
           </div>
           <Button variant="soft" tone="tertiary" rightIcon={<IconEdit02 />} />
         </div>
@@ -83,24 +93,3 @@ function formatQuoteDate(date: Date): string {
 
   return `${d.format("D")} ${month.charAt(0).toUpperCase()}${month.slice(1)} ${d.format("YYYY")}г.`;
 }
-
-interface ReactionProps {
-  kind: "like" | "dislike";
-  count: number;
-}
-
-const Reaction = ({ kind, count }: ReactionProps) => {
-  const isLike = kind === "like";
-
-  return (
-    <Button
-      variant="soft"
-      tone="tertiary"
-      size="md"
-      aria-label={isLike ? "Нравится" : "Не нравится"}
-      rightIcon={<IconThumbUp className={isLike ? undefined : "rotate-180"} />}
-    >
-      {count}
-    </Button>
-  );
-};

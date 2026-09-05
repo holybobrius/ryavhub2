@@ -1,0 +1,37 @@
+@layer components {
+  .btn.reaction[data-kind="like"][data-active="true"] {
+    --btn-bg-default: var(--color-quote-reaction-like-bg-default);
+    --btn-text-default: var(--color-quote-reaction-like-text-default);
+    --btn-icon-default: var(--color-quote-reaction-like-icon-default);
+
+    --btn-bg-hover: var(--color-quote-reaction-like-bg-hover);
+    --btn-text-hover: var(--color-quote-reaction-like-text-hover);
+    --btn-icon-hover: var(--color-quote-reaction-like-icon-hover);
+
+    --btn-bg-pressed: var(--color-quote-reaction-like-bg-pressed);
+    --btn-text-pressed: var(--color-quote-reaction-like-text-pressed);
+    --btn-icon-pressed: var(--color-quote-reaction-like-icon-pressed);
+
+    --btn-bg-focused: var(--color-quote-reaction-like-bg-focused);
+    --btn-text-focused: var(--color-quote-reaction-like-text-focused);
+    --btn-icon-focused: var(--color-quote-reaction-like-icon-focused);
+  }
+
+  .btn.reaction[data-kind="dislike"][data-active="true"] {
+    --btn-bg-default: var(--color-quote-reaction-dislike-bg-default);
+    --btn-text-default: var(--color-quote-reaction-dislike-text-default);
+    --btn-icon-default: var(--color-quote-reaction-dislike-icon-default);
+
+    --btn-bg-hover: var(--color-quote-reaction-dislike-bg-hover);
+    --btn-text-hover: var(--color-quote-reaction-dislike-text-hover);
+    --btn-icon-hover: var(--color-quote-reaction-dislike-icon-hover);
+
+    --btn-bg-pressed: var(--color-quote-reaction-dislike-bg-pressed);
+    --btn-text-pressed: var(--color-quote-reaction-dislike-text-pressed);
+    --btn-icon-pressed: var(--color-quote-reaction-dislike-icon-pressed);
+
+    --btn-bg-focused: var(--color-quote-reaction-dislike-bg-focused);
+    --btn-text-focused: var(--color-quote-reaction-dislike-text-focused);
+    --btn-icon-focused: var(--color-quote-reaction-dislike-icon-focused);
+  }
+}
