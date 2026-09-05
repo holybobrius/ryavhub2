@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { Quote } from "./models";
+import { Quote } from "../model/models";
 import { selectBestQuotes } from "./getBestQuotes";
 
 export const getQuotesList = async (): Promise<Quote[]> => {

@@ -1972,7 +1972,7 @@
   --color-year-nav-item-bg-hover: var(--color-surface-fill-disabled);
   --ryav-year-nav-item-gap: var(--spacing-8);
   --ryav-year-nav-item-padding-x: var(--spacing-12);
-  --ryav-year-nav-item-padding-y: var(--spacing-8);
+  --ryav-year-nav-item-padding-y: 6px;
   --ryav-year-nav-item-radius: var(--radius-xs);
   --color-year-nav-year-color-active: var(--color-surface-text-base);
   --color-year-nav-year-color-default: var(--color-surface-text-tertiary);

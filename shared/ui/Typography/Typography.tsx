@@ -108,7 +108,7 @@ const Display = ({ size = "md", ...rest }: DisplayProps) => {
   return (
     <Base
       variant={`display-${size}`}
-      defaultWeight="semibold"
+      defaultWeight="medium"
       defaultAs="p"
       {...rest}
     />
@@ -122,7 +122,7 @@ const Heading = ({ size = "lg", ...rest }: HeadingProps) => {
   return (
     <Base
       variant={`heading-${size}`}
-      defaultWeight="semibold"
+      defaultWeight="medium"
       defaultAs="p"
       {...rest}
     />
@@ -136,7 +136,7 @@ const Body = ({ size = "md", ...rest }: BodyProps) => {
   return (
     <Base
       variant={`body-${size}`}
-      defaultWeight="regular"
+      defaultWeight="medium"
       defaultAs="p"
       {...rest}
     />

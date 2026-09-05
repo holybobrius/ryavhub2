@@ -2,7 +2,7 @@ import { describe, it, expect } from "bun:test";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BestQuote } from "../ui/BestQuote";
-import type { Quote } from "../models";
+import type { Quote } from "../model/models";
 
 const quote = (id: number, text: string): Quote => ({
   id,

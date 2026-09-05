@@ -6,8 +6,15 @@ import { Input } from "@/shared/ui/Input";
 import { Radio } from "@/shared/ui/Radio";
 import { Typography } from "@/shared/ui/Typography";
 import { IconSearch } from "@/shared/ui/icons";
-import type { AuthorFilter, YearFilter } from "../getQuotesFilters";
+import type {
+  AuthorFilter,
+  QuotesFilters as QuotesFiltersModel,
+  QuotesSortType,
+  YearFilter,
+} from "../model/models";
 import "./quotes-filters.css";
+import { YearFilterTag } from "./YearFilterTag";
+import { useState } from "react";
 
 const SORT_OPTIONS = [
   { value: "newest", label: "Сначала новые" },
@@ -20,13 +27,33 @@ interface QuotesFiltersProps {
   authors: AuthorFilter[];
   years: YearFilter[];
   className?: string;
+  sort: QuotesSortType;
+  handleSortChange: (sort: QuotesSortType) => void;
+  filters: QuotesFiltersModel;
+  setFilters: (filters: QuotesFiltersModel) => void;
+  clearAuthorsFilters: () => void;
+  resetAuthorsFilters: () => void;
+  clearFilters: () => void;
 }
 
 export const QuotesFilters = ({
   authors,
   years,
   className,
+  sort,
+  handleSortChange,
+  filters,
+  setFilters,
+  clearAuthorsFilters,
+  resetAuthorsFilters,
+  clearFilters,
 }: QuotesFiltersProps) => {
+  const [searchAuthor, setSearchAuthor] = useState("");
+
+  const filteredAuthors = authors.filter((author) =>
+    author.name.toLowerCase().includes(searchAuthor.toLowerCase()),
+  );
+
   return (
     <aside
       className={["flex flex-col gap-space-md", className]
@@ -36,13 +63,16 @@ export const QuotesFilters = ({
       <div className="flex flex-col gap-sidebar-card-section rounded-sidebar-card border-sidebar-card border-sidebar-card-border-color bg-sidebar-card-bg p-sidebar-card">
         <Section title="Сортировка">
           <div className="flex flex-col gap-space-sm">
-            {SORT_OPTIONS.map((option, index) => (
+            {SORT_OPTIONS.map((option) => (
               <Radio
                 key={option.value}
                 name="quotes-sort"
                 value={option.value}
+                checked={sort === option.value}
+                onChange={() =>
+                  handleSortChange(option.value as QuotesSortType)
+                }
                 label={option.label}
-                defaultChecked={index === 0}
               />
             ))}
           </div>
@@ -56,8 +86,13 @@ export const QuotesFilters = ({
             <button
               type="button"
               className="text-label-md tracking-label-md font-body cursor-pointer text-surface-text-link"
+              onClick={
+                filters.authors.length > 0
+                  ? clearAuthorsFilters
+                  : resetAuthorsFilters
+              }
             >
-              Снять всё
+              {filters.authors.length > 0 ? "Снять всё" : "Выбрать все"}
             </button>
           }
         >
@@ -68,14 +103,30 @@ export const QuotesFilters = ({
               placeholder="Поиск автора"
               aria-label="Поиск автора"
               leftIcon={<IconSearch />}
+              value={searchAuthor}
+              onChange={(e) => setSearchAuthor(e.target.value)}
             />
 
             <div className="quotes-filters__scroll flex flex-col gap-space-sm pr-inset-xs">
-              {authors.map((author) => (
+              {filteredAuthors.map((author) => (
                 <Checkbox
                   key={author.id}
                   className="quotes-filters__author"
-                  defaultChecked
+                  checked={filters.authors.some(
+                    (filter) => filter.id === author.id,
+                  )}
+                  onChange={() =>
+                    setFilters({
+                      ...filters,
+                      authors: filters.authors.some(
+                        (filter) => filter.id === author.id,
+                      )
+                        ? filters.authors.filter(
+                            (filter) => filter.id !== author.id,
+                          )
+                        : [...filters.authors, author],
+                    })
+                  }
                   value={String(author.id)}
                   label={
                     <span className="flex items-center gap-space-xs">
@@ -112,24 +163,32 @@ export const QuotesFilters = ({
         <Section title="Год">
           <div className="flex flex-wrap gap-year-nav">
             {years.map(({ year, count }) => (
-              <button key={year} type="button" className="quotes-filters__year">
-                <Typography.Body size="sm" as="span">
-                  {year}
-                </Typography.Body>
-                <Typography.Label
-                  size="xs"
-                  as="span"
-                  className="quotes-filters__year-count"
-                >
-                  {count}
-                </Typography.Label>
-              </button>
+              <YearFilterTag
+                key={year}
+                year={year}
+                count={count}
+                active={filters.years.some((filter) => filter.year === year)}
+                onClick={() =>
+                  setFilters({
+                    ...filters,
+                    years: filters.years.some((filter) => filter.year === year)
+                      ? filters.years.filter((filter) => filter.year !== year)
+                      : [...filters.years, { year, count }],
+                  })
+                }
+              />
             ))}
           </div>
         </Section>
       </div>
 
-      <Button variant="outlined" tone="tertiary" size="lg" className="w-full">
+      <Button
+        variant="outlined"
+        tone="tertiary"
+        size="lg"
+        className="w-full"
+        onClick={clearFilters}
+      >
         Сбросить фильтры
       </Button>
     </aside>

@@ -4,7 +4,7 @@ import { Avatar } from "@/shared/ui/Avatar";
 import { Typography } from "@/shared/ui/Typography";
 import { Button } from "@/shared/ui/Button";
 import { IconArrowUpRight, IconThumbUp } from "@/shared/ui/icons";
-import type { Quote } from "../models";
+import type { Quote } from "../model/models";
 
 interface QuoteCardProps {
   quote: Quote;

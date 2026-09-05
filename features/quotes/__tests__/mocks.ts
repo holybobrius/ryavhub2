@@ -1,4 +1,4 @@
-import { Quote } from "../models";
+import { Quote } from "../model/models";
 
 export const mockQuote: Quote = {
   id: 1,

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/shared/ui/Button";
 import { IconChevronLeft, IconChevronRight } from "@/shared/ui/icons";
 import { QuoteCard } from "./QuoteCard";
-import type { Quote } from "../models";
+import type { Quote } from "../model/models";
 
 interface BestQuoteProps {
   quotes: Quote[];

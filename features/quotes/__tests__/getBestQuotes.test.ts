@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
-import { selectBestQuotes } from "../getBestQuotes";
-import type { Quote } from "../models";
+import { selectBestQuotes } from "../lib/getBestQuotes";
+import type { Quote } from "../model/models";
 
 const quote = (id: number, upvotes: number, downvotes: number): Quote => ({
   id,

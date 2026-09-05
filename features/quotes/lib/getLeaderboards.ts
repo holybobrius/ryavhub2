@@ -1,4 +1,4 @@
-import type { Quote } from "./models";
+import type { Quote } from "../model/models";
 import type { LeaderboardEntry } from "@/shared/ui/Leaderboard";
 
 export interface QuotesLeaderboards {

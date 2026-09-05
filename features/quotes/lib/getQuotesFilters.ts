@@ -1,21 +1,4 @@
-import type { Quote } from "./models";
-
-export interface AuthorFilter {
-  id: number;
-  name: string;
-  avatarUrl?: string;
-  count: number;
-}
-
-export interface YearFilter {
-  year: number;
-  count: number;
-}
-
-export interface QuotesFilters {
-  authors: AuthorFilter[];
-  years: YearFilter[];
-}
+import type { AuthorFilter, QuotesFilters, Quote } from "../model/models";
 
 export function buildQuotesFilters(quotes: Quote[]): QuotesFilters {
   const authors = new Map<number, AuthorFilter>();
