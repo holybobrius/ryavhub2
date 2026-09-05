@@ -10,6 +10,7 @@ export interface IconTileProps {
   size?: IconTileSize;
   inactive?: boolean;
   title?: string;
+  secondary?: boolean;
   className?: string;
 }
 
@@ -20,6 +21,7 @@ export const IconTile = ({
   size = "default",
   inactive,
   title,
+  secondary,
   className,
 }: IconTileProps) => {
   const decorative = title == null;
@@ -37,7 +39,12 @@ export const IconTile = ({
         // eslint-disable-next-line @next/next/no-img-element
         <img className="icon-tile__glyph icon-tile__img" src={src} alt={alt} />
       ) : (
-        <span className="icon-tile__glyph">{icon}</span>
+        <span
+          className="icon-tile__glyph"
+          data-secondary={secondary ? "true" : undefined}
+        >
+          {icon}
+        </span>
       )}
     </span>
   );

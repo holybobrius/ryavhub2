@@ -9,6 +9,7 @@ import { Button } from "@/shared/ui/Button";
 import { QuoteCard } from "./QuoteCard";
 import { YearDivider } from "./YearDivider";
 import { QuotesFilters } from "./QuotesFilters";
+import { EmptyState } from "@/shared/ui/EmptyState/EmptyState";
 
 interface QuotesBrowserProps {
   quotes: Quote[];
@@ -63,16 +64,33 @@ export const QuotesBrowser = ({
             Добавить цитату
           </Button>
         </div>
-        {quotesByYear.map(({ year, quotes }) => (
-          <div key={`quotes-${year}`} className="flex flex-col gap-space-xl">
-            {year && <YearDivider year={year} />}
-            <div className="flex flex-col gap-space-md">
-              {quotes.map((quote) => (
-                <QuoteCard key={quote.id} quote={quote} />
-              ))}
+        {quotesByYear.length > 0 ? (
+          quotesByYear.map(({ year, quotes }) => (
+            <div key={`quotes-${year}`} className="flex flex-col gap-space-xl">
+              {year && <YearDivider year={year} />}
+              <div className="flex flex-col gap-space-md">
+                {quotes.map((quote) => (
+                  <QuoteCard key={quote.id} quote={quote} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <EmptyState
+            title="Ничего не найдено"
+            description="По таким фильтрам цитат не найдено"
+            icon={<IconSearch />}
+            action={
+              <Button
+                variant="outlined"
+                tone="tertiary"
+                rightIcon={<IconPlus />}
+              >
+                Добавить цитату
+              </Button>
+            }
+          />
+        )}
       </div>
 
       <QuotesFilters
