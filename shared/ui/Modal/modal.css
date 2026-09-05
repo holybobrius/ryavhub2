@@ -1,0 +1,169 @@
+/* Токены --color-modal-* / --ryav-modal-* — по именам, значения переживают
+   реэкспорт из Figma. .modal — визуал карточки, .modal-dialog — позиционирование
+   поверх страницы (статичная витрина в стори берёт только .modal).
+
+   Провизорно, токенов нет — флаг дизайнеру: подложка (общий bg-mask), размер
+   шрифта описания, зазор заголовок↔крестик, единый border-color на рамку и
+   разделители, длительность анимации, нижний паддинг шапки. */
+
+@layer components {
+  .modal {
+    display: flex;
+    flex-direction: column;
+    width: var(--mdl-width);
+    max-width: 100%;
+    overflow: hidden;
+    border: var(--ryav-modal-border-width) solid var(--color-modal-border-color);
+    border-radius: var(--ryav-modal-border-radius);
+    background-color: var(--color-modal-bg);
+  }
+
+  .modal[data-size="sm"] {
+    --mdl-width: var(--ryav-modal-sm-width);
+  }
+  .modal[data-size="md"] {
+    --mdl-width: var(--ryav-modal-md-width);
+  }
+  .modal[data-size="lg"] {
+    --mdl-width: var(--ryav-modal-lg-width);
+  }
+
+  .modal-dialog {
+    position: fixed;
+    z-index: 61;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    max-width: calc(100vw - var(--spacing-32));
+    max-height: calc(100vh - var(--spacing-64));
+
+    /* База = скрытое состояние, data-enter/data-leave Ariakit ставит сам. */
+    opacity: 0;
+    scale: 0.96;
+    transition:
+      opacity 0.15s ease,
+      scale 0.15s ease;
+  }
+  .modal-dialog[data-enter] {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    z-index: 60;
+    inset: 0;
+    background-color: var(--color-surface-bg-mask);
+
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .modal-backdrop[data-enter] {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modal-dialog,
+    .modal-backdrop {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  .modal__header {
+    display: flex;
+    flex: none;
+    align-items: flex-start;
+    gap: var(--spacing-16);
+    padding: var(--mdl-header-padding-y) var(--mdl-header-padding-x);
+    /* Строго после шортхенда padding, иначе затрёт. */
+    padding-bottom: var(--spacing-24);
+    border-bottom: var(--ryav-modal-border-width) solid
+      var(--color-modal-border-color);
+  }
+
+  .modal__header[data-size="sm"] {
+    --mdl-header-padding-x: var(--ryav-modal-header-sm-padding-x);
+    --mdl-header-padding-y: var(--ryav-modal-header-sm-padding-y);
+  }
+  .modal__header[data-size="md"] {
+    --mdl-header-padding-x: var(--ryav-modal-header-md-padding-x);
+    --mdl-header-padding-y: var(--ryav-modal-header-md-padding-y);
+  }
+  .modal__header[data-size="lg"] {
+    --mdl-header-padding-x: var(--ryav-modal-header-lg-padding-x);
+    --mdl-header-padding-y: var(--ryav-modal-header-lg-padding-y);
+  }
+
+  .modal__titles {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--ryav-modal-header-title-gap);
+  }
+
+  .modal__title {
+    color: var(--color-modal-header-title);
+  }
+
+  .modal__description {
+    margin: 0;
+    color: var(--color-modal-header-description);
+    font-family: var(--font-body);
+    font-size: var(--text-label-md);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+  }
+
+  .modal__close {
+    flex: none;
+  }
+
+  .modal__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--mdl-content-gap);
+    padding: var(--mdl-content-padding);
+    overflow-y: auto;
+    background-color: var(--color-modal-content-bg);
+  }
+
+  .modal__content[data-size="sm"] {
+    --mdl-content-gap: var(--ryav-modal-content-sm-gap);
+    --mdl-content-padding: var(--ryav-modal-content-sm-padding);
+  }
+  .modal__content[data-size="md"] {
+    --mdl-content-gap: var(--ryav-modal-content-md-gap);
+    --mdl-content-padding: var(--ryav-modal-content-md-padding);
+  }
+  .modal__content[data-size="lg"] {
+    --mdl-content-gap: var(--ryav-modal-content-lg-gap);
+    --mdl-content-padding: var(--ryav-modal-content-lg-padding);
+  }
+
+  .modal__footer {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--ryav-modal-footer-button-gap);
+    padding: var(--mdl-footer-padding-y) var(--mdl-footer-padding-x);
+    border-top: var(--ryav-modal-border-width) solid
+      var(--color-modal-border-color);
+    background-color: var(--color-modal-footer-bg);
+  }
+
+  .modal__footer[data-size="sm"] {
+    --mdl-footer-padding-x: var(--ryav-modal-footer-sm-padding-x);
+    --mdl-footer-padding-y: var(--ryav-modal-footer-sm-padding-y);
+  }
+  .modal__footer[data-size="md"] {
+    --mdl-footer-padding-x: var(--ryav-modal-footer-md-padding-x);
+    --mdl-footer-padding-y: var(--ryav-modal-footer-md-padding-y);
+  }
+  .modal__footer[data-size="lg"] {
+    --mdl-footer-padding-x: var(--ryav-modal-footer-lg-padding-x);
+    --mdl-footer-padding-y: var(--ryav-modal-footer-lg-padding-y);
+  }
+}
