@@ -1,6 +1,6 @@
-import { MC_AVATAR_BASE_URL } from "@/shared/const/constants";
 import { User } from "./models";
 import { db } from "@/lib/db";
+import { getMCAvatarUrl } from "@/shared/lib/avatars";
 
 export const getUserById = async (id: number): Promise<User | undefined> => {
   try {
@@ -9,7 +9,7 @@ export const getUserById = async (id: number): Promise<User | undefined> => {
     return {
       id: Number(id),
       name: user?.name || "",
-      avatarUrl: `${MC_AVATAR_BASE_URL}${user?.mc_name}`,
+      avatarUrl: getMCAvatarUrl(user?.mc_uuid),
     };
   } catch (error) {
     console.error(error);

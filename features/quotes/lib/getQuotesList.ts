@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { Quote } from "../model/models";
 import { selectBestQuotes } from "./getBestQuotes";
-import { MC_AVATAR_BASE_URL } from "@/shared/const/constants";
+import { getMCAvatarUrl } from "@/shared/lib/avatars";
 
 export const getQuotesList = async (): Promise<Quote[]> => {
   const quotes = await db.quotes.findMany({
@@ -24,9 +24,7 @@ export const getQuotesList = async (): Promise<Quote[]> => {
       quoteAuthor: {
         id: n.quote_by == null ? undefined : Number(n.quote_by),
         name: n.users_quotes_quote_byTousers?.name ?? "",
-        avatarUrl: n.users_quotes_quote_byTousers?.mc_name
-          ? `${MC_AVATAR_BASE_URL}${n.users_quotes_quote_byTousers?.mc_name}`
-          : undefined,
+        avatarUrl: getMCAvatarUrl(n.users_quotes_quote_byTousers?.mc_uuid),
       },
       date: n.date || new Date(),
       upvotes: byType("Upvote"),
