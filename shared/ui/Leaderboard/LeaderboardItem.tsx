@@ -53,7 +53,7 @@ export const LeaderboardItem = ({
         </Avatar>
 
         <Typography.Body
-          size="sm"
+          size="lg"
           as="span"
           className="truncate"
           style={{ color: "var(--color-user-badge-name-color)" }}
@@ -63,7 +63,7 @@ export const LeaderboardItem = ({
       </div>
 
       <Typography.Body
-        size="sm"
+        size="md"
         as="span"
         className="ml-auto shrink-0 text-right"
         style={{
