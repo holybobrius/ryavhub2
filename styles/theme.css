@@ -62,7 +62,7 @@
 
   --spacing-page-margin: var(--ryav-grid-margin-desktop-xl);
   --spacing-layout-block: var(--ryav-layout-block-gap);
-  --spacing-author-block: var(--ryav-author-block-gap);
+  --spacing-author-block: var(--ryav-author-block-gap-2);
   --spacing-author-block-info: var(--ryav-author-block-info-gap);
   --spacing-year-nav: var(--ryav-year-nav-gap);
   --spacing-user-badge: var(--ryav-user-badge-gap);

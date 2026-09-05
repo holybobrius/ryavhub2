@@ -24,7 +24,7 @@ export const UserMenu = ({ user }: { user: User }) => {
       size="sm"
       variant="soft"
       tone="tertiary"
-      leftIcon={<Avatar size={20} shape="square" />}
+      leftIcon={<Avatar size={20} shape="square" src={user.avatarUrl} />}
       menu={menu}
     >
       {user.name}

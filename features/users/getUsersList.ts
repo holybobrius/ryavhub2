@@ -1,5 +1,6 @@
 import { User } from "./models";
 import { db } from "@/lib/db";
+import { getMCAvatarUrl } from "@/shared/lib/avatars";
 
 export const getUserById = async (id: number): Promise<User | undefined> => {
   try {
@@ -8,7 +9,7 @@ export const getUserById = async (id: number): Promise<User | undefined> => {
     return {
       id: Number(id),
       name: user?.name || "",
-      avatarUrl: "",
+      avatarUrl: getMCAvatarUrl(user?.mc_uuid),
     };
   } catch (error) {
     console.error(error);
