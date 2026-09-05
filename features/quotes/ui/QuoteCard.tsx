@@ -65,7 +65,7 @@ export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-space-2xl">
+        <div className="flex items-center gap-space-xl">
           <div className="flex items-center gap-space-2xs">
             <Reaction kind="like" count={upvotes} />
             <Reaction kind="dislike" count={downvotes} />
