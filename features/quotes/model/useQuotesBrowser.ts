@@ -1,3 +1,4 @@
+import { useDeferredValue } from "react";
 import { getAllQuotesList } from "../lib/getAllQuotesList";
 import {
   AuthorFilter,
@@ -44,8 +45,14 @@ export const useQuotesBrowser = ({
     clearFilters,
   } = useQuotesFilters({ authorsList, yearsList });
   const { search, handleSearchChange } = useQuotesSearch();
+  const deferredSearch = useDeferredValue(search);
 
-  const quotesByYear = getAllQuotesList({ sort, quotes, filters, search });
+  const quotesByYear = getAllQuotesList({
+    sort,
+    quotes,
+    filters,
+    search: deferredSearch,
+  });
   return {
     quotesByYear,
     sort,

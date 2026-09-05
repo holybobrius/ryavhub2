@@ -20,17 +20,17 @@ export const getAllQuotesList = ({
   filters,
   search,
 }: AllQuotesListProps): QuotesByYear[] => {
-  const sortedQuotes = sortQuotes(quotes, sort);
+  const filteredQuotes = filterQuotes(quotes, filters, search);
+
+  const sortedQuotes = sortQuotes(filteredQuotes, sort);
 
   const quotesByYear = new Map<number, Quote[]>();
 
-  const filteredQuotes = filterQuotes(sortedQuotes, filters, search);
-
   if (sort === "best" || sort === "worst") {
-    return [{ quotes: filteredQuotes }];
+    return [{ quotes: sortedQuotes }];
   }
 
-  for (const quote of filteredQuotes) {
+  for (const quote of sortedQuotes) {
     const year = quote.date.getFullYear();
     quotesByYear.set(year, [...(quotesByYear.get(year) ?? []), quote]);
   }

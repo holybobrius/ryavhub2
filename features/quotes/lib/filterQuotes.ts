@@ -5,13 +5,16 @@ export const filterQuotes = (
   filters: QuotesFilters,
   search: string,
 ) => {
-  const filteredQuotes = quotes.filter((quote) => {
-    return (
-      quote.quote.toLowerCase().includes(search.toLowerCase()) &&
-      filters.authors.some((author) => author.id === quote.quoteAuthor?.id) &&
-      filters.years.some((year) => year.year === quote.date.getFullYear())
-    );
-  });
+  const authorIds = new Set(filters.authors.map((author) => author.id));
+  const years = new Set(filters.years.map((year) => year.year));
+  const searchQuery = search.trim().toLowerCase();
+
+  const filteredQuotes = quotes.filter(
+    (quote) =>
+      years.has(quote.date.getFullYear()) &&
+      (!quote.quoteAuthor?.id || authorIds.has(quote.quoteAuthor?.id)) &&
+      (searchQuery === "" || quote.quote.toLowerCase().includes(searchQuery)),
+  );
 
   return filteredQuotes;
 };
