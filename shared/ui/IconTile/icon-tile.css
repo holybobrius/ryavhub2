@@ -34,7 +34,7 @@
     display: inline-flex;
     width: var(--ryav-icon-tile-glyph-size);
     height: var(--ryav-icon-tile-glyph-size);
-    color: var(--it-icon);
+    color: var(--color-surface-icon-default);
   }
 
   .icon-tile__glyph > :where(.icon, svg, img) {
@@ -42,6 +42,10 @@
      иначе иконка игнорировала бы размер, заданный тут. */
     width: 100% !important;
     height: 100% !important;
+  }
+
+  .icon-tile__glyph[data-secondary] {
+    color: var(--color-surface-icon-secondary);
   }
 
   .icon-tile__img {
