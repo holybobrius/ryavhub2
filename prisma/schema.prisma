@@ -76,10 +76,10 @@ model quotes {
 model timeline {
   id                    Int                     @id @default(autoincrement())
   title                 String                  @db.VarChar(150)
-  description           String?                 @db.Text
   location              String?                 @db.VarChar(100)
   date                  DateTime                @db.Date
   created_by            BigInt?
+  description           String?                 @db.Text
   users                 users?                  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "timeline_users__fk")
   timeline_participants timeline_participants[]
 
@@ -101,6 +101,8 @@ model users {
   id                              BigInt                   @id
   email                           String                   @unique(map: "users_email_uindex") @db.VarChar(100)
   name                            String                   @db.VarChar(50)
+  mc_name                         String                   @db.VarChar(50)
+  mc_uuid                         String                   @db.VarChar(50)
   gauntlet                        Boolean                  @default(false)
   created_utc                     DateTime?                @db.DateTime(0)
   gamesaves                       gamesaves[]

@@ -11,6 +11,7 @@ const TOP_SIZE = 5;
 
 interface AuthorTotals {
   name: string;
+  avatarUrl?: string;
   likes: number;
   dislikes: number;
   quotes: number;
@@ -26,6 +27,7 @@ export function buildQuotesLeaderboards(quotes: Quote[]): QuotesLeaderboards {
 
     const current = totals.get(authorId) ?? {
       name: quote.quoteAuthor.name,
+      avatarUrl: quote.quoteAuthor.avatarUrl,
       likes: 0,
       dislikes: 0,
       quotes: 0,
@@ -78,6 +80,10 @@ function board(
       // как строки легли в БД, и рейтинг «прыгал» бы между рендерами.
       .sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name, "ru"))
       .slice(0, TOP_SIZE)
-      .map((author) => ({ name: author.name, ...format(score(author)) }))
+      .map((author) => ({
+        name: author.name,
+        avatarSrc: author.avatarUrl,
+        ...format(score(author)),
+      }))
   );
 }
