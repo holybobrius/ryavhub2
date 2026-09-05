@@ -6,6 +6,16 @@ import { ryavTheme } from "./theme";
 
 import "../app/globals.css";
 
+// Переменные шрифтов вешаем на <html>, как в app/layout.tsx, а не на обёртку
+// стори. --font-heading объявлена в @theme, то есть на :root, а var() в
+// кастомном свойстве подставляется на элементе объявления: будь --font-geologica
+// ниже по дереву, значение схлопнулось бы в пустоту и заголовки рендерились бы
+// телесным шрифтом. Бонусом шрифты достаются и портальному контенту (модалки,
+// меню, тултипы) — он живёт в body, вне декоратора.
+if (typeof document !== "undefined") {
+  document.documentElement.classList.add(geologica.variable, ptRootUI.variable);
+}
+
 const preview: Preview = {
   parameters: {
     layout: "centered",
@@ -14,9 +24,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <div
-        className={`${geologica.variable} ${ptRootUI.variable} bg-surface-bg-page text-surface-text-base rounded-md p-24`}
-      >
+      <div className="bg-surface-bg-page text-surface-text-base rounded-md p-24">
         <Story />
       </div>
     ),
