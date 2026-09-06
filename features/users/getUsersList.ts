@@ -18,7 +18,10 @@ export const getUserById = async (id: number): Promise<User | undefined> => {
 };
 
 export const getUsersList = async (): Promise<User[]> => {
-  const users = await db.users.findMany();
+  const users = await db.users.findMany({
+    select: { id: true, name: true, mc_uuid: true },
+    orderBy: { name: "asc" },
+  });
 
   return users.map((user) => ({
     id: Number(user.id),

@@ -17,11 +17,12 @@ import { getUsersList } from "@/features/users/getUsersList";
 
 export default async function QuotesPage() {
   const user = await getCurrentUser();
-  const [{ quotesCount, rankingsCount }, quotes, users] = await Promise.all([
+  const [{ quotesCount, rankingsCount }, quotes] = await Promise.all([
     getQuotesStats(),
     getQuotesList(user?.id),
-    getUsersList(),
   ]);
+
+  const users = await getUsersList();
 
   const bestQuotes = selectBestQuotes(quotes);
 

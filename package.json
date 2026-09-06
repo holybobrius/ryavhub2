@@ -5,7 +5,6 @@
   "engines": {
     "node": ">=24"
   },
-  "typecheck": "tsc --noEmit",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
