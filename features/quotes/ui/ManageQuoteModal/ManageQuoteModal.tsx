@@ -11,7 +11,7 @@ import { Controller, useFormState } from "react-hook-form";
 import { addQuote } from "../../actions/addQuote";
 
 export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
-  const { state, close, form } = useQuoteModal();
+  const { state, close, form, open } = useQuoteModal();
   const { register, control } = form;
   const { errors } = useFormState({ control });
 
@@ -48,7 +48,7 @@ export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
           ? "Добавь цитату, укажи автора и дату, когда она была сказана."
           : "Редактируй цитату, укажи автора и дату, когда она была сказана."
       }
-      open={state.mode !== "closed"}
+      open={open}
       cancelText="Отмена"
       okText="Сохранить"
       onOk={handleOk}
