@@ -2,10 +2,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { Avatar } from "@/shared/ui/Avatar";
 import { Typography } from "@/shared/ui/Typography";
-import { Button } from "@/shared/ui/Button";
-import { IconArrowUpRight, IconEdit02 } from "@/shared/ui/icons";
+import { IconArrowUpRight } from "@/shared/ui/icons";
 import type { Quote } from "../model/models";
 import { QuoteReactions } from "./QuoteReactions/QuoteReactions";
+import { EditQuoteButton } from "./EditQuoteButton";
 
 interface QuoteCardProps {
   quote: Quote;
@@ -73,7 +73,7 @@ export const QuoteCard = ({ quote, isBest = false }: QuoteCardProps) => {
             downvotes={downvotes}
             userVote={quote.userVote}
           />
-          <Button variant="soft" tone="tertiary" rightIcon={<IconEdit02 />} />
+          {!isBest && <EditQuoteButton quote={quote} />}
         </div>
       </div>
     </article>
