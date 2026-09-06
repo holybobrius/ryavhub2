@@ -26,6 +26,8 @@ export const BestQuote = ({ quotes, className }: BestQuoteProps) => {
   const hasMultiple = quotes.length > 1;
 
   const shift = (step: number) =>
+    setActiveId(
+      quotes[(activeIndex + step + quotes.length) % quotes.length]?.id,
     );
 
   return (
