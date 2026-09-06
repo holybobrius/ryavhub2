@@ -33,16 +33,3 @@ export const getQuotesList = async (userId?: number): Promise<Quote[]> => {
     };
   });
 };
-
-export const getBestQuote = async (
-  preloadedQuotes?: Quote[],
-): Promise<Quote | null> => {
-  const quotes = preloadedQuotes ?? (await getQuotesList());
-  const best = selectBestQuotes(quotes);
-
-  if (best.length === 0) {
-    return null;
-  }
-
-  return best[Math.floor(Math.random() * best.length)];
-};
