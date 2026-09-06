@@ -37,10 +37,20 @@ export const mockUsers = [
   { id: 2n, name: "User 2", avatarUrl: "" },
 ];
 
+// Аргумент нужен не самому моку, а типам: bun выводит .mock.calls из
+// сигнатуры, и у функции без параметров calls[0] — пустой кортеж.
+type QuoteUpdateArgs = {
+  where: { id: number };
+  data: Record<string, unknown>;
+};
+
 export const mockDb = {
   quotes: {
     findMany: mock(() => Promise.resolve(mockQuotes)),
     create: mock(() => Promise.resolve({ id: 3n })),
+    update: mock((args: QuoteUpdateArgs) =>
+      Promise.resolve({ id: BigInt(args.where.id) }),
+    ),
   },
   quote_rankings: {
     findMany: mock(() => Promise.resolve(mockRankings)),

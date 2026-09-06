@@ -9,6 +9,7 @@ import { User } from "@/features/users/models";
 import { Avatar } from "@/shared/ui/Avatar";
 import { Controller, useFormState } from "react-hook-form";
 import { addQuote } from "../../actions/addQuote";
+import { editQuote } from "../../actions/editQuote";
 
 export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
   const { state, close, form } = useQuoteModal();
@@ -23,7 +24,9 @@ export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
 
     const values = form.getValues();
 
-    const result = await addQuote(values);
+    const result = isCreateMode
+      ? await addQuote(values)
+      : await editQuote(values, state.mode === "edit" ? state.quote.id : 0);
 
     if (!result.ok) {
       form.setError("root", {

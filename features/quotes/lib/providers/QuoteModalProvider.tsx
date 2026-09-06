@@ -13,7 +13,7 @@ type QuoteModalState =
 type QuoteModalContextType = {
   state: QuoteModalState;
   openAddModal: () => void;
-  openEdit: (quote: Quote) => void;
+  openEditModal: (quote: Quote) => void;
   close: () => void;
   form: UseFormReturn<QuoteFormValues>;
 };
@@ -39,7 +39,7 @@ export const QuoteModalProvider = ({ children }: PropsWithChildren) => {
     setState({ mode: "add" });
   };
 
-  const openEdit = (quote: Quote) => {
+  const openEditModal = (quote: Quote) => {
     form.reset({
       quote: quote.quote,
       date: dayjs(quote.date).format("YYYY-MM-DD"),
@@ -54,7 +54,9 @@ export const QuoteModalProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <QuoteModalContext value={{ state, openAddModal, form, openEdit, close }}>
+    <QuoteModalContext
+      value={{ state, openAddModal, form, openEditModal, close }}
+    >
       {children}
     </QuoteModalContext>
   );
