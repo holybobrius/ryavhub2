@@ -20,7 +20,7 @@
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "test:watch": "bun test --watch",
     "test:ui": "bun test --watch",
     "test:coverage": "bun test --coverage",
