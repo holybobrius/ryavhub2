@@ -1,7 +1,7 @@
 "use client";
 
 import * as Ariakit from "@ariakit/react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Button } from "../Button";
 import type { ButtonSize } from "../Button";
 import { Typography } from "../Typography";
@@ -29,7 +29,7 @@ export interface ModalProps {
   title: ReactNode;
   subtitle?: ReactNode;
   size?: ModalSize;
-  onOk?: () => void;
+  onOk?: () => void | boolean | Promise<boolean | void>;
   okText?: ReactNode;
   onCancel?: () => void;
   cancelText?: ReactNode;
@@ -52,6 +52,24 @@ export const Modal = ({
   children,
   className,
 }: ModalProps) => {
+  const [pending, setPending] = useState(false);
+
+  const handleOk = async () => {
+    if (pending) return;
+    setPending(true);
+
+    try {
+      const result = await onOk?.();
+      if (result !== false) {
+        onClose();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setPending(false);
+    }
+  };
+
   const store = Ariakit.useDialogStore({
     open,
     setOpen: (next) => {
@@ -63,8 +81,8 @@ export const Modal = ({
     <Ariakit.Dialog
       store={store}
       unmountOnHide
-      hideOnEscape={dismissible}
-      hideOnInteractOutside={dismissible}
+      hideOnEscape={dismissible && !pending}
+      hideOnInteractOutside={dismissible && !pending}
       backdrop={<div className="modal-backdrop" />}
       data-size={size}
       className={["modal", "modal-dialog", className].filter(Boolean).join(" ")}
@@ -74,6 +92,7 @@ export const Modal = ({
         title={title}
         subtitle={subtitle}
         onClose={onClose}
+        closeDisabled={pending}
       />
 
       {children != null && (
@@ -86,17 +105,12 @@ export const Modal = ({
         size={size}
         okText={okText}
         cancelText={cancelText}
-        onOk={
-          onOk &&
-          (() => {
-            onOk();
-            onClose();
-          })
-        }
+        onOk={onOk && handleOk}
         onCancel={() => {
           onCancel?.();
           onClose();
         }}
+        pending={pending}
       />
     </Ariakit.Dialog>
   );
@@ -107,6 +121,7 @@ interface ModalHeaderProps {
   title: ReactNode;
   subtitle?: ReactNode;
   onClose: () => void;
+  closeDisabled: boolean;
 }
 
 export const ModalHeader = ({
@@ -114,6 +129,7 @@ export const ModalHeader = ({
   title,
   subtitle,
   onClose,
+  closeDisabled,
 }: ModalHeaderProps) => {
   return (
     <div className="modal__header" data-size={size}>
@@ -144,6 +160,7 @@ export const ModalHeader = ({
         leftIcon={<IconClose />}
         aria-label="Закрыть"
         onClick={onClose}
+        disabled={closeDisabled}
       />
     </div>
   );
@@ -153,8 +170,9 @@ interface ModalFooterProps {
   size: ModalSize;
   okText: ReactNode;
   cancelText: ReactNode;
-  onOk?: () => void;
+  onOk?: () => void | Promise<boolean | void>;
   onCancel: () => void;
+  pending: boolean;
 }
 
 export const ModalFooter = ({
@@ -163,14 +181,25 @@ export const ModalFooter = ({
   cancelText,
   onOk,
   onCancel,
+  pending,
 }: ModalFooterProps) => {
   return (
     <div className="modal__footer" data-size={size}>
-      <Button variant="outlined" tone="tertiary" onClick={onCancel}>
+      <Button
+        variant="outlined"
+        tone="tertiary"
+        onClick={onCancel}
+        disabled={pending}
+      >
         {cancelText}
       </Button>
       {onOk && (
-        <Button variant="filled" tone="secondary" onClick={onOk}>
+        <Button
+          variant="filled"
+          tone="secondary"
+          onClick={onOk}
+          disabled={pending}
+        >
           {okText}
         </Button>
       )}

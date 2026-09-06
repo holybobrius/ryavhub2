@@ -1,7 +1,7 @@
 "use client";
 
 import * as Ariakit from "@ariakit/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import "../Input/input.css";
 import "./select.css";
@@ -279,6 +279,7 @@ const ComboboxSelect = (props: SelectProps) => {
   });
 
   const fieldRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const open = Ariakit.useStoreState(combobox, "open");
   const search = Ariakit.useStoreState(combobox, "value");
   const matches = search
@@ -286,6 +287,24 @@ const ComboboxSelect = (props: SelectProps) => {
         o.label.toLowerCase().includes(search.toLowerCase()),
       )
     : options;
+
+  const selectedLabel = Ariakit.useStoreState(combobox, "selectedValue");
+  const selectedText = typeof selectedLabel === "string" ? selectedLabel : "";
+
+  // Ariakit не помечает выбранную опцию сам (aria-selected он ставит только в
+  // паре с Ariakit.Select), а автоскролла к ней без select-режима тоже нет.
+  // Доводим руками: на открытии подтягиваем выбранный пункт в видимую часть.
+  // Через таймер, а не синхронно в эффекте: сразу после монтирования поповер
+  // ещё не спозиционирован и Ariakit сам сбрасывает activeId/скролл.
+  useEffect(() => {
+    if (!open) return;
+    const timer = setTimeout(() => {
+      popoverRef.current
+        ?.querySelector('[aria-selected="true"]')
+        ?.scrollIntoView({ block: "nearest" });
+    });
+    return () => clearTimeout(timer);
+  }, [open]);
 
   return (
     <div {...wrapperProps(shell, open)}>
@@ -299,15 +318,23 @@ const ComboboxSelect = (props: SelectProps) => {
         <Ariakit.Combobox
           store={combobox}
           disabled={shell.disabled}
-          placeholder={placeholder}
+          placeholder={selectedText ? "" : placeholder}
           className="select__search-input"
         />
+
+        {/* Инпут — всегда только поисковая строка, поэтому печатать можно
+            сразу, не стирая выбранное. Само выбранное значение лежит слоем
+            поверх поля и скрывается, как только начали искать. */}
+        {selectedText && !search && (
+          <span className="select__selected">{selectedText}</span>
+        )}
         <span className="select__search-icon">
           <SearchIcon />
         </span>
       </div>
       <Ariakit.ComboboxPopover
         store={combobox}
+        ref={popoverRef}
         gutter={4}
         sameWidth
         portal
@@ -323,6 +350,8 @@ const ComboboxSelect = (props: SelectProps) => {
               key={opt.value}
               value={opt.label}
               disabled={opt.disabled}
+              aria-selected={opt.label === selectedText}
+              setValueOnClick={false}
               className="menu-item"
             >
               {opt.icon && <span className="menu-item__icon">{opt.icon}</span>}

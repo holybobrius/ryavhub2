@@ -16,3 +16,13 @@ export const getUserById = async (id: number): Promise<User | undefined> => {
     return undefined;
   }
 };
+
+export const getUsersList = async (): Promise<User[]> => {
+  const users = await db.users.findMany();
+
+  return users.map((user) => ({
+    id: Number(user.id),
+    name: user.name,
+    avatarUrl: getMCAvatarUrl(user.mc_uuid),
+  }));
+};

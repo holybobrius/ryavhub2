@@ -23,30 +23,35 @@ export const useQuotesFilters = ({
   authorsList,
   yearsList,
 }: Props): HookReturns => {
-  const [filters, setFilters] = useState<QuotesFilters>({
-    authors: authorsList,
-    years: yearsList,
-  });
+  const [excludedAuthorIds, setExcludedAuthorIds] = useState<number[]>([]);
+  const [excludedYears, setExcludedYears] = useState<number[]>([]);
 
-  const clearAuthorsFilters = () => {
-    setFilters({
-      authors: [],
-      years: filters.years,
-    });
+  const filters = {
+    authors: authorsList.filter((n) => !excludedAuthorIds.includes(n.id)),
+    years: yearsList.filter((n) => !excludedYears.includes(n.year)),
   };
 
-  const resetAuthorsFilters = () => {
-    setFilters({
-      authors: authorsList,
-      years: filters.years,
-    });
+  const setFilters = (next: QuotesFilters) => {
+    setExcludedAuthorIds(
+      authorsList
+        .filter((n) => !next.authors.some((s) => s.id === n.id))
+        .map((n) => n.id),
+    );
+    setExcludedYears(
+      yearsList
+        .filter((n) => !next.years.some((s) => s.year === n.year))
+        .map((n) => n.year),
+    );
   };
+
+  const clearAuthorsFilters = () =>
+    setExcludedAuthorIds(authorsList.map((n) => n.id));
+
+  const resetAuthorsFilters = () => setExcludedAuthorIds([]);
 
   const clearFilters = () => {
-    setFilters({
-      authors: authorsList,
-      years: yearsList,
-    });
+    setExcludedAuthorIds([]);
+    setExcludedYears([]);
   };
 
   return {

@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type {
-  ChangeEvent,
-  InputHTMLAttributes,
-  ReactNode,
-  TextareaHTMLAttributes,
-} from "react";
+import type { ChangeEvent, ComponentPropsWithRef, ReactNode } from "react";
 import "./input.css";
 
 export type InputSize = "sm" | "md" | "lg";
@@ -78,7 +73,7 @@ const InputShell = ({
 
 export interface InputProps
   // Omit "size": у нативного <input> size — это ширина в символах (number).
-  extends FieldCommon, Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {}
+  extends FieldCommon, Omit<ComponentPropsWithRef<"input">, "size"> {}
 
 const InputBase = ({
   size = "md",
@@ -116,9 +111,7 @@ const InputBase = ({
 };
 
 export interface TextAreaProps
-  extends
-    FieldCommon,
-    Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> {
+  extends FieldCommon, Omit<ComponentPropsWithRef<"textarea">, "size"> {
   showCount?: boolean;
 }
 
@@ -187,7 +180,50 @@ const TextArea = ({
   );
 };
 
+export interface InputDateProps
+  extends FieldCommon, Omit<ComponentPropsWithRef<"input">, "size" | "type"> {}
+
+const InputDate = ({
+  size = "md",
+  label,
+  helperText,
+  error,
+  required,
+  leftIcon,
+  rightIcon,
+  disabled,
+  className,
+  ...rest
+}: InputDateProps) => {
+  return (
+    <InputShell
+      size={size}
+      label={label}
+      helperText={helperText}
+      error={error}
+      required={required}
+      leftIcon={leftIcon}
+      rightIcon={rightIcon}
+      disabled={disabled}
+      className={className}
+    >
+      <input
+        type="date"
+        className="input__control"
+        disabled={disabled}
+        aria-invalid={error || undefined}
+        required={required}
+        {...rest}
+      />
+    </InputShell>
+  );
+};
+
 InputBase.displayName = "Input";
 TextArea.displayName = "Input.TextArea";
+InputDate.displayName = "Input.Date";
 
-export const Input = Object.assign(InputBase, { TextArea });
+export const Input = Object.assign(InputBase, {
+  TextArea,
+  Date: InputDate,
+});

@@ -3,6 +3,7 @@
 
 @layer components {
   .select__trigger {
+    position: relative;
     justify-content: space-between;
     width: 100%;
     background: transparent;
@@ -14,6 +15,23 @@
   }
   .select__trigger:disabled {
     cursor: not-allowed;
+  }
+
+  /* Слой с выбранным значением для searchable-режима: лежит поверх инпута,
+     клики пропускает сквозь себя (фокус и каретка достаются инпуту). Справа
+     оставляем место под иконку поиска. */
+  .select__selected {
+    position: absolute;
+    inset-block: 0;
+    left: var(--in-padding-x);
+    right: calc(var(--in-padding-x) + var(--in-icon-size) + var(--in-gap));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    pointer-events: none;
+    color: var(--in-text);
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .select__value {
@@ -85,10 +103,11 @@
     background: var(--color-dropdown-bg);
     border: var(--border-width-1) solid var(--color-dropdown-border);
     border-radius: var(--ryav-dropdown-border-radius);
-    z-index: 50;
+    z-index: var(--ryav-z-popover);
   }
 
   .dropdown__search {
+    flex: none;
     height: var(--ryav-input-md-height);
     margin-bottom: var(--ryav-dropdown-gap);
     padding-inline: var(--ryav-input-md-padding-x);
@@ -108,6 +127,7 @@
   }
 
   .dropdown__empty {
+    flex: none;
     padding: var(--ryav-menu-item-padding-x);
     color: var(--color-surface-text-tertiary);
     font-family: var(--font-body);
@@ -116,6 +136,10 @@
 
   .menu-item {
     display: flex;
+    /* .dropdown — flex-колонка с max-height. Без flex:none строки сжимаются
+       до min-content (высоты иконки) вместо скролла, и тем сильнее, чем
+       больше опций: overflow-y появляется уже после сжатия. */
+    flex: none;
     align-items: center;
     gap: var(--ryav-menu-item-gap);
     height: var(--ryav-menu-item-height);
