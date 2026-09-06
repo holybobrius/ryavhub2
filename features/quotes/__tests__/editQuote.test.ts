@@ -26,11 +26,7 @@ const validBody = {
   date: "2026-09-06",
 };
 
-const lastUpdate = () =>
-  quotes.update.mock.calls[0][0] as {
-    where: { id: number };
-    data: Record<string, unknown>;
-  };
+const lastUpdate = () => quotes.update.mock.calls[0][0];
 
 describe("editQuote", () => {
   beforeEach(() => {
