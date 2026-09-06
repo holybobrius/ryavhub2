@@ -136,7 +136,7 @@ const Body = ({ size = "md", ...rest }: BodyProps) => {
   return (
     <Base
       variant={`body-${size}`}
-      defaultWeight="medium"
+      defaultWeight="regular"
       defaultAs="p"
       {...rest}
     />
