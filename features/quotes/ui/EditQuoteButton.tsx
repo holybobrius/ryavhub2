@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/shared/ui/Button";
 import { useQuoteModal } from "../lib/providers/QuoteModalProvider";
 import { IconEdit02 } from "@/shared/ui/icons";

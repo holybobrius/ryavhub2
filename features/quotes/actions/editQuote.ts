@@ -5,21 +5,15 @@ import { cookies } from "next/headers";
 import { validateSession } from "@/shared/model/validateSession";
 import { isUnauthError } from "@/shared/errors/UnauthError";
 import { revalidatePath } from "next/cache";
-import { quoteSchema } from "../model/addQuoteSchema";
+import { QuoteFormValues, quoteSchema } from "../model/addQuoteSchema";
 
-type EditQuoteBody = {
-  quote: string;
-  authorId: string;
-  date: string;
-};
-
-export const editQuote = async (body: EditQuoteBody, quoteId: number) => {
+export const editQuote = async (body: QuoteFormValues, quoteId: number) => {
   const parsed = quoteSchema.safeParse(body);
   if (!parsed.success) return { ok: false, error: "invalid" };
 
   try {
     const sessionId = (await cookies()).get("sessionId")?.value;
-    const { id: createdById } = await validateSession(sessionId);
+    await validateSession(sessionId);
 
     await db.quotes.update({
       where: { id: quoteId },
@@ -27,7 +21,6 @@ export const editQuote = async (body: EditQuoteBody, quoteId: number) => {
         quote: parsed.data.quote,
         quote_by: BigInt(parsed.data.authorId),
         date: new Date(parsed.data.date),
-        created_by: createdById,
       },
     });
   } catch (error) {

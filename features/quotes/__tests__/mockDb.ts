@@ -41,6 +41,7 @@ export const mockDb = {
   quotes: {
     findMany: mock(() => Promise.resolve(mockQuotes)),
     create: mock(() => Promise.resolve({ id: 3n })),
+    update: mock(() => Promise.resolve({ id: 5n })),
   },
   quote_rankings: {
     findMany: mock(() => Promise.resolve(mockRankings)),

@@ -5,15 +5,9 @@ import { cookies } from "next/headers";
 import { validateSession } from "@/shared/model/validateSession";
 import { isUnauthError } from "@/shared/errors/UnauthError";
 import { revalidatePath } from "next/cache";
-import { quoteSchema } from "../model/addQuoteSchema";
+import { QuoteFormValues, quoteSchema } from "../model/addQuoteSchema";
 
-type AddQuoteBody = {
-  quote: string;
-  authorId: string;
-  date: string;
-};
-
-export const addQuote = async (body: AddQuoteBody) => {
+export const addQuote = async (body: QuoteFormValues) => {
   const parsed = quoteSchema.safeParse(body);
   if (!parsed.success) return { ok: false, error: "invalid" };
 
