@@ -5,11 +5,11 @@ import { AuthorFilter, YearFilter } from "../model/models";
 import { Quote } from "../model/models";
 import { useQuotesBrowser } from "../model/useQuotesBrowser";
 import { IconPlus, IconSearch } from "@/shared/ui/icons";
-import { Button } from "@/shared/ui/Button";
 import { QuoteCard } from "./QuoteCard";
 import { YearDivider } from "./YearDivider/YearDivider";
 import { QuotesFilters } from "./QuoteFilters/QuotesFilters";
 import { EmptyState } from "@/shared/ui/EmptyState/EmptyState";
+import { AddQuoteTrigger } from "./AddQuoteTrigger";
 
 interface QuotesBrowserProps {
   quotes: Quote[];
@@ -54,7 +54,7 @@ export const QuotesBrowser = ({
             onChange={(e) => handleSearchChange(e.target.value)}
           />
 
-          <Button
+          <AddQuoteTrigger
             size="lg"
             variant="soft"
             tone="tertiary"
@@ -62,7 +62,7 @@ export const QuotesBrowser = ({
             className="shrink-0"
           >
             Добавить цитату
-          </Button>
+          </AddQuoteTrigger>
         </div>
         {quotesByYear.length > 0 ? (
           quotesByYear.map(({ year, quotes }) => (
@@ -81,13 +81,15 @@ export const QuotesBrowser = ({
             description="По таким фильтрам цитат не найдено"
             icon={<IconSearch />}
             action={
-              <Button
-                variant="outlined"
+              <AddQuoteTrigger
+                size="lg"
+                variant="soft"
                 tone="tertiary"
                 rightIcon={<IconPlus />}
+                className="shrink-0"
               >
                 Добавить цитату
-              </Button>
+              </AddQuoteTrigger>
             }
           />
         )}

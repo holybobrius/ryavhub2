@@ -6,12 +6,14 @@ interface QuoteReactionProps {
   kind: "like" | "dislike";
   count: number;
   isActive: boolean;
+  onClick: () => void;
 }
 
 export const QuoteReaction = ({
   kind,
   count,
   isActive,
+  onClick,
 }: QuoteReactionProps) => {
   const isLike = kind === "like";
 
@@ -25,6 +27,7 @@ export const QuoteReaction = ({
       data-active={isActive}
       aria-label={isLike ? "Нравится" : "Не нравится"}
       rightIcon={<IconThumbUp className={isLike ? undefined : "rotate-180"} />}
+      onClick={onClick}
     >
       {count}
     </Button>

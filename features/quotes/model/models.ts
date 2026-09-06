@@ -1,9 +1,6 @@
 export type QuotesSortType = "newest" | "best" | "oldest" | "worst";
 
-export type QuoteRanking = {
-  id: number;
-  created_by: number;
-};
+export type QuoteVoteType = "Upvote" | "Downvote";
 
 export interface Quote {
   id: number;
@@ -14,8 +11,9 @@ export interface Quote {
     avatarUrl?: string;
   };
   date: Date;
-  upvotes?: QuoteRanking[];
-  downvotes?: QuoteRanking[];
+  upvotes?: number;
+  downvotes?: number;
+  userVote?: QuoteVoteType;
 }
 
 export interface AuthorFilter {

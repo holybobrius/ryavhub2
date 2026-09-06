@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography";
-import { Button } from "@/shared/ui/Button";
 import { IconPlus } from "@/shared/ui/icons";
 import { StatCard } from "./StatCard";
+import { AddQuoteTrigger } from "@/features/quotes/ui/AddQuoteTrigger";
 
 const formatCount = (value: number) =>
   new Intl.NumberFormat("ru-RU").format(value);
@@ -54,15 +54,14 @@ export const QuotesHero = ({ quotesCount, rankingsCount }: QuotesHeroProps) => {
             <StatCard label="Всего оценок" value={formatCount(rankingsCount)} />
           </div>
 
-          {/* TODO: привязать создание цитаты — формы/роута пока нет */}
-          <Button
+          <AddQuoteTrigger
             size="lg"
             variant="filled"
             tone="secondary"
             rightIcon={<IconPlus />}
           >
             Добавить цитату
-          </Button>
+          </AddQuoteTrigger>
         </div>
       </div>
     </section>

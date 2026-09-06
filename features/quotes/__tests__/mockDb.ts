@@ -40,6 +40,7 @@ export const mockUsers = [
 export const mockDb = {
   quotes: {
     findMany: mock(() => Promise.resolve(mockQuotes)),
+    create: mock(() => Promise.resolve({ id: 3n })),
   },
   quote_rankings: {
     findMany: mock(() => Promise.resolve(mockRankings)),

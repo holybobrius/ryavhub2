@@ -9,8 +9,8 @@ const quote = (id: number, text: string): Quote => ({
   quote: text,
   quoteAuthor: { id: 1, name: "Автор" },
   date: new Date("2024-01-01"),
-  upvotes: [],
-  downvotes: [],
+  upvotes: 0,
+  downvotes: 0,
 });
 
 describe("BestQuote", () => {

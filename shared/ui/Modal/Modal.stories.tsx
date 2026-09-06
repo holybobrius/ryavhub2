@@ -113,6 +113,7 @@ export const Composition: Story = {
             title="Heading"
             subtitle="Description"
             onClose={() => {}}
+            closeDisabled={false}
           />
           <div className="modal__content" data-size={size}>
             <Typography.Body size="sm" color="tertiary">
@@ -125,6 +126,7 @@ export const Composition: Story = {
             cancelText="Отмена"
             onOk={() => {}}
             onCancel={() => {}}
+            pending={false}
           />
         </div>
       ))}
@@ -143,6 +145,7 @@ export const Header: Story = {
             title="Heading"
             subtitle="Description"
             onClose={() => {}}
+            closeDisabled={false}
           />
         </div>
       ))}
@@ -162,6 +165,7 @@ export const Footer: Story = {
             cancelText="Отмена"
             onOk={() => {}}
             onCancel={() => {}}
+            pending={false}
           />
         </div>
       ))}
@@ -171,6 +175,7 @@ export const Footer: Story = {
           okText="Сохранить"
           cancelText="Отмена"
           onCancel={() => {}}
+          pending={false}
         />
       </div>
     </div>

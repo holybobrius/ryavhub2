@@ -1,7 +1,7 @@
 import type { Quote } from "../model/models";
 
 export const quoteScore = (quote: Quote): number =>
-  (quote.upvotes?.length ?? 0) - (quote.downvotes?.length ?? 0);
+  (quote.upvotes ?? 0) - (quote.downvotes ?? 0);
 
 export function selectBestQuotes(quotes: Quote[]): Quote[] {
   if (quotes.length === 0) return [];

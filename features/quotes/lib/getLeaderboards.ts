@@ -33,8 +33,8 @@ export function buildQuotesLeaderboards(quotes: Quote[]): QuotesLeaderboards {
       quotes: 0,
     };
 
-    current.likes += quote.upvotes?.length ?? 0;
-    current.dislikes += quote.downvotes?.length ?? 0;
+    current.likes += quote.upvotes ?? 0;
+    current.dislikes += quote.downvotes ?? 0;
     current.quotes += 1;
 
     totals.set(authorId, current);

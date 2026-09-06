@@ -1,6 +1,6 @@
 @layer components {
   .tooltip {
-    z-index: 50;
+    z-index: var(--ryav-z-popover);
     max-width: var(--ryav-tooltip-max-width);
     padding: var(--ryav-tooltip-padding-y) var(--ryav-tooltip-padding-x);
     border-radius: var(--ryav-tooltip-border-radius);

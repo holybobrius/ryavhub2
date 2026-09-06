@@ -11,20 +11,24 @@ interface BestQuoteProps {
   className?: string;
 }
 
-// Шеврон — по центру бокового поля страницы: половина ширины поля плюс
-// половина ширины кнопки, тогда карточка занимает всю ширину контента.
 const CHEVRON_INSET =
   "calc((var(--ryav-grid-margin-desktop-xl) + var(--ryav-button-icon-only-md-size)) / -2)";
 
 export const BestQuote = ({ quotes, className }: BestQuoteProps) => {
-  const [index, setIndex] = useState(0);
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const activeIndex = Math.max(
+    0,
+    quotes.findIndex((quote) => quote.id === activeId),
+  );
 
   if (quotes.length === 0) return null;
 
   const hasMultiple = quotes.length > 1;
 
   const shift = (step: number) =>
-    setIndex((current) => (current + step + quotes.length) % quotes.length);
+    setActiveId(
+      quotes[(activeIndex + step + quotes.length) % quotes.length]?.id,
+    );
 
   return (
     <div className={["relative", className].filter(Boolean).join(" ")}>
@@ -44,7 +48,7 @@ export const BestQuote = ({ quotes, className }: BestQuoteProps) => {
         </div>
       )}
 
-      <QuoteCard quote={quotes[index]} isBest />
+      <QuoteCard quote={quotes[activeIndex]} isBest />
 
       {hasMultiple && (
         <div
