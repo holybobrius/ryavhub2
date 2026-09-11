@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import { Quote } from "../model/models";
-import { selectBestQuotes } from "./getBestQuotes";
 import { getMCAvatarUrl } from "@/shared/lib/avatars";
 
 export const getQuotesList = async (userId?: number): Promise<Quote[]> => {

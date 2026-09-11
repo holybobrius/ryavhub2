@@ -7,13 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { QuoteFormValues, quoteSchema } from "../../model/addQuoteSchema";
 import dayjs from "dayjs";
 
-type QuoteModalState =
-  { mode: "closed" } | { mode: "add" } | { mode: "edit"; quote: Quote };
+type QuoteModalTarget = { mode: "add" } | { mode: "edit"; quote: Quote };
 
 type QuoteModalContextType = {
-  state: QuoteModalState;
+  state: QuoteModalTarget;
   openAddModal: () => void;
   openEditModal: (quote: Quote) => void;
+  open: boolean;
   close: () => void;
   form: UseFormReturn<QuoteFormValues>;
 };
@@ -27,7 +27,8 @@ const EMPTY: QuoteFormValues = {
 const QuoteModalContext = createContext<QuoteModalContextType | null>(null);
 
 export const QuoteModalProvider = ({ children }: PropsWithChildren) => {
-  const [state, setState] = useState<QuoteModalState>({ mode: "closed" });
+  const [target, setTarget] = useState<QuoteModalTarget>({ mode: "add" });
+  const [open, setOpen] = useState(false);
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteSchema),
@@ -36,7 +37,8 @@ export const QuoteModalProvider = ({ children }: PropsWithChildren) => {
 
   const openAddModal = () => {
     form.reset(EMPTY);
-    setState({ mode: "add" });
+    setTarget({ mode: "add" });
+    setOpen(true);
   };
 
   const openEditModal = (quote: Quote) => {
@@ -45,17 +47,18 @@ export const QuoteModalProvider = ({ children }: PropsWithChildren) => {
       date: dayjs(quote.date).format("YYYY-MM-DD"),
       authorId: String(quote.quoteAuthor.id ?? ""),
     });
-    setState({ mode: "edit", quote });
+    setTarget({ mode: "edit", quote });
+    setOpen(true);
   };
 
   const close = () => {
-    setState({ mode: "closed" });
+    setOpen(false);
     form.reset(EMPTY);
   };
 
   return (
     <QuoteModalContext
-      value={{ state, openAddModal, form, openEditModal, close }}
+      value={{ state: target, openAddModal, form, open, openEditModal, close }}
     >
       {children}
     </QuoteModalContext>

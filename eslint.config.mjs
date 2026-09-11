@@ -11,6 +11,24 @@ const eslintConfig = defineConfig([
   prettierPlugin,
   // Prettier config must be last to disable other configs that conflict
   prettierConfig,
+  {
+    rules: {
+      // В пресете Next это warning, а eslint с warning'ами выходит с кодом 0 —
+      // то есть CI на них не падает и они копятся. Поднимаем до ошибки.
+      // Префикс _ оставляет лазейку для намеренно неиспользуемых аргументов.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
+      ],
+      // console.error нужен серверным catch-блокам, запрещаем только отладочный шум.
+      "no-console": ["error", { allow: ["error", "warn"] }],
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

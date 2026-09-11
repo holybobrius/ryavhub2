@@ -1,5 +1,5 @@
 import { User } from "@/features/auth/models";
-import { create, createStore } from "zustand";
+import { createStore } from "zustand";
 
 export type AuthState = {
   user: User | null;
