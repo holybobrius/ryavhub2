@@ -55,6 +55,7 @@
      Нужна, потому что gap-16 жёстко привязан к имени --spacing-16 из
      экспорта: переименует ступень — класс молча перестанет генерироваться.
      Спросить дизайнера про шкалу space/* в Figma Variables. */
+  --spacing-space-3xs: var(--spacing-4);
   --spacing-space-2xs: var(--spacing-8);
   --spacing-space-xs: var(--spacing-12);
   --spacing-space-sm: var(--spacing-16);

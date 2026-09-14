@@ -24,7 +24,10 @@ export const DayGrid = ({
   const grid = getDayGrid(viewDate);
 
   return (
-    <Ariakit.CompositeProvider focusLoop={"horizontal"}>
+    <Ariakit.CompositeProvider
+      focusLoop={"horizontal"}
+      defaultActiveId={`day-${viewDate.format("YYYY-MM-DD")}`}
+    >
       <Ariakit.Composite role="grid">
         <div
           role="row"
@@ -43,6 +46,7 @@ export const DayGrid = ({
           >
             {week.map((day) => (
               <Ariakit.CompositeItem
+                className="date-picker-day"
                 key={day.format("YYYY-MM-DD")}
                 id={`day-${day.format("YYYY-MM-DD")}`}
                 role="gridcell"

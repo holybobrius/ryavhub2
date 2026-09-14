@@ -1,0 +1,10 @@
+@layer components {
+  .date-picker-day[aria-selected="true"] {
+    background-color: red;
+  }
+
+  .date-picker-day[data-outside="true"] {
+    opacity: 0.5;
+  }
+
+}

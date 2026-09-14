@@ -28,10 +28,16 @@ export const getMonthGrid = (viewDate: Dayjs): Dayjs[][] => {
   return grid;
 };
 
+export const getDecade = (
+  viewDate: Dayjs,
+): { firstYear: number; lastYear: number } => {
+  const firstYearInDecade = Math.floor(viewDate.get("year") / 10) * 10;
+  return { firstYear: firstYearInDecade, lastYear: firstYearInDecade + 9 };
+};
+
 /** 3 строки по 4: десятилетие viewDate плюс по году с краёв. */
 export const getYearGrid = (viewDate: Dayjs): Dayjs[][] => {
-  const viewYear = viewDate.get("year");
-  const firstYearInDecade = Math.floor(viewYear / 10) * 10;
+  const { firstYear: firstYearInDecade } = getDecade(viewDate);
 
   const start = viewDate
     .locale("ru")
