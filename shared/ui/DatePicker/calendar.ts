@@ -70,6 +70,11 @@ export const formatDate = (date: Dayjs | null): string => {
   return date.format("DD.MM.YYYY");
 };
 
+export const formatMonthYear = (date: Dayjs): string => {
+  const text = date.locale("ru").format("MMMM YYYY");
+  return text.charAt(0).toLocaleUpperCase("ru") + text.slice(1);
+};
+
 export const isInRange = (date: Dayjs, min?: Dayjs, max?: Dayjs): boolean => {
   if ((min && date.isBefore(min, "day")) || (max && date.isAfter(max, "day")))
     return false;

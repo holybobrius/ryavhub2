@@ -2,7 +2,7 @@
 
 import { Dayjs } from "dayjs";
 import * as Ariakit from "@ariakit/react";
-import { getDecade, getYearGrid } from "./calendar";
+import { getDecade, getYearGrid } from "../calendar";
 
 interface YearGridProps {
   selected: Dayjs | null;
@@ -14,32 +14,34 @@ export const YearGrid = ({ selected, viewDate, onSelect }: YearGridProps) => {
   const grid = getYearGrid(viewDate);
   const { firstYear, lastYear } = getDecade(viewDate);
 
+  const isDisabled = (year: Dayjs) => {
+    return year.year() < firstYear || year.year() > lastYear;
+  };
+
   return (
     <Ariakit.CompositeProvider
       focusLoop={"horizontal"}
       defaultActiveId={`year-${viewDate.year()}`}
     >
-      <Ariakit.Composite role="grid">
+      <Ariakit.Composite
+        role="grid"
+        style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+      >
         {grid.map((row) => (
           <Ariakit.CompositeRow
             key={`row-${row[0].format("YYYY-MM-DD")}`}
             role="row"
-            style={{ display: "flex" }}
+            style={{ display: "flex", gap: "8px" }}
           >
             {row.map((day) => (
               <Ariakit.CompositeItem
-                className="date-picker-day"
+                className="date-picker-button date-picker-year"
                 key={day.format("YYYY-MM-DD")}
                 id={`year-${day.year()}`}
                 role="gridcell"
-                style={{ width: 40, height: 40, border: "1px solid #555" }}
                 onClick={() => onSelect?.(day)}
                 render={<button type="button" />}
-                data-outside={
-                  day.year() < firstYear || day.year() > lastYear
-                    ? "true"
-                    : undefined
-                }
+                disabled={isDisabled(day)}
                 aria-selected={day.isSame(selected, "year")}
               >
                 {day.format("YYYY")}

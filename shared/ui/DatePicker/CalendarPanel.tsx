@@ -1,14 +1,16 @@
 "use client";
 
 import dayjs, { Dayjs } from "dayjs";
-import { DayGrid } from "./DayGrid";
+import { DayGrid } from "./grids/DayGrid";
 import { useState } from "react";
 import { Button } from "../Button";
 import { IconChevronDown, IconChevronUp } from "../icons";
 import "./date-picker.css";
-import { MonthGrid } from "./MonthGrid";
-import { YearGrid } from "./YearGrid";
-import { getDecade } from "./calendar";
+import { MonthGrid } from "./grids/MonthGrid";
+import { YearGrid } from "./grids/YearGrid";
+import { formatMonthYear, getDecade } from "./calendar";
+
+import "dayjs/locale/ru";
 
 interface CalendarPanelProps {
   value: Dayjs | null;
@@ -26,21 +28,23 @@ const CalendarPanel = ({
   maxDate,
 }: CalendarPanelProps) => {
   const [selected, setSelected] = useState<Dayjs | null>(value);
-  const [viewDate, setViewDate] = useState(() => value || dayjs());
+  const [viewDate, setViewDate] = useState(() =>
+    (value || dayjs()).locale("ru"),
+  );
   const [viewMode, setViewMode] = useState<"day" | "month" | "year">("day");
 
   const getTopLabel = () => {
     if (viewMode === "year") {
       const { firstYear, lastYear } = getDecade(viewDate);
 
-      return `${firstYear}-${lastYear} г.`;
+      return `${firstYear}-${lastYear}`;
     }
 
     if (viewMode === "month") {
       return `${viewDate.format("YYYY")} г.`;
     }
 
-    return viewDate.format("MMMM YYYY");
+    return formatMonthYear(viewDate);
   };
 
   const handleViewDatePeriodUp = () => {
@@ -82,7 +86,7 @@ const CalendarPanel = ({
   };
 
   return (
-    <div className="flex flex-col gap-space-md bg-surface-bg-surface-elevated p-inset-md rounded-xs">
+    <div className="calendar-panel flex flex-col gap-space-md bg-date-picker-bg p-inset-md rounded-xs">
       <div className="flex flex-col gap-space-2xs">
         <div className="flex justify-between items-center">
           <Button
@@ -137,7 +141,7 @@ const CalendarPanel = ({
       </div>
       <div className="flex justify-end gap-x-space-xs">
         <Button variant="outlined" tone="tertiary" onClick={onCancel}>
-          Отменить
+          Отмена
         </Button>
         <Button
           variant="filled"

@@ -2,7 +2,7 @@
 
 import { Dayjs } from "dayjs";
 import * as Ariakit from "@ariakit/react";
-import { getMonthGrid } from "./calendar";
+import { getMonthGrid } from "../calendar";
 
 interface MonthGridProps {
   viewDate: Dayjs;
@@ -18,20 +18,22 @@ export const MonthGrid = ({ viewDate, selected, onSelect }: MonthGridProps) => {
       focusLoop={"horizontal"}
       defaultActiveId={`month-${viewDate.month()}`}
     >
-      <Ariakit.Composite role="grid">
+      <Ariakit.Composite
+        role="grid"
+        style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+      >
         {grid.map((row) => (
           <Ariakit.CompositeRow
             key={`row-${row[0].format("YYYY-MM-DD")}`}
             role="row"
-            style={{ display: "flex" }}
+            style={{ display: "flex", gap: "8px" }}
           >
             {row.map((day) => (
               <Ariakit.CompositeItem
-                className="date-picker-day"
+                className="date-picker-button date-picker-month"
                 key={day.format("YYYY-MM-DD")}
                 id={`month-${day.month()}`}
                 role="gridcell"
-                style={{ width: 40, height: 40, border: "1px solid #555" }}
                 onClick={() => onSelect?.(day)}
                 render={<button type="button" />}
                 aria-selected={day.isSame(selected, "month")}
