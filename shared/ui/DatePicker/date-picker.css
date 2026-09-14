@@ -1,5 +1,9 @@
 @layer components {
 
+  .date-picker__panel {
+    z-index: var(--ryav-z-popover);
+  }
+
     .calendar-panel {
         width: 370px;
     }

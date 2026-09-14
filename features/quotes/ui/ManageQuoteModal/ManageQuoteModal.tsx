@@ -10,6 +10,8 @@ import { Avatar } from "@/shared/ui/Avatar";
 import { Controller, useFormState } from "react-hook-form";
 import { addQuote } from "../../actions/addQuote";
 import { editQuote } from "../../actions/editQuote";
+import { DatePicker } from "@/shared/ui/DatePicker/DatePicker";
+import dayjs from "dayjs";
 
 export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
   const { state, close, form, open } = useQuoteModal();
@@ -82,11 +84,20 @@ export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
             )}
           />
 
-          <Input.Date
-            label="Дата"
-            error={!!errors.date}
-            helperText={errors.date?.message}
-            {...register("date")}
+          <Controller
+            name="date"
+            control={control}
+            render={({ field, fieldState }) => (
+              <DatePicker
+                label="Дата"
+                value={field.value ? dayjs(field.value) : null}
+                onChange={(next) =>
+                  field.onChange(next ? next.format("YYYY-MM-DD") : "")
+                }
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+              />
+            )}
           />
         </div>
         <Input.TextArea

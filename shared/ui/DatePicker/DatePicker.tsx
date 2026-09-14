@@ -106,8 +106,11 @@ export const DatePicker = ({
       <Ariakit.Popover
         ref={panelRef}
         unmountOnHide
+        portal
+        preserveTabOrder={false}
         gutter={8}
         aria-label="Выбор даты"
+        className="date-picker__panel"
         getAnchorRect={(anchor) =>
           anchor?.closest(".input__field")?.getBoundingClientRect() ?? null
         }
