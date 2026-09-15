@@ -81,3 +81,15 @@ export const isInRange = (date: Dayjs, min?: Dayjs, max?: Dayjs): boolean => {
 
   return true;
 };
+
+export const isPeriodInRange = (
+  date: Dayjs,
+  unit: "month" | "year",
+  min?: Dayjs,
+  max?: Dayjs,
+): boolean => {
+  if (min && date.endOf(unit).isBefore(min, "day")) return false;
+  if (max && date.startOf(unit).isAfter(max, "day")) return false;
+
+  return true;
+};

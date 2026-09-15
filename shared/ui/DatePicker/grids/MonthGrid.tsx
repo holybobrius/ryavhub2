@@ -2,15 +2,23 @@
 
 import { Dayjs } from "dayjs";
 import * as Ariakit from "@ariakit/react";
-import { getMonthGrid } from "../calendar";
+import { getMonthGrid, isPeriodInRange } from "../calendar";
 
 interface MonthGridProps {
   viewDate: Dayjs;
   selected: Dayjs | null;
   onSelect: (date: Dayjs) => void;
+  minDate?: Dayjs;
+  maxDate?: Dayjs;
 }
 
-export const MonthGrid = ({ viewDate, selected, onSelect }: MonthGridProps) => {
+export const MonthGrid = ({
+  viewDate,
+  selected,
+  onSelect,
+  minDate,
+  maxDate,
+}: MonthGridProps) => {
   const grid = getMonthGrid(viewDate);
 
   return (
@@ -36,6 +44,8 @@ export const MonthGrid = ({ viewDate, selected, onSelect }: MonthGridProps) => {
                 role="gridcell"
                 onClick={() => onSelect?.(day)}
                 render={<button type="button" />}
+                disabled={!isPeriodInRange(day, "month", minDate, maxDate)}
+                accessibleWhenDisabled
                 aria-selected={day.isSame(selected, "month")}
               >
                 {day.format("MMM")}

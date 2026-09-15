@@ -2,24 +2,35 @@
 
 import { Dayjs } from "dayjs";
 import * as Ariakit from "@ariakit/react";
-import { getDecade, getYearGrid } from "../calendar";
+import { getDecade, getYearGrid, isPeriodInRange } from "../calendar";
 
 interface YearGridProps {
   selected: Dayjs | null;
   viewDate: Dayjs;
   onSelect: (date: Dayjs) => void;
+  minDate?: Dayjs;
+  maxDate?: Dayjs;
 }
 
-export const YearGrid = ({ selected, viewDate, onSelect }: YearGridProps) => {
+export const YearGrid = ({
+  selected,
+  viewDate,
+  onSelect,
+  minDate,
+  maxDate,
+}: YearGridProps) => {
   const grid = getYearGrid(viewDate);
   const { firstYear, lastYear } = getDecade(viewDate);
 
   const isDisabled = (year: Dayjs) => {
-    return year.year() < firstYear || year.year() > lastYear;
+    if (year.year() < firstYear || year.year() > lastYear) return true;
+
+    return !isPeriodInRange(year, "year", minDate, maxDate);
   };
 
   return (
     <Ariakit.CompositeProvider
+      key={firstYear}
       focusLoop={"horizontal"}
       defaultActiveId={`year-${viewDate.year()}`}
     >

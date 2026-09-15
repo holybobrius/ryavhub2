@@ -49,21 +49,21 @@ const CalendarPanel = ({
 
   const handleViewDatePeriodUp = () => {
     if (viewMode === "day") {
-      setViewDate(viewDate.add(1, "month"));
+      setViewDate(viewDate.startOf("month").add(1, "month"));
     } else if (viewMode === "month") {
-      setViewDate(viewDate.add(1, "year"));
+      setViewDate(viewDate.startOf("year").add(1, "year"));
     } else if (viewMode === "year") {
-      setViewDate(viewDate.add(10, "year"));
+      setViewDate(viewDate.startOf("year").add(10, "year"));
     }
   };
 
   const handleViewDatePeriodDown = () => {
     if (viewMode === "day") {
-      setViewDate(viewDate.subtract(1, "month"));
+      setViewDate(viewDate.startOf("month").subtract(1, "month"));
     } else if (viewMode === "month") {
-      setViewDate(viewDate.subtract(1, "year"));
+      setViewDate(viewDate.startOf("year").subtract(1, "year"));
     } else if (viewMode === "year") {
-      setViewDate(viewDate.subtract(10, "year"));
+      setViewDate(viewDate.startOf("year").subtract(10, "year"));
     }
   };
 
@@ -129,6 +129,8 @@ const CalendarPanel = ({
             viewDate={viewDate}
             selected={selected}
             onSelect={handleMonthSelect}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         )}
         {viewMode === "year" && (
@@ -136,6 +138,8 @@ const CalendarPanel = ({
             viewDate={viewDate}
             selected={selected}
             onSelect={handleYearSelect}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         )}
       </div>

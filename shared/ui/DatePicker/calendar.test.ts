@@ -7,6 +7,7 @@ import {
   parseDate,
   formatDate,
   isInRange,
+  isPeriodInRange,
 } from "./calendar";
 
 const iso = (d: dayjs.Dayjs) => d.format("YYYY-MM-DD");
@@ -135,5 +136,38 @@ describe("isInRange", () => {
   test("соседний день отсекается независимо от его времени", () => {
     expect(isInRange(cell, dayjs("2027-01-13T00:00"))).toBe(false);
     expect(isInRange(cell, undefined, dayjs("2027-01-11T23:59"))).toBe(false);
+  });
+});
+
+describe("isPeriodInRange", () => {
+  const january = dayjs("2027-01-01");
+
+  test("без границ — всегда true", () => {
+    expect(isPeriodInRange(january, "month")).toBe(true);
+  });
+
+  test("месяц жив, пока в нём есть хоть один выбираемый день", () => {
+    expect(isPeriodInRange(january, "month", dayjs("2027-01-31"))).toBe(true);
+    expect(
+      isPeriodInRange(january, "month", undefined, dayjs("2027-01-01")),
+    ).toBe(true);
+  });
+
+  test("месяц целиком за границей — false", () => {
+    expect(isPeriodInRange(january, "month", dayjs("2027-02-01"))).toBe(false);
+    expect(
+      isPeriodInRange(january, "month", undefined, dayjs("2026-12-31")),
+    ).toBe(false);
+  });
+
+  test("год считается по своим краям", () => {
+    expect(isPeriodInRange(january, "year", dayjs("2027-12-31"))).toBe(true);
+    expect(isPeriodInRange(january, "year", dayjs("2028-01-01"))).toBe(false);
+    expect(
+      isPeriodInRange(january, "year", undefined, dayjs("2027-01-01")),
+    ).toBe(true);
+    expect(
+      isPeriodInRange(january, "year", undefined, dayjs("2026-12-31")),
+    ).toBe(false);
   });
 });

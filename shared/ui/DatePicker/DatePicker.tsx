@@ -11,7 +11,7 @@ import CalendarPanel from "./CalendarPanel";
 
 export interface DatePickerProps extends Omit<
   InputProps,
-  "value" | "defaultValue" | "onChange" | "onBlur" | "ref" | "type"
+  "value" | "defaultValue" | "onChange" | "type"
 > {
   placeholder?: string;
   value?: Dayjs | null;
@@ -30,6 +30,8 @@ export const DatePicker = ({
   maxDate,
   error,
   disabled,
+  onBlur,
+  ref,
   ...props
 }: DatePickerProps) => {
   const isControlled = valueProp !== undefined;
@@ -53,6 +55,16 @@ export const DatePicker = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  const setInputRef = (node: HTMLInputElement | null) => {
+    inputRef.current = node;
+
+    if (typeof ref === "function") {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+
   const commit = (next: Dayjs | null) => {
     if (!isControlled) {
       setInternalValue(next);
@@ -67,12 +79,9 @@ export const DatePicker = ({
     (!!inputRef.current?.closest(".input")?.contains(node) ||
       !!panelRef.current?.contains(node));
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (isInside(e.relatedTarget as Element)) return;
-
+  const syncFromText = () => {
     const trimmed = text.trim();
     if (!trimmed) return commit(null);
-    if (trimmed === formatDate(value)) return;
 
     const parsed = parseDate(trimmed);
     if (!parsed || !isInRange(parsed, minDate, maxDate)) {
@@ -80,19 +89,29 @@ export const DatePicker = ({
       return;
     }
 
+    if (trimmed === formatDate(value)) return setParseError(false);
+
     commit(parsed);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (isInside(e.relatedTarget as Element)) return;
+
+    syncFromText();
+    onBlur?.(e);
   };
 
   return (
     <Ariakit.PopoverProvider store={popover}>
       <Input
         {...props}
-        ref={inputRef}
+        ref={setInputRef}
         value={text}
         error={error || parseError}
         placeholder={placeholder}
         onChange={(e) => setText(e.target.value)}
         onBlur={handleBlur}
+        disabled={disabled}
         leftIcon={
           <Ariakit.PopoverDisclosure
             disabled={disabled}

@@ -31,6 +31,7 @@ export const DayGrid = ({
 
   return (
     <Ariakit.CompositeProvider
+      key={viewDate.format("YYYY-MM")}
       focusLoop={"horizontal"}
       defaultActiveId={`day-${viewDate.format("YYYY-MM-DD")}`}
     >

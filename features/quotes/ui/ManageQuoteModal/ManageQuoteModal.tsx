@@ -90,10 +90,13 @@ export const ManageQuoteModal: FC<{ users: User[] }> = ({ users }) => {
             render={({ field, fieldState }) => (
               <DatePicker
                 label="Дата"
+                name={field.name}
+                ref={field.ref}
                 value={field.value ? dayjs(field.value) : null}
                 onChange={(next) =>
                   field.onChange(next ? next.format("YYYY-MM-DD") : "")
                 }
+                onBlur={field.onBlur}
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />

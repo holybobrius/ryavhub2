@@ -1,20 +1,19 @@
 @layer components {
-
   .date-picker__panel {
     z-index: var(--ryav-z-popover);
   }
 
-    .calendar-panel {
-        width: 370px;
-    }
+  .calendar-panel {
+    width: 370px;
+  }
 
   .date-picker-weekday {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-date-picker-content-number-color-disabled);
-    }
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-date-picker-content-number-color-disabled);
+  }
   .date-picker-button {
     width: 100%;
     box-sizing: border-box;
@@ -40,7 +39,7 @@
 
   .date-picker-button[aria-selected="true"] {
     color: var(--color-date-picker-content-number-today);
-   background-color: var(--color-date-picker-content-bg-today);
+    background-color: var(--color-date-picker-content-bg-today);
   }
 
   .date-picker-button[data-today="true"] {
@@ -55,5 +54,4 @@
   .date-picker-button[aria-disabled="true"]:hover {
     background-color: transparent;
   }
-
 }
