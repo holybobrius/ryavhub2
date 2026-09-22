@@ -6,7 +6,7 @@ interface EmptyStateProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  action: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 export const EmptyState = ({
@@ -24,7 +24,7 @@ export const EmptyState = ({
           {description}
         </Typography.Body>
       </div>
-      {action}
+      {action && action}
     </div>
   );
 };
