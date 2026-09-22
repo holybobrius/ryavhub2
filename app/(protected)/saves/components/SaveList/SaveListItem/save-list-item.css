@@ -1,0 +1,30 @@
+@layer components {
+
+    .save-list-item + .save-list-item {
+        border-top: var(--ryav-save-list-item-border-width) solid var(--color-save-list-item-border-color);
+    }
+
+  .save-list-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: var(--color-save-list-item-text-default);
+    padding: var(--ryav-save-list-item-padding-y) var(--ryav-save-list-item-padding-x);
+  }
+
+  .save-list-item:hover {
+    cursor: pointer;
+    background-color: var(--color-save-list-item-bg-hover);
+    color: var(--color-save-list-item-text-hover);
+    padding: var(--ryav-save-list-item-padding-y) var(--ryav-save-list-item-padding-x);
+  }
+
+  .save-list-item:active {
+    cursor: pointer;
+    background-color: var(--color-save-list-item-bg-pressed);
+    color: var(--color-save-list-item-text-pressed);
+    padding: var(--ryav-save-list-item-padding-y) var(--ryav-save-list-item-padding-x);
+  }
+}
