@@ -57,9 +57,13 @@ This is a **Next.js 16 application** with the **App Router**, using **TypeScript
 ├── app/                    # Next.js App Router (routes and API)
 │   ├── api/               # API routes (RESTful endpoints)
 │   ├── components/        # Page-level components (Navbar, Footer)
-│   ├── quotes/            # Quotes feature pages
-│   ├── timeline/          # Timeline feature pages
-│   └── saves/             # Game saves feature pages
+│   ├── login/             # Login page (public, outside the protected group)
+│   └── (protected)/       # Route group: pages that require a session (not in the URL)
+│       ├── layout.tsx     # Auth guard: redirect("/login") when no valid session
+│       ├── page.tsx       # Home "/"
+│       ├── quotes/        # Quotes feature pages
+│       ├── timeline/      # Timeline feature pages
+│       └── saves/         # Game saves feature pages
 ├── features/              # Feature-based modules
 │   ├── auth/              # Authentication logic and models
 │   ├── quotes/            # Quotes functionality
@@ -85,6 +89,12 @@ This is a **Next.js 16 application** with the **App Router**, using **TypeScript
 **Path Aliases**: Use `@/` for absolute imports (e.g., `@/lib/db`, `@/shared/ui/Button`). This is configured in `tsconfig.json`.
 
 **Authentication Flow**: Custom session-based auth using cookies. The `AuthProvider` wraps the app and manages auth state via Zustand. Use `validateSession()` from `@/shared/model/validateSession` in API routes to authenticate requests.
+
+**Protected pages**: Every page that requires a logged-in user goes under `app/(protected)/`. Its `layout.tsx` calls `getCurrentUser()` and does a server-side `redirect("/login")` when there is no session; the root `app/layout.tsx` (Navbar/Footer) wraps both protected pages and `/login`, so the guard can't live there (it would redirect-loop on `/login`). Public pages (`/login`) stay outside the group.
+
+- The layout guard only protects **rendering**. Server actions and API routes are separate POST endpoints and must still call `validateSession()` themselves.
+- Layouts are not re-rendered on client-side navigation between sibling pages, so a session that expires mid-visit is caught on the next full load. For a per-navigation check, add an optimistic cookie check in `proxy.ts` (Next 16's rename of `middleware.ts`).
+- `getCurrentUser()` is wrapped in React `cache()`, so calling it in several layouts/pages of one request hits the DB once.
 
 **Error Handling**: Use `UnauthError` from `@/shared/errors/UnauthError` for authentication failures. Throw this in API routes when validation fails.
 
