@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import { validateSession } from "@/shared/model/validateSession";
 import { User } from "./models";
 import { getMCAvatarUrl } from "@/shared/lib/avatars";
+import { cache } from "react";
 
-export const getCurrentUser = async (): Promise<User | undefined> => {
+export const getCurrentUser = cache(async (): Promise<User | undefined> => {
   try {
     const { id, name, gauntlet, mc_uuid } = await validateSession(
       (await cookies()).get("sessionId")?.value,
@@ -19,4 +20,4 @@ export const getCurrentUser = async (): Promise<User | undefined> => {
     console.error(error);
     return undefined;
   }
-};
+});
