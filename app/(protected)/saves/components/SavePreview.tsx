@@ -14,28 +14,30 @@ interface SavePreviewProps {
 export const SavePreview: FC<SavePreviewProps> = ({ selectedSave }) => {
   return (
     <div className="w-full flex flex-col gap-space-md">
-      <div className="flex items-center justify-center bg-surface-bg-layout rounded-xs aspect-242/165 relative overflow-hidden">
-        <SaveListItemImage
-          src={selectedSave?.imageUrl}
-          alt={selectedSave?.name ?? "Save preview"}
-          fill
-          sizes="50vw"
-          className="object-cover rounded-xs"
-        />
+      <div className="aspect-242/165 bg-surface-bg-layout rounded-xs flex items-center justify-center relative overflow-hidden">
+        {selectedSave?.imageUrl && (
+          <SaveListItemImage
+            src={selectedSave?.imageUrl}
+            alt={selectedSave?.name ?? "Save preview"}
+            fill
+            sizes="50vw"
+            className="object-cover rounded-xs"
+          />
+        )}
       </div>
       <div className="flex items-center">
         <div className="flex flex-1 border-r-1 border-action-stat-divider-color">
           <SaveListStatisticItem
             title="Год"
-            value={String(selectedSave?.year) ?? ""}
+            value={selectedSave?.year?.toString() ?? "-"}
           />
           <SaveListStatisticItem
             title="Версия"
-            value={String(selectedSave?.version) ?? "-"}
+            value={selectedSave?.version?.toString() ?? "-"}
           />
           <SaveListStatisticItem
             title="Размер"
-            value={String(selectedSave?.size) ?? "-"}
+            value={selectedSave?.size?.toString() ?? "-"}
           />
           <div className="border-l-1 border-action-stat-divider-color px-space-md">
             <a

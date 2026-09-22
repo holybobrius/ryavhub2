@@ -11,7 +11,7 @@ interface SaveBrowserProps {
 
 export const SaveBrowser: FC<SaveBrowserProps> = ({ saves }) => {
   const [selectedSave, setSelectedSave] = useState<SaveListItemType | null>(
-    null,
+    saves[0] ?? null,
   );
 
   const handleSelectSave = (save: SaveListItemType) => {
@@ -20,7 +20,11 @@ export const SaveBrowser: FC<SaveBrowserProps> = ({ saves }) => {
 
   return (
     <div className="flex gap-space-md w-full">
-      <SavesList saves={saves} onSelectSave={handleSelectSave} />
+      <SavesList
+        saves={saves}
+        onSelectSave={handleSelectSave}
+        selectedSaveId={selectedSave?.id?.toString() ?? null}
+      />
       <SavePreview selectedSave={selectedSave ?? undefined} />
     </div>
   );

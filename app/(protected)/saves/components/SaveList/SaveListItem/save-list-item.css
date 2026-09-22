@@ -14,7 +14,8 @@
     padding: var(--ryav-save-list-item-padding-y) var(--ryav-save-list-item-padding-x);
   }
 
-  .save-list-item:hover {
+  .save-list-item:hover,
+  .save-list-item[data-selected="true"] {
     cursor: pointer;
     background-color: var(--color-save-list-item-bg-hover);
     color: var(--color-save-list-item-text-hover);

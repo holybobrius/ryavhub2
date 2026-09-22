@@ -3,9 +3,11 @@ import { SaveListItem } from "./model/models";
 import { baseImageUrl } from "./getSaveImageUrl";
 
 export const getSaveList = async (): Promise<SaveListItem[]> => {
-  const saves = await db.gamesaves.findMany();
+  const saves = await db.gamesaves.findMany({
+    orderBy: [{ year: "desc" }, { id: "desc" }],
+  });
 
-  return saves.reverse().map((save) => {
+  return saves.map((save) => {
     return {
       id: save.id,
       name: save.name,
