@@ -1,7 +1,7 @@
 /*
   RYAV.HUB — Tailwind CSS token bridge
-  Source: Figma token audit, 08/29/2026
-  Tokens transferred: 1949 / 1949
+  Source: Figma token audit, 09/14/2026
+  Tokens transferred: 1983 / 1983
   Format: Tailwind CSS v4 @theme
 
   Usage examples:
@@ -1243,6 +1243,26 @@
   --color-checkbox-unchecked-border-pressed: var(--color-surface-border-secondary);
   --ryav-control-item-gap: var(--spacing-12);
   --color-control-item-label-color: var(--color-surface-text-base);
+  --color-date-picker-content-bg-hover: var(--color-alpha-white-4);
+  --color-date-picker-content-bg-today: var(--color-surface-text-base);
+  --color-date-picker-content-border-select: var(--color-surface-border-disabled);
+  --color-date-picker-content-number-color: var(--color-surface-text-base);
+  --color-date-picker-content-number-color-disabled: var(--color-surface-text-disabled);
+  --color-date-picker-content-number-today: var(--color-surface-bg-page);
+  --ryav-date-picker-content-radius: var(--radius-xs);
+  --ryav-date-picker-content-size-x-default: var(--spacing-40);
+  --ryav-date-picker-content-size-x-large: var(--spacing-56);
+  --ryav-date-picker-content-size-y-default: var(--spacing-32);
+  --ryav-date-picker-content-size-y-large: var(--spacing-48);
+  --color-date-picker-bg: var(--color-surface-bg-surface-elevated);
+  --color-date-picker-border: var(--color-surface-border-default);
+  --ryav-date-picker-contents-gap: var(--spacing-8);
+  --ryav-date-picker-gap: var(--spacing-12);
+  --ryav-date-picker-gap-2: var(--spacing-20);
+  --ryav-date-picker-padding: var(--spacing-20);
+  --ryav-date-picker-radius: var(--radius-xs);
+  --color-date-picker-year-color: var(--color-surface-text-tertiary);
+  --color-date-picker-year-color-hover: var(--color-surface-text-base);
   --color-divider-color-default: var(--color-surface-border-default);
   --color-divider-color-secondary: var(--color-surface-border-secondary);
   --color-drag-handle-icon-default: var(--color-surface-text-quaternary);
@@ -1482,13 +1502,6 @@
   --color-menu-item-text-pressed: var(--color-surface-text-secondary);
   --color-menu-item-text-selected: var(--color-surface-text-base);
   --color-menu-item-text-selected-hover: var(--color-surface-text-base);
-  --color-modal-bg: var(--color-surface-bg-surface);
-  --color-modal-border-color: var(--color-surface-border-default);
-  --ryav-modal-border-radius: var(--radius-xs);
-  --ryav-modal-border-width: var(--border-width-1);
-  --ryav-modal-lg-width: 960px;
-  --ryav-modal-md-width: 720px;
-  --ryav-modal-sm-width: 480px;
   --color-modal-content-bg: var(--color-surface-transparent);
   --ryav-modal-content-lg-gap: var(--spacing-24);
   --ryav-modal-content-lg-padding: var(--spacing-32);
@@ -1513,6 +1526,13 @@
   --ryav-modal-header-sm-padding-y: var(--spacing-24);
   --color-modal-header-title: var(--color-surface-text-base);
   --ryav-modal-header-title-gap: var(--spacing-8);
+  --color-modal-bg: var(--color-surface-bg-surface);
+  --color-modal-border-color: var(--color-surface-border-default);
+  --ryav-modal-border-radius: var(--radius-xs);
+  --ryav-modal-border-width: var(--border-width-1);
+  --ryav-modal-lg-width: 960px;
+  --ryav-modal-md-width: 720px;
+  --ryav-modal-sm-width: 480px;
   --ryav-nav-bar-gap: var(--spacing-32);
   --ryav-nav-bar-padding-x: var(--spacing-4);
   --color-nav-link-focus-ring-color: var(--color-focus-ring);
@@ -1580,8 +1600,10 @@
   --ryav-quote-card-footer-padding-x: var(--spacing-32);
   --ryav-quote-card-footer-padding-y: var(--spacing-20);
   --color-quote-card-icon-color: var(--color-surface-text-quaternary);
+  --ryav-quote-card-icons-gap: var(--spacing-32);
   --color-quote-card-label-color: var(--color-surface-text-quaternary);
   --color-quote-card-text-color: var(--color-surface-text-base);
+  --ryav-quote-card-thumbs-gap: var(--spacing-8);
   --color-quote-chip-bg: var(--color-alpha-white-4);
   --color-quote-chip-bg-primary: var(--color-alpha-purple-10);
   --color-quote-chip-border-color: var(--color-alpha-white-8);
@@ -1681,14 +1703,26 @@
   --color-scrollbar-color: var(--color-surface-fill-secondary);
   --ryav-scrollbar-radius: var(--radius-full);
   --ryav-scrollbar-width: 6px;
+  --color-section-card-bg: var(--color-surface-bg-surface);
+  --ryav-section-card-body-padding: var(--spacing-28);
+  --ryav-section-card-content-gap: var(--spacing-4);
+  --color-section-card-desc-color: var(--color-surface-text-tertiary);
+  --ryav-section-card-gap: var(--spacing-32);
+  --color-section-card-heading-color: var(--color-surface-text-secondary);
+  --ryav-section-card-heading-gap: var(--spacing-12);
+  --ryav-section-card-icon-border: var(--border-width-2);
+  --color-section-card-icon-color: var(--color-primary-200);
+  --ryav-section-card-icon-size: var(--ryav-icon-size-xl);
+  --ryav-section-card-radius: var(--radius-sm);
+  --color-section-card-value-color: var(--color-surface-text-base);
   --color-section-label-color: var(--color-surface-text-quaternary);
-  --ryav-select-gap: var(--spacing-8);
   --ryav-select-option-gap: var(--spacing-12);
   --ryav-select-option-gap-control: var(--spacing-8);
   --ryav-select-option-height: var(--spacing-40);
   --color-select-option-name-color-default: var(--color-surface-text-tertiary);
   --color-select-option-name-color-selected: var(--color-surface-text-base);
   --color-select-option-value-color: var(--color-surface-text-quaternary);
+  --ryav-select-gap: var(--spacing-8);
   --color-sidebar-card-bg: var(--color-surface-bg-surface);
   --color-sidebar-card-border-color: var(--color-surface-border-default);
   --ryav-sidebar-card-border-radius: var(--radius-xs);
@@ -1944,11 +1978,11 @@
   --ryav-user-badge-md-avatar-size: var(--spacing-24);
   --color-user-badge-name-color: var(--color-surface-text-base);
   --ryav-user-badge-sm-avatar-size: var(--spacing-20);
-  --ryav-user-group-overlap: var(--spacing-negative-4);
   --color-user-group-item-counter-bg: var(--color-surface-bg-surface-elevated);
   --color-user-group-item-ring-color-page: var(--color-surface-bg-page);
   --color-user-group-item-ring-color-surface: var(--color-surface-bg-surface);
   --ryav-user-group-item-ring-width: 3px;
+  --ryav-user-group-overlap: var(--spacing-negative-4);
   --ryav-video-card-author-avatar-size: var(--spacing-20);
   --ryav-video-card-author-gap: var(--spacing-8);
   --color-video-card-author-name-color: var(--color-surface-text-secondary);
@@ -1972,7 +2006,7 @@
   --color-year-nav-item-bg-hover: var(--color-surface-fill-disabled);
   --ryav-year-nav-item-gap: var(--spacing-8);
   --ryav-year-nav-item-padding-x: var(--spacing-12);
-  --ryav-year-nav-item-padding-y: 6px;
+  --ryav-year-nav-item-padding-y: var(--spacing-8);
   --ryav-year-nav-item-radius: var(--radius-xs);
   --color-year-nav-year-color-active: var(--color-surface-text-base);
   --color-year-nav-year-color-default: var(--color-surface-text-tertiary);

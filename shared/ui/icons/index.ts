@@ -17,6 +17,7 @@ import {
   suDiamond,
   suMessageCircle,
   suEdit02,
+  suCalendar01,
 } from "stratis-ui-icons";
 import { makeIcon } from "./makeIcon";
 
@@ -35,12 +36,12 @@ export const IconMenu = makeIcon(suMenu01.data);
 export const IconFileAttach = makeIcon(suFileAttach01.data);
 export const IconArrowUpRight = makeIcon(suArrowUpRight.data);
 export const IconEdit02 = makeIcon(suEdit02.data);
-
 // Плейсхолдер: thumb-up/down в stratis-ui-icons@1.5.2 нет, поэтому стрелка
 // (для дизлайка QuoteCard поворачивает её на 180°).
 export const IconThumbUp = makeIcon(suArrowUp.data);
 export const IconDiamond = makeIcon(suDiamond.data);
 export const IconMessageCircle = makeIcon(suMessageCircle.data);
+export const IconCalendar = makeIcon(suCalendar01.data);
 
 export { Icon, type IconProps } from "../Icon/Icon";
 export { makeIcon, type IconComponentProps } from "./makeIcon";

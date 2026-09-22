@@ -1,0 +1,57 @@
+@layer components {
+  .date-picker__panel {
+    z-index: var(--ryav-z-popover);
+  }
+
+  .calendar-panel {
+    width: 370px;
+  }
+
+  .date-picker-weekday {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-date-picker-content-number-color-disabled);
+  }
+  .date-picker-button {
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+    border-radius: var(--ryav-date-picker-content-radius);
+    font-size: var(--text-body-sm);
+    color: var(--color-date-picker-content-number-color);
+  }
+
+  .date-picker-day {
+    height: 32px;
+  }
+
+  .date-picker-month,
+  .date-picker-year {
+    height: 62px;
+  }
+
+  .date-picker-button:hover {
+    background-color: var(--color-date-picker-content-bg-hover);
+  }
+
+  .date-picker-button[aria-selected="true"] {
+    color: var(--color-date-picker-content-number-today);
+    background-color: var(--color-date-picker-content-bg-today);
+  }
+
+  .date-picker-button[data-today="true"] {
+    border: 1px solid var(--color-date-picker-content-border-select);
+  }
+
+  .date-picker-button[aria-disabled="true"] {
+    color: var(--color-date-picker-content-number-color-disabled);
+    cursor: not-allowed;
+  }
+
+  .date-picker-button[aria-disabled="true"]:hover {
+    background-color: transparent;
+  }
+}
