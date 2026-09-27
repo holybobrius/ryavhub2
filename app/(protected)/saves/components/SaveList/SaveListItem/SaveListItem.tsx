@@ -3,6 +3,7 @@ import { Typography } from "@/shared/ui/Typography";
 import { FC } from "react";
 import "./save-list-item.css";
 import { IconChevronRight } from "@/shared/ui/icons";
+import Link from "next/link";
 
 interface SaveListItemProps {
   save: SaveListItemType;
@@ -16,13 +17,14 @@ export const SaveListItem: FC<SaveListItemProps> = ({
   selected,
 }) => {
   return (
-    <div
+    <Link
+      href={`/saves/${save.id}`}
       className="save-list-item"
       data-selected={selected}
       onMouseEnter={() => onSelect(save)}
     >
       <Typography.Heading size="xl">{save.name}</Typography.Heading>
       <IconChevronRight size={48} />
-    </div>
+    </Link>
   );
 };

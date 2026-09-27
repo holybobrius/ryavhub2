@@ -7,3 +7,13 @@ export interface SaveListItem {
   size?: string | null;
   downloadUrl?: string | null;
 }
+
+export interface Save {
+  id: number;
+  name: string;
+  images: string[];
+  year: number;
+  version?: string | null;
+  size?: string | null;
+  downloadUrl?: string | null;
+}
