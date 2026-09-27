@@ -137,3 +137,11 @@
   padding: var(--ryav-leaderboard-item-padding-y)
     var(--ryav-leaderboard-item-padding-x);
 }
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

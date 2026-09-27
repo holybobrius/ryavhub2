@@ -18,6 +18,8 @@ import {
   suMessageCircle,
   suEdit02,
   suCalendar01,
+  suDownload,
+  suImage03,
 } from "stratis-ui-icons";
 import { makeIcon } from "./makeIcon";
 
@@ -41,7 +43,8 @@ export const IconEdit02 = makeIcon(suEdit02.data);
 export const IconThumbUp = makeIcon(suArrowUp.data);
 export const IconDiamond = makeIcon(suDiamond.data);
 export const IconMessageCircle = makeIcon(suMessageCircle.data);
+export const IconDownload = makeIcon(suDownload.data);
 export const IconCalendar = makeIcon(suCalendar01.data);
-
+export const IconImage = makeIcon(suImage03.data);
 export { Icon, type IconProps } from "../Icon/Icon";
 export { makeIcon, type IconComponentProps } from "./makeIcon";

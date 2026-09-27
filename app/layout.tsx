@@ -27,7 +27,7 @@ export default async function RootLayout({
         <AuthProvider user={user ?? null}>
           <Navbar user={user ?? null} />
 
-          <main className="min-h-screen bg-surface-bg-layout px-page-margin pb-inset-xl">
+          <main className="min-h-screen px-page-margin pb-inset-xl">
             {children}
           </main>
           <Footer user={user ?? null} />

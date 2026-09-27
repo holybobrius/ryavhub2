@@ -13,6 +13,7 @@ model gamesaves {
   year       Int
   download   String? @db.VarChar(150)
   size       String  @default("0G") @db.VarChar(10)
+  version    String  @db.VarChar(10)
   created_by BigInt?
   users      users?  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gamesaves_users__fk")
 

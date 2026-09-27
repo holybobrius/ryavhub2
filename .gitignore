@@ -19,6 +19,9 @@ node_modules/
 # Production
 /build
 
+# Картинки сейвов
+/public/save-images/
+
 # Misc
 .DS_Store
 *.pem
